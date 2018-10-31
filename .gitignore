@@ -1,5 +1,6 @@
 Reading/*
 Samples/*
+
 Proposal/*.png
 Proposal/*.aux
 Proposal/*.bbl
@@ -7,6 +8,8 @@ Proposal/*.blg
 Proposal/*.log
 Proposal/*.out
 Proposal/*.gz
+
+.vscode
 
 LiteratureMap.txt
 Notes.txt

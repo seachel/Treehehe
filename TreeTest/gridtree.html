@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tree as Grid Experiments</title>
+
+	<link href="styles/gridstyle.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="scripts/jquery.js"></script>
+
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+	    extensions: ["tex2jax.js"],
+	    jax: ["input/TeX","output/HTML-CSS"],
+			tex2jax: { inlineMath : [['$','$'], ['\\(','\\)']] },
+			"HTML-CSS" : { preferredFont : "STIX" }
+		});
+	</script>
+
+	<!-- Remote MathJax -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+	<!-- Local MathJax -->
+	<!-- <script type="text/javascript" src='scripts/MathJax/MathJax.js' async></script> -->
+
+</head>
+<body>
+
+<div class="tree1 tree">
+	<div class="tree1_A A node">
+		A
+	</div>
+	<div class="tree1_B B node">
+		B
+	</div>
+	<div class="tree1_C C node">
+		$\exists shit$
+	</div>
+</div>
+
+<div id="test"></div>
+
+<canvas>
+	$\models x y$
+</canvas>
+
+<canvas id="mycanvas" class="drawtree">
+	<div id="texdiv">$x \leq y$</div>
+</canvas>
+
+<script type="text/javascript">
+	function draw()
+	{
+		var ctx = document.getElementById('mycanvas').getContext('2d');
+		ctx.font = '48px serif';
+		ctx.fillText('$ \\forall x, P \; x $', 10, 50);
+		console.log("fuk");
+		
+		// document.getElementById('texdiv').innerText = "$ \\exists x , Q \\; x $";
+
+		// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+		
+		setTimeout()
+
+		var math = null;
+		MathJax.Hub.Queue(function()
+		{
+			math = MathJax.Hub.getAllJax("test")[0];
+		})
+
+		MathJax.Hub.Queue(["Text", math, "$\\exists x, P \\; x$"]);
+	};
+
+	(() => setTimeout(draw, 10000))();
+</script>
+
+</body>
+</html>

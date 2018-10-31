@@ -1,0 +1,426 @@
+\documentclass[12pt]{article}
+
+\usepackage[
+  margin=0.75in,
+  includefoot,
+  footskip=30pt
+]{geometry}
+
+\usepackage{fancyhdr} 
+\pagestyle{fancy} 
+\fancyhf{}
+\setlength{\headheight}{27pt}
+\fancyhead[LE,RO]{\centering{\thepage} \\ \hfill Chelsea Battell}
+
+\usepackage{bussproofs,proof}
+
+\usepackage{array}
+
+\usepackage{cite}
+% \usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{standalone,preview,xcolor,amsmath,amssymb,latexsym,mathtools}
+
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\usepackage[page]{appendix}
+
+\newcommand{\projectname}{Treehehe}
+
+% \linespread{1.25}
+
+\begin{document}
+
+% \null\hfill\begin{tabular}[t]{l@{}}
+%   \textbf{Project Proposal} \\
+%   \textit{COMP 5209}
+% \end{tabular}
+
+%\section{Short Title and Brief Description:}
+
+%% A title for your project, and a one-line description.
+
+%% ideas:
+% 	- Interacting with Proof Trees
+% 	- Proof Tree Explorer
+% 	- Proof Tree Playground
+% 	- Proof Forest Adventure
+% 	- Cyberproof
+%	- some kind of tree? enlightenment
+%	- linden tree inspires truthfulness
+%	- fig tree symbol of Buddha's enlightenment
+%	- euphrasia or eyebright
+%	- pun? Treehehe
+% 	\end{itemize}
+%%  make title sound more like software?
+
+\begin{center}
+\includegraphics[width=2in]{logo_v1} \\
+
+\vspace{15px}
+
+{\LARGE \textbf{\projectname{}}} \\
+\vspace{10px}
+An interactive visualization of natural deduction proof trees \\
+\end{center}
+
+\vspace*{20pt}
+
+
+%% Who is involved.
+\noindent \textbf{Author:} Chelsea Battell
+
+
+%% Either Design/Development, or Evaluation/Analysis, or whatever else was approved.
+
+\noindent \textbf{Kind of Project:} Design/Development
+
+\vspace*{20pt}
+
+\section{Reading Review}
+
+%% A review of the relevant issues from our readings from the first part of the course (before the Fall Break). This should describe the issues as they arise in your project, then summarize the key parts from the relevant readings: either papers or chapters from Ware's book. You should then integrate these to provide an overview, and then add any insight or speculation of your own.
+
+%% Approx 1000 words.
+
+% TODO: add images
+% TODO: juxtapose with linear proof?
+% TODO: relationsihp between declarative nature of rules and procedural interpretation
+% TODO: see summary in Logic in Computer Science
+% TODO: more references from litmap: facets of Lin and Yang
+% TODO: distinction between rule premise and proof premise (assumption), judgment vs proposition
+% TODO: quotes to italics
+% TODO: remove headings in reading review?
+% TODO: example in latex
+% TODO: example as tree abstraction sketch
+% TODO: page layout sketch
+% TODO: abstract mode vs detail mode sketch?
+% TODO: rules in index?
+% TODO: fitch style?
+
+% \subsection*{Formalisms}
+
+Data in this visualization project are trees, so exploring visual formalisms for trees is an important first task. Herman et al.~\cite{graphvis-herman+melancon+marshall} discuss a number of techniques for visualizing trees. Several space-saving representations are presented, such as H-tree layout, radial view, and balloon view. In \projectname{}, much of the utility of a proof tree comes from being able to read a flow of inferences, seeing the leaves as axioms or assumptions and the root as the conclusion of the proof. Each node contains a propositional formula, so to be readable all nodes need to have the same orientation. The space-saving layouts could be useful if it is clear which node is the root and some other form of iconography could be used for constructing formulas. For the current project, we will use the Reingold and Tilford layout for trees, which could be described as visually rooted, since we have a convention that tells us which node we see as the root. We will invert the standard tree constructed with this algorithm so that the root is at centre bottom. Another benefit of the Reingold and Tilford algorithm for this application is the vertical alignment of nodes at the same level (distance from the root) in a proof.
+
+Since proof trees can easily escape the bounds of a display, navigation is another topic explored by Herman et al~\cite{graphvis-herman+melancon+marshall} that is relevant to this project. Zooming is not necessary because there is no refinement of information to be seen. The user will want to be able to scroll around the graph while exploring. The technique of incremental exploration and navigation will be used to display only a desired subtree of the proof.
+
+
+% \subsection*{Colour}
+
+In~\cite{infovis-ware} we learn many best practices from Ware for using colour in a visualization. In \projectname{}, colour will be used to highlight a focused node in a proof tree. One mode of interaction in this project will be a walk-through of a proof. In a walk-through, low saturated colours and small luminance contrast will be used to make the past and future inferences less salient and more difficult to read. Then the focus of the user will be on the current inference of interest.
+
+% \subsection*{Interaction}
+
+Interaction is an essential component of this project because it elevates a proof tree from a static graphic to a visualization that can lead to further understanding and insight along a variety of paths. Duval claims that proof trees are disappointing and visualizations in general do not lead to immediate comprehension in mathematics~\cite{repvisvis-duval}. It appears that what is meant by \textit{visualization} in this article only includes static graphics representing mathematical objects. He also does not fully explore other advantages to explicit articulation of proof trees, such as cognitive offloading and observation of patterns in large proofs, which are particularly useful in proofs where the goal to be proven has a complicated logical structure. Here we propose that adding interaction to a proof tree will aid in understanding of both the logic used to build it and the proposition being proven, although this is stated without evidence and without a study to verify this hypothesis. There is more to discuss relating Duval's work to what is being attempted here, and this will be expanded on in the final report.
+
+Figueiras presents a taxonomy of interaction consisting of eleven categories of techniques~\cite{interaction-figueiras}. The categories of interaction that will be used in this presentation are: abstract/elaborate, select, and overview/explore. %Possible extensions will include filter and connect/relate.
+
+The interaction technique \textit{abstract/elaborate} is used to adjust the level of abstraction of the data. Data in \projectname{} are trees, where each node contains a proposition and transitions are labeled with a rule name and possibly side conditions. Two alternative views will be available for a proof tree. One will display the tree with all detail, and the other will only show the rules that are used, allowing a more abstract and structural perspective of the tree.
+
+A user may want to \textit{select} data to learn more about it or track how it changes in response to other interaction. In \projectname{}, a node can be selected to see more detail on its role in the proof tree. Its related parent and child inferences can be highlighted, the rules used displayed, and the substitutions used in applying the rules explicitly stated.
+
+Techniques in the \textit{overview/explore} category first display an overview of the data, then allow exploration through zooming, filtering, and the display of details on demand. Large proof trees cannot be easily displayed on a monitor. In this situation, it may not be possible to have a full proof tree with all details, thus no proper ``overview'', but there will be icons to allow the minimizing and expansion of subtrees and some form of panning to allow exploration of subtrees of the proof. The abstract, structural view mentioned above should help the user to see a condensed view of the tree. 
+
+Lin and Yang~\cite{readingcompgeometry-yang+lin} present five facets of proof comprehension: basic knowledge, logical status, summary, generality, and application. These facets will be used to guide the design of this project.
+
+%An extension being considered, time-permitting, would be to have both a vertical, fully detailed proof tree and beside it a horizontal proof tree only showing the structure of the proof tree and rules used. This would use the interaction techniques of \textit{select} and \textit{connect/relate} to highlight a node in both the structural tree and the detail tree.
+
+% \subsection*{Insight}
+
+% This visualization is intended primarily as an educational tool. It's not exclusively meant to teach beginners, although the logics discussed will be as simple as possible to appeal to a wider audience. Rather, it's meant to be used to explore proofs. (discussion of facets of proof comprehension?)
+
+% - discovery too?
+
+% - more general insights found in other readings where the main content is not useful will also appear; for example,...
+
+Yi et al. observe that sensemaking is one path to insight~\cite{insights-yi+etal}. Sensemaking, in the context of interactive visualizations, is an intentional process in which a person continually reframes their understanding of a concept. The authors also propose four processes for gaining insight: provide overview, adjust, detect pattern, and match mental model.
+
+\textit{Provide overview} means a user can gain a higher-level understanding of a data set. In \projectname{}, this is realized in the viewing of a complete proof tree. In the case of a large proof tree, this may have to be restricted to the ``structure view'' mentioned earlier, where only the rule names are visible to show the structure of a proof but no other detail.
+
+Through \textit{adjust}, a user is able to explore a data set. This can come from a variety of interaction techniques, such as adjustments to the level of abstraction, or selecting a range of values. In \projectname{}, the alternation between detail and structure view and the hiding of subtrees can help the user develop insight about the logic and formula proven. 
+
+When new structure is observed in data and possibly new discoveries made, the user has been able to \textit{detect} a \textit{pattern}. In \projectname{}, examples of how this is realized include observing repeated arguments in a proof and being able to detect loops.
+
+\textit{Match mental model} means one has a bridge between the data and their mental model of it. Having an external visual version of the mental model allows for cognitive offloading. In this project, we will see the value of having a visualization of a proof to interact with rather than trying to hold the entire picture in one's head. It is then possible to allocate more mental resources to reasoning and gaining insight through the other processes.
+
+
+\section{Detailed Description}
+
+%% A brief description of the domain. Approx 100 words.
+
+\subsection{Problem Domain}
+
+Proofs are a naturally visual exercise and an essential part of comprehension and advancement in logic. Proof trees are a common representation used to illustrate both the structure and details of a logical argument. There are many advantages to be found using proof trees: they are useful for learning about a logic through experimentation with writing proofs, they reveal structure in the proof that a linear proof presentation may obscure, they allow cognitive offloading when working through a challenging argument, and they can serve as a form of documentation. Standard presentations of proof trees are static. Adding interaction to such visualizations makes it easier to realize the advantages mentioned above.
+
+%A proof displayed in tree form is a visualization of a proof that reveals its underlying structure. 
+
+% need reference for first sentence?
+%(TODO: add references, check references)
+
+% By arranging a proof in a tree, one can see the goal of the proof as the root of the tree, premises or axioms as the leaves of the tree, and all intermediate nodes as results of, and arguments to, inferences.
+
+
+% Proof trees are static, and so an uninitiated reader may not have any immediate insights into how to parse such a proof.
+
+\subsection{Use of Visualization}
+
+%% A brief desciption of tasks where visualization will help, and an explanation to support this. Approx 500 words.
+
+There are critical limitations in the use of proof trees in certain mediums. Even a straightforward, ``small'' proof tree can easily escape the bounds of a sheet of paper. Creating a digital version eliminates bounds on the size of the tree, but it is still desirable to have all pertinent parts visible on a screen at the same time. A proof tree in the visualization created in this project will be an interactive, digital version where subtrees can be hidden. This will be done by selecting an icon on the node that will cause the subtree rooted at that node to be minimized. It will be ideal for the transitions when minimizing or expanding subtrees be as smooth as possible to avoid disrupting the mental model of the data.
+
+A proof tree is a static and declarative object, which requires some level of expertise to be parsed by the reader. In~\cite{repvisvis-duval}, one of Duval's criticisms of proof trees and mathematics visualizations is that they don't aid in operational or discursive comprehension. To overcome this limitation of static proof trees, the user will be able to interact with the tree in two distinct ways.
+  
+The first will be in the form of a proof walk-through that will support operational comprehension by using colour to focus attention on the current inference in a proof and distinguish between previously seen inferences and future inferences. Future and past inferences will be coloured to be less visible. Another panel on the page will have some text to provide discourse.
+
+The second form of interaction will allow more free-form exploration of the proof tree. The user can click on any node to focus on it. At this point, the rule used to infer this formula will be visible. Side conditions may be shown, as well as the substitutions for the rule schema variables.
+
+Weber and Mejia-Ramos~\cite{majorsbeliefs-weber+mejiaramos} and Alcock and Wilkinson~\cite{eproofs-alcock+wilkinson} have argued that too much detail visible in a proof obscures high-level structural information which is important for proof comprehension. To address this concern, there will be two views for this proof visualization: detail view and structure view. Detail view will show a proof tree, possibly with subtrees hidden as discussed above, with full formulas, rule names, and rule side conditions. Structure view will show the shape of the tree and which rules are used.
+
+
+
+% Side note, should be discussed somewhere
+% The logic presented will be as simple as possible. Either a classical propositional logic natural deduction system or a variant of it will be used to allow as broad an audience as possible to profit from the visualization.
+
+
+
+\subsection{Design Outline}
+
+\subsubsection{Approach}
+
+%% An outline of your design approach. This should include explanation of the visual formalisms you will use and plans for use of visualization design principles. Show sketches or diagrams, with labels and give a written description of how the interaction is intended to work. Approx 1500 words or 3 pages.
+
+The goal of this project is to build a tool for visualizing and interacting with proof tree representations of natural deduction proofs. Before such a proof can be built, a set of rules of the logic must be determined. These rules have the following form:
+
+\begin{prooftree}
+\RightLabel{rule name}
+\AxiomC{$premise_1$}
+\AxiomC{$\dots$}
+\AxiomC{$premise_n$}
+\TrinaryInfC{$conclusion$}
+\end{prooftree}
+
+The meaning of this rule is, if $premise_1, \dots, premise_n$ are all true, then $conclusion$ is true. The rule name is to the right of the horizontal line separating premises from conclusion. A concrete rule example is the rule $\wedge_I$ for building a proposition that contains the symbol $\wedge$ which means ``and'' and its use is called a conjunction:
+
+\begin{prooftree}
+\RightLabel{$\wedge_I$}
+\AxiomC{$P$}
+\AxiomC{$Q$}
+\BinaryInfC{$P \wedge Q$}
+\end{prooftree}
+
+This rule says ``if $P$ and $Q$, then $P \wedge Q$'', consistent with our understanding of the meaning of the symbol $\wedge$. The variables $P$ and $Q$ are called schema variables (sometimes called metavariables or syntactic categories). To use this rule requires some pattern matching. If the desired substitutions for $P$ and $Q$ are known, then the proposition in the conclusion is $P \wedge Q$ where $P$ and $Q$ are substituted as required. The rule $\wedge_I$ for conjunction introduction is part of the set of rules for natural deduction, the logic that will be used in \projectname{}. Our presentation of natural deduction will follow the lecture notes of Frank Pfenning~\cite{natded-pfenning} with labels on assumptions in hypothetical premises. See Appendix~\ref{app:rules} for the natural deduction rules that are used in this report.
+
+%Notation to say that from a set of premises $premise_1, \dots, premise_n$ we can derive $conclusion$ is called a sequent, written $premise_1, \dots, premise_n \vdash conclusion$.
+
+Suppose we wish to prove that from the $n$ assumptions $P_1, \dots, P_n$, we can derive the conclusion $C$. This goal can be written as $P_1, \dots, P_n \vdash C$, called a sequent. If, by applying rules from our logic and making appropriate substitutions, we are able construct a tree with all of the $P_1$ to $P_n$ as leaves and $C$ as the root, then this proof tree is evidence for the validity of the sequent $P_1, \dots, P_n \vdash C$. See Figure~\ref{fig:tree-example} for an example proof of a sequent.
+
+
+\begin{figure}[h]
+
+\def\extraVskip{5pt}
+\def\defaultHypSeparation{\hskip .5in}
+
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{$u$}
+\UnaryInfC{$p \wedge r$}
+\RightLabel{$\wedge_{E_1}$}
+\UnaryInfC{$p$}
+\AxiomC{$p \supset q$}
+\RightLabel{$\supset_E$}
+\BinaryInfC{$q$}
+
+\AxiomC{}
+\RightLabel{$u$}
+\UnaryInfC{$p \wedge r$}
+\RightLabel{$\wedge_{E_2}$}
+\UnaryInfC{$r$}
+
+\RightLabel{$\wedge_I$}
+\BinaryInfC{$q \wedge r$}
+
+\RightLabel{$\supset_{I^u}$}
+\UnaryInfC{$p \wedge r \supset q \wedge r$}
+\end{prooftree}
+
+\caption{An example proof of $p \supset q \vdash p \wedge r \supset q \wedge r$, formatted in \LaTeX}
+\label{fig:tree-example}
+\end{figure}
+
+
+The medium for this project will be a web page. The page will have the following regions: example selection panel, main tree view panel, header, information panel, and rules panel. A sketch of the web page can be seen in Figure~\ref{fig:sketchofpage}.
+
+\begin{figure}
+
+\begin{center}
+\includegraphics[width=6in]{page_layout}
+\end{center}
+
+\caption{A sketch of the layout of \projectname{}}
+\label{fig:sketchofpage}
+\end{figure}
+
+From the example selection panel, the user can select an example proposition. Examples will be drawn from Logic in Computer Science by Huth and Ryan~\cite{logicincs-huth+ryan} to ensure a breadth of examples from a textbook presenting natural deduction at an introductory level. Once a proposition is chosen, its proof tree will be displayed in the main tree view panel.
+
+The proof tree for the selected proposition will be displayed using a variant of the Reingold and Tilford algorithm, inverted so that the root of the proof tree, the formula derived, is at bottom center. See Figure~\ref{fig:tree-example} for an example proof tree. In this tree layout, the root of the tree is visually salient; it is isolated at the bottom point of the tree, and we can always depend on the conclusion of the proof tree appearing in that location. The example proof is laid out by \LaTeX{} and is an example of how such a tree is typically presented. To allow interaction, we need each node of the tree to be an accessible object. From this style of proof presentation, we can see that the proof resembles a tree, but it is not immediately clear how each of the components should be represented in a tree abstraction.
+
+There is a subtlety to how we view proofs as trees. To ease implementation and future discussion of proof tree structures, additional formalisms are proposed in interpreting proofs as trees. Each node contains a proposition, which is something that is either true or false. Propositions that serve as assumptions in hypothetical premises of rules such as $\supset_{I^u}$ require a label to reference when these assumptions are discharged, so a node may also contain a label. An edge between two nodes is directed from the proposition used as a premise to the proposition being inferred. Each edge is labeled with a rule name and side conditions that must hold to use the rule, where applicable. See Figure~\ref{fig:tree-rep-comparison} for an illustration of the proof presented in Figure~\ref{fig:tree-example} converted to this tree abstraction.
+
+\begin{figure}
+
+\begin{center}
+\includegraphics[width=3in]{tree_abstraction_example}
+\end{center}
+
+\caption{Comparison of the standard proof tree display to its abstract tree representation}
+\label{fig:tree-rep-comparison}
+\end{figure}
+
+The header will contain the project title and controls to toggle the interaction mode and view type. The interaction mode is either \textit{explore} or \textit{walk-through}. The default mode is \textit{explore}. In this mode, the user can click on any node of the proof tree, causing it to be focused visually and information specific to that node to be displayed on the information panel. This information includes, as applicable, the rule used to infer the current proposition, the rule in which it is used to infer the next proposition in the proof, and substitutions made to the schema variables in the rules to match the focused proposition.
+
+The alternative mode is \textit{walk-through}, which allows the user to step through the proof. At each step, a node in the tree will be visually focused through a use of colour as discussed in the reading review. There will be two buttons to move forward or backward in the proof tree. The information panel will be used in the same way for the walk-through mode as it was for explore mode.
+
+The walk-through will take the user through a forward reading of the proof; that is, from assumptions to conclusion. This is in contrast to goal-directed proofs which work from the conclusion to assumptions using ``backward'' reasoning. There are benefits to goal-directed proofs, namely in automated proving and proof search, but their reading can feel unnatural without practice. Our decision to progress from assumptions at leaves to the conclusion at the root brings us to an issue requiring further contemplation: how best to traverse the tree.
+
+A priority is comprehension of the operational semantics of the proof, and since we have decided on a forward presentation of the reasoning, we suggest a variant of a depth-first search for traversing a proof tree. Traversal will begin at the left-most leaf and travel down that branch to the root. Then searching back through unvisited children, the next leaf from the left will be found and the algorithm will repeat. Other tree traversals will be considered if this option does not seem to ease proof comprehension.
+
+The final area on the web page is the rules panel. It will be minimized by default, but can be opened to show the user the rules of the logic in their most general form, without any substitutions for schema variables.
+
+In the reading review the issue of displaying a large proof on a too-small display was discussed. To allow a more condensed display of the proof that is easier to navigate, two further features will be added. The first uses the technique of incremental exploration and navigation~\cite{graphvis-herman+melancon+marshall} and is an option to minimize subtrees rooted at any node. Each node will have a small button to allow the subtree it roots to be expanded or minimized. The second feature is an alternative view in the \textit{explore} mode. The default view is as discussed above and we will call it \textit{detail view}. The alternative is called \textit{abstract view} and shows only the rules used with no other detail, leading to insight on the structure of the proof. This view will be accessed through a control, possibly a toggle, that will only be visible while in \textit{explore} mode.
+
+\subsubsection{Technology}
+
+%% An outline of the development technology you intend to use: languages, libraries, frameworks, and the role they will play, Also describe your familiarity with these technologies. Approx 500 words.
+
+This project will be developed as a web page using HTML, CSS, and Javascript. The page will be hosted using GitHub Pages. These technologies have been chosen because they are relatively easy to quickly develop in and share with a wide audience.
+
+The data are proof trees, and they will be written directly in HTML. It would be desirable to have a visual interface for building proof trees, but this addition is out of scope for this project.
+
+CSS will be used to style the page and for data layout. A few libraries exist for laying out trees but they may not meet the needs of proof tree layouts. Most examples found for laying out trees are to build treeview controls for horizontal systems like those used for visualizing a file system. Flexbox and Grid are CSS layouts used for building responsive layouts and are being explored for building proof trees but without success so far. The alternative horizontal tree layout will be considered, with benefits being that it is simpler to lay out and more compact.
+
+It is not expected that this tool will be very useful on small-display devices such as mobile phones, but the page will still be designed to be responsive to changes in window size. Flexbox will likely be used for this purpose.
+
+% use both layout styles simultaneously?
+
+Javascript and jQuery will be used for the interaction logic and possibly also for drawing some elements of proof trees if other libraries and CSS tools don't meet the needs of the project.
+
+The MathJax library will be used so that \LaTeX{} can be embedded in HTML. It will be used for the layout of propositions and not full proof trees since each node of the tree needs to accept interaction.
+
+I have used these technologies for a few small to medium sized projects in the last four years. In 2014 I completed a project in a compilers class where I wrote a compiler for a version of a knitting language. I also made a small GUI that allowed a user to push buttons to build a knitting pattern and then check that the pattern is correct (has no errors according to the standard rules of knitting). The pattern was then compiled to the expanded form of knitting pattern that a knitter can work from. My most recent project using web technologies was a website to use for a presentation and future reference on the theory behind various logic programming languages, culminating in \href{http://chelsea.lol/pwhol}{programming with higher-order logic}). I also have a small static \href{http://chelsea.lol}{personal web page}.
+
+
+\subsection{Plan}
+
+%% Project Plan: Present a week-by-week plan for the project, describing the work already done, work planned for rest of the project, and (for team projects) the division of work between team members.
+
+\setlist[itemize]{itemsep=5pt}
+
+
+\begin{center}
+\begin{tabular}{ | m{2.5cm} | m{14cm} | }
+\hline
+\textbf{Week of} & \textbf{Tasks} \\
+\hline
+October 14 & \begin{itemize}
+	\item planning: review literature on visualization in math, proof visualization, proof comprehension
+	\end{itemize} \\
+\hline
+October 21 &
+	\begin{itemize}
+	\item proposal: draw designs and finish writing
+	\end{itemize} \\ 
+\hline
+October 28 &
+	\begin{itemize}
+	\item implementation: choose CSS or Javascript frameworks to help with the layout of trees
+	\item implementation: enumerate examples to include in the project 
+	\end{itemize} \\
+\hline
+November 4 &
+	\begin{itemize}		
+	\item implementation: initial layout of page, including supplementary content for selected node
+	\item report: document structure and abstract
+	\end{itemize} \\
+\hline 
+November 11 & \begin{itemize}		
+	\item implementation: logic and styling for proof walk-through
+	\item report: notes for content of each section
+	\end{itemize} \\ 
+\hline
+November 18 & 
+	\begin{itemize}		
+	\item implementation: final decisions for colours and fonts
+	\item presentation: plan content of talk and begin slides
+	\item report: notes for content of each section
+	\end{itemize} \\ 
+\hline
+November 25 & 
+	\begin{itemize}		
+	\item implementation: brief logic tutorial, time permitting
+	\item presentation: finish preparation for talk
+	\item report: writing
+	\end{itemize} \\  
+\hline
+December 2 & 
+	\begin{itemize}
+	\item report: writing
+	\end{itemize} \\ 
+\hline
+December 9 & 
+	\begin{itemize}
+	\item report: writing
+	\end{itemize} \\ 
+\hline
+December 16 & 
+	\begin{itemize}
+	\item report: writing
+	\end{itemize} \\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+%% Format:
+
+%% You should format your proposal document using the NSERC guidelines for grant applications: 8.5x11 inch paper, portrait orientation, single column, single-sided, .75 inch margins. Above the top margin should be the page number at centre, and your name(s) at the right. Font should be 12 point Times Roman or similar, with headings in boldface. References and Bibliography should follow ACM Master style, as described in: https://www.acm.org/publications/proceedings-template
+
+
+%% Submission:
+
+%% Prepare your proposal document as described above, and submit this and any other important material to the instructor via the mechanism on the course CULearn page by the due date. For projects done by teams of two, each team member must send email to the instructor robert.biddle@carleton.ca confirming the division of work as reported by the due date.
+
+\appendix
+
+\section{Natural Deduction Rules}
+\label{app:rules}
+
+Below are the natural deduction rules that are used in the report. This is not the full set of natural deduction rules.
+
+\setlength{\tabcolsep}{30pt}
+\renewcommand\arraystretch{6}
+
+\begin{center}
+\begin{tabular}{c  c  c}
+$\infer[\wedge_I]{P \wedge Q}{P & Q}$ &
+$\infer[\wedge_{E_1}]{P}{P \wedge Q}$ &
+$\infer[\wedge_{E_2}]{Q}{P \wedge Q}$ \\
+$\infer[\supset_{I^u}]{P \supset Q}{\infer[u]{{\infer*{Q}{P}}}{}}$ &
+\multicolumn{2}{c}{$\infer[\supset_E]{Q}{P & P \supset Q}$} \\
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+	\item The rule $\wedge_I$ is used to construct a proposition that is a conjunction of two propositions $P$ and $Q$, given $P$ and $Q$ can both be assumed or derived
+	\item The rules $\wedge_{E_1}$ and $\wedge_{E_2}$ are used to derive a proposition with a conjunction eliminated given a proposition that contains a proposition as the top-level logical symbol
+	\item The rule $\supset_{I^u}$ is used to construct a proposition that is an implication between two propositions $P$ and $Q$ given a derivation that allows us to derive $Q$ if $P$ is assumed; the assumption $P$ is given a label $u$ so that it is clear which assumption is being discharged in any use of this rule
+	\item The rule $\supset_E$ is used to derive a proposition with an implication eliminated; given the premise $P$ and a premise with $P$ as the antecedent, $P \supset Q$, we can conclude $Q$
+\end{itemize}
+
+\bibliography{visualanalytics_prooftrees}{}
+\bibliographystyle{plain}
+
+
+\end{document}
