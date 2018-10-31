@@ -37,41 +37,5 @@
 	</div>
 </div>
 
-<div id="test"></div>
-
-<canvas>
-	$\models x y$
-</canvas>
-
-<canvas id="mycanvas" class="drawtree">
-	<div id="texdiv">$x \leq y$</div>
-</canvas>
-
-<script type="text/javascript">
-	function draw()
-	{
-		var ctx = document.getElementById('mycanvas').getContext('2d');
-		ctx.font = '48px serif';
-		ctx.fillText('$ \\forall x, P \; x $', 10, 50);
-		console.log("fuk");
-		
-		// document.getElementById('texdiv').innerText = "$ \\exists x , Q \\; x $";
-
-		// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-		
-		setTimeout()
-
-		var math = null;
-		MathJax.Hub.Queue(function()
-		{
-			math = MathJax.Hub.getAllJax("test")[0];
-		})
-
-		MathJax.Hub.Queue(["Text", math, "$\\exists x, P \\; x$"]);
-	};
-
-	(() => setTimeout(draw, 10000))();
-</script>
-
 </body>
 </html>
