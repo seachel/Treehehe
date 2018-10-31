@@ -1,0 +1,13 @@
+Reading/*
+Samples/*
+Proposal/*.png
+Proposal/*.aux
+Proposal/*.bbl
+Proposal/*.blg
+Proposal/*.log
+Proposal/*.out
+Proposal/*.gz
+
+LiteratureMap.txt
+Notes.txt
+comp5209-projectproposal-2018f.pdf
