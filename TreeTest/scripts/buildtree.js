@@ -12,7 +12,10 @@ function buildNode(newProposition = "", newChildren = null, newLeftContent = "",
         children: newChildren,
         leftContent: newLeftContent,
         rightContent: newRightContent,
-        rowStart: null
+        rowStart: null,
+        rowEnd: null,
+        colStart: null,
+        colEnd: null
     };
 
     return result;
