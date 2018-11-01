@@ -1,11 +1,20 @@
 /* Temp styles for development */
 
+.tree-display-panel { background: antiquewhite; }
 .rule-text { background: aquamarine; }
 .A { background: lightcoral; }
 .B { background: lemonchiffon; }
 .C { background: slateblue; }
 .D { background: rosybrown; }
 
+
+/* Page styles */
+
+.tree-display-panel
+{
+	max-width: 50%;
+	overflow: auto;
+}
 
 /* General tree styles */
 
@@ -110,7 +119,7 @@
 	display: grid;
 	grid-template: repeat(4, 1fr) / repeat(5, 1fr);
 	/*grid-gap: 10px;*/
-	/*grid-auto-rows: minmax(100px, auto);*/
+	grid-auto-rows: minmax(50px, 100px);
 }
 
 
