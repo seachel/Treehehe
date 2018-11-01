@@ -16,6 +16,11 @@
 	overflow: auto;
 }
 
+.tree-wrapper
+{
+	overflow: auto;
+}
+
 /* General tree styles */
 
 .node
@@ -29,18 +34,19 @@
 {
 	display: flex;
 	justify-content: center;
+	white-space: nowrap;
 }
 
 .tree
 {
 	margin: 20px;
-	
 }
 
 .rule-text
 {
 	display: flex;
 	align-items: center;
+	white-space: nowrap;
 }
 
 .rule-left
@@ -117,9 +123,9 @@
 .tree_two-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(5, 1fr);
-	/*grid-gap: 10px;*/
-	grid-auto-rows: minmax(50px, 100px);
+	/* grid-template: repeat(4, 1fr) / repeat(5, minmax(20px, 200%)); */
+	grid-template-rows: repeat(4, 1fr);
+	grid-template-columns: minmax(20px, 10000px) minmax(20px, 10000px) 50px minmax(20px, 10000px) minmax(20px, 10000px);
 }
 
 
@@ -157,7 +163,7 @@
 .tree_three-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(7, 1fr);
+	grid-template: repeat(4, 25%) / repeat(7, 14%);
 }
 
 
