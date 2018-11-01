@@ -21,6 +21,35 @@ function buildNode(newProposition = "", newChildren = null, newLeftContent = "",
     return result;
 }
 
+function writeLeafHTML(treeName, leafName, leafObj)
+{
+    var leafClassContent = `${treeName}_${leafName} leaf`;
+    var leafContent = `${leafObj.proposition}`;
+
+    return `<div class="${leafClassContent}">${leafContent}</div>`;
+}
+
+function writeLeafCSS(treeName, leafName, leafObj) {}
+
+function writeNodeHTML(treeName, leafName, nodeObj)
+{
+    var leafClassContent = `${treeName}_${leafName} leaf`;
+    var leafContent = `${leafObj.proposition}`;
+
+    var leftClassContent = `${treeName}_${leafName}_left rule-left rule-text`
+    var leftContent = `${leafObj.leftContent}`;
+
+    var rightClassContent = `${treeName}_${leafName}_right rule-right rule-text`
+    var rightContent = `${leafObj.rightContent}`;
+
+    return `<div class="${leftClassContent}">${leftContent}</div>
+    <div class="${leafClassContent}">${leafContent}</div>
+    <div class="${rightClassContent}">${rightContent}</div>`;
+}
+
+function writeNodeCSS(treeName, leafName, nodeObj) {}
+
+
 var leaf1 = buildNode("leaf 1 conclusion");
 var leaf2 = buildNode("leaf 2 conclusion");
 var leaf3 = buildNode("leaf 3 conclusion");
