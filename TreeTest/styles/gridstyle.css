@@ -1,9 +1,9 @@
 /* Temp styles for development */
 
 .rule-text { background: aquamarine; }
-.tree1_A, .A { background: lightcoral; }
-.tree1_B, .B { background: lemonchiffon; }
-.tree1_C, .C { background: slateblue; }
+.A { background: lightcoral; }
+.B { background: lemonchiffon; }
+.C { background: slateblue; }
 .D { background: rosybrown; }
 
 
@@ -145,4 +145,34 @@
 .tree2_F
 {
 	grid-area: 1 / 6;
+}
+
+
+/* Tree: one child */
+
+.tree_one-child
+{
+	display: grid;
+	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+.tree_one-child_A_left
+{
+	grid-area: 2 / 1 / span 2;
+}
+
+.tree_one-child_A
+{
+	grid-area: 3 / 2 / span 2;
+}
+
+.tree_one-child_A_right
+{
+	grid-area: 2 / 3 / span 2;
+}
+
+
+.tree_one-child_B
+{
+	grid-area: 1 / 2 / span 2;
 }
