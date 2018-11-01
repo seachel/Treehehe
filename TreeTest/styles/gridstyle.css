@@ -45,6 +45,32 @@
  Specific tree styles 
 ******************************/
 
+/* Tree: zero children */
+
+.tree_zero-child
+{
+	display: grid;
+	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+
+.tree_zero-child_A_left
+{
+	grid-area: 2 / 1 / span 2;
+}
+
+.tree_zero-child_A
+{
+	grid-area: 3 / 2 / span 2;
+}
+
+.tree_zero-child_A_right
+{
+	grid-area: 2 / 3 / span 2;
+}
+
+
+
 /* Tree: one child */
 
 .tree_one-child
@@ -52,6 +78,7 @@
 	display: grid;
 	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
 }
+
 
 .tree_one-child_A_left
 {
@@ -73,6 +100,7 @@
 {
 	grid-area: 1 / 2 / span 2;
 }
+
 
 
 /* Tree: two children */
@@ -111,6 +139,9 @@
 	grid-area: 1 / 4 / span 2;
 }
 
+
+
+/* Example trees */
 
 .tree2
 {
