@@ -41,9 +41,43 @@
 
 
 
-/* Specific tree styles */
+/******************************
+ Specific tree styles 
+******************************/
 
-.tree1
+/* Tree: one child */
+
+.tree_one-child
+{
+	display: grid;
+	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+.tree_one-child_A_left
+{
+	grid-area: 2 / 1 / span 2;
+}
+
+.tree_one-child_A
+{
+	grid-area: 3 / 2 / span 2;
+}
+
+.tree_one-child_A_right
+{
+	grid-area: 2 / 3 / span 2;
+}
+
+
+.tree_one-child_B
+{
+	grid-area: 1 / 2 / span 2;
+}
+
+
+/* Tree: two children */
+
+.tree_two-child
 {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
@@ -52,27 +86,27 @@
 	/*grid-auto-rows: minmax(100px, auto);*/
 }
 
-.tree1_A_left
+.tree_two-child_A_left
 {
 	grid-area: 2 / 1 / span 2;
 }
 
-.tree1_A_right
+.tree_two-child_A_right
 {
 	grid-area: 2 / 5 / span 2;
 }
 
-.tree1_A
+.tree_two-child_A
 {
 	grid-area: 3 / 2 / span 2 / span 3;
 }
 
-.tree1_B
+.tree_two-child_B
 {
 	grid-area: 1 / 2 / span 2;
 }
 
-.tree1_C
+.tree_two-child_C
 {
 	grid-area: 1 / 4 / span 2;
 }
@@ -147,32 +181,3 @@
 	grid-area: 1 / 6;
 }
 
-
-/* Tree: one child */
-
-.tree_one-child
-{
-	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
-}
-
-.tree_one-child_A_left
-{
-	grid-area: 2 / 1 / span 2;
-}
-
-.tree_one-child_A
-{
-	grid-area: 3 / 2 / span 2;
-}
-
-.tree_one-child_A_right
-{
-	grid-area: 2 / 3 / span 2;
-}
-
-
-.tree_one-child_B
-{
-	grid-area: 1 / 2 / span 2;
-}
