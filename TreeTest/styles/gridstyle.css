@@ -1,6 +1,6 @@
 /* Temp styles for development */
 
-.tree-display-panel { background: antiquewhite; }
+.tree-display-panel { background: lightsteelblue; }
 .rule-text { background: aquamarine; }
 .A { background: lightcoral; }
 .B { background: lemonchiffon; }
@@ -65,7 +65,7 @@
 .tree_zero-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+	grid-template: repeat(4, 1fr) / repeat(3, min-content);
 }
 
 
@@ -91,7 +91,7 @@
 .tree_one-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+	grid-template: repeat(4, 1fr) / repeat(3, min-content);
 }
 
 
@@ -123,9 +123,7 @@
 .tree_two-child
 {
 	display: grid;
-	/* grid-template: repeat(4, 1fr) / repeat(5, minmax(20px, 200%)); */
-	grid-template-rows: repeat(4, 1fr);
-	grid-template-columns: minmax(20px, 10000px) minmax(20px, 10000px) 50px minmax(20px, 10000px) minmax(20px, 10000px);
+	grid-template: repeat(4, 1fr) / repeat(2, min-content) 50px repeat(2, min-content);
 }
 
 
@@ -163,9 +161,8 @@
 .tree_three-child
 {
 	display: grid;
-	grid-template: repeat(4, 25%) / repeat(7, 14%);
+	grid-template: repeat(4, 25%) / repeat(2, min-content) 50px min-content 50px repeat(2, min-content);
 }
-
 
 
 .tree_three-child_A_left
