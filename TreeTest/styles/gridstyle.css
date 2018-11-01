@@ -12,6 +12,13 @@
 {
 	display: flex;
 	justify-content: center;
+	border-top: 1px solid black;
+}
+
+.leaf
+{
+	display: flex;
+	justify-content: center;
 }
 
 .tree
@@ -31,16 +38,6 @@
 	justify-content: flex-end;
 }
 
-.leaf
-{
-	border-bottom: 1px solid black;
-}
-
-.root
-{
-	border-top: 1px solid black;
-	border-collapse: collapse;
-}
 
 
 /* Specific tree styles */
