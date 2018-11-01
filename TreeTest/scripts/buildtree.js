@@ -18,13 +18,16 @@ function buildNode(newProposition = "", newChildren = null, newLeftContent = "",
     return result;
 }
 
-var leaf = buildNode("leaf conclusion");
-var zeroChildren = buildNode("zero conclusion", [], "left zero", "right zero");
-var oneChild = buildNode("one conclusion", ["child 1"], "left one", "right one");
-var twoChildren = buildNode("two conclusion", ["child 1", "child 2"], "left two", "right two");
-var threeChildren = buildNode("three conclusion", ["child 1", "child 2", "child 3"], "left three", "right three");
+var leaf1 = buildNode("leaf 1 conclusion");
+var leaf2 = buildNode("leaf 2 conclusion");
+var leaf3 = buildNode("leaf 3 conclusion");
 
-var testTrees = [leaf, zeroChildren, oneChild, twoChildren, threeChildren];
+var zeroChildren = buildNode("zero conclusion", [], "left zero", "right zero");
+var oneChild = buildNode("one conclusion", [leaf1], "left one", "right one");
+var twoChildren = buildNode("two conclusion", [leaf1, leaf2], "left two", "right two");
+var threeChildren = buildNode("three conclusion", [leaf1, leaf2, leaf3], "left three", "right three");
+
+var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren];
 
 (function go()
 {
