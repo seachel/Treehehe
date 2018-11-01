@@ -108,11 +108,11 @@
 .tree_two-child
 {
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(4, 1fr);
+	grid-template: repeat(4, 1fr) / repeat(5, 1fr);
 	/*grid-gap: 10px;*/
 	/*grid-auto-rows: minmax(100px, auto);*/
 }
+
 
 .tree_two-child_A_left
 {
@@ -129,16 +129,62 @@
 	grid-area: 3 / 2 / span 2 / span 3;
 }
 
+
 .tree_two-child_B
 {
 	grid-area: 1 / 2 / span 2;
 }
+
 
 .tree_two-child_C
 {
 	grid-area: 1 / 4 / span 2;
 }
 
+
+
+/* Tree: three children */
+
+.tree_three-child
+{
+	display: grid;
+	grid-template: repeat(4, 1fr) / repeat(7, 1fr);
+}
+
+
+
+.tree_three-child_A_left
+{
+	grid-area: 2 / 1 / span 2;
+}
+
+.tree_three-child_A_right
+{
+	grid-area: 2 / 7 / span 2;
+}
+
+.tree_three-child_A
+{
+	grid-area: 3 / 2 / span 2 / span 5;
+}
+
+
+.tree_three-child_B
+{
+	grid-area: 1 / 2 / span 2;
+}
+
+
+.tree_three-child_C
+{
+	grid-area: 1 / 4 / span 2;
+}
+
+
+.tree_three-child_D
+{
+	grid-area: 1 / 6 / span 2;
+}
 
 
 /* Example trees */
