@@ -12,13 +12,18 @@
 
 .tree-display-panel
 {
-	max-width: 50%;
+	/* max-width: 50%; */
 	overflow: auto;
 }
 
 .tree-wrapper
 {
-	overflow: auto;
+	/* overflow: auto; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
 }
 
 /* General tree styles */
@@ -65,7 +70,7 @@
 .tree_zero-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(3, min-content);
+	grid-template: repeat(4, 1fr) / repeat(3, minmax(min-content, 50px));
 }
 
 
@@ -91,7 +96,7 @@
 .tree_one-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(3, min-content);
+	grid-template: repeat(4, 1fr) / repeat(3, minmax(min-content, 50px));
 }
 
 
@@ -123,7 +128,10 @@
 .tree_two-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(2, min-content) 50px repeat(2, min-content);
+	grid-template-rows: repeat(4, 1fr);
+	grid-template-columns: repeat(2, minmax(min-content, 50px))
+							50px
+							repeat(2, minmax(min-content, 50px));
 }
 
 
@@ -161,7 +169,12 @@
 .tree_three-child
 {
 	display: grid;
-	grid-template: repeat(4, 25%) / repeat(2, min-content) 50px min-content 50px repeat(2, min-content);
+	grid-template: repeat(4, 1fr);
+	grid-template-columns: repeat(2, minmax(min-content, 50px))
+							50px
+							minmax(min-content, 50px)
+							50px
+							repeat(2, minmax(min-content, 50px));
 }
 
 
