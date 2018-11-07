@@ -2,12 +2,16 @@ Reading/*
 Samples/*
 
 Proposal/*.png
-Proposal/*.aux
-Proposal/*.bbl
-Proposal/*.blg
-Proposal/*.log
-Proposal/*.out
-Proposal/*.gz
+Report/*.png
+
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.gz
+*.fls
+*.fdb_latexmk
 
 .vscode
 yarn.lock
