@@ -1,3 +1,43 @@
 <html>
-    TODO: Treehehe visualization main page
+    <head>
+        <meta charset="utf-8">
+		<title>Treehehe</title>
+        
+        
+        <!------------------------------ Styles ------------------------------>
+        
+        <link href="styles/style.css" rel="stylesheet" type="text/css">
+
+
+        <!------------------------------ Scripts ------------------------------>
+
+		<script type="text/javascript" src="scripts/jquery.js"></script>
+
+
+        <!------------------------------ MathJax ------------------------------>
+
+        <script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+		    extensions: ["tex2jax.js"],
+		    jax: ["input/TeX","output/HTML-CSS"],
+				tex2jax: { inlineMath : [['$','$'], ['\\(','\\)']] },
+				"HTML-CSS" : { preferredFont : "STIX" }
+			});
+		</script>
+
+		<!-- Remote MathJax -->
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+		<!-- Local MathJax -->
+		<!-- <script type="text/javascript" src='scripts/MathJax/MathJax.js' async></script>		 -->
+    </head>
+    <body>
+        <div class="page-container">
+            <div class="header-panel">header</div>
+            <div class="example-selection-panel">examples</div>
+            <div class="rule-panel">rules</div>
+            <div class="tree-display-panel">main tree display</div>
+            <div class="selection-info-panel">selection information</div>
+        </div>
+    </body>
 </html>
