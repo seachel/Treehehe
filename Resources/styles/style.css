@@ -3,9 +3,23 @@
 .header-panel { background: rgb(243, 104, 104); }
 .example-selection-panel { background: rgb(245, 243, 144); }
 .rule-panel { background: rgb(255, 183, 233); }
-.tree-display-panel { background: rgb(68, 160, 88); }
 .selection-info-panel { background: rgb(104, 104, 219); }
-
+.tree-display-panel { background: rgb(68, 160, 88); }
+.tree-wrapper
+{
+    background-image: url("../img/main-panel-test.jpg");
+    background-size: cover;
+    height: 150%;
+    width: 150%;
+}
+.node
+{
+    background: black;
+    color: white;
+    align-self: center;
+    width: min-content;
+    margin: 0 auto;
+}
 
 /* Page styles */
 
@@ -41,9 +55,18 @@ body
 .tree-display-panel
 {
     grid-area: 2 / 2;
+    overflow: auto;
 }
 
 .selection-info-panel
 {
     grid-area: 2 / 3;
+}
+
+
+.tree-wrapper
+{
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
