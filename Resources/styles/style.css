@@ -9,6 +9,7 @@
 {
     background-image: url("../img/main-panel-test.jpg");
     background-size: cover;
+    background-position: center;
     height: 150%;
     width: 150%;
 }
@@ -56,6 +57,7 @@ body
 {
     grid-area: 2 / 2;
     overflow: auto;
+    scroll-snap-type: mandatory;
 }
 
 .selection-info-panel
@@ -69,4 +71,5 @@ body
     display: flex;
     justify-content: center;
     align-content: center;
+    scroll-snap-align: center;
 }
