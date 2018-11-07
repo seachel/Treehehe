@@ -1,25 +1,41 @@
-function buildTree(newRoot)
-{
-    return {
-        root: newRoot
-    };
-}
+// import { setFlagsFromString } from "v8";
 
-function buildNode(newProposition = "", newChildren = null, newLeftContent = "", newRightContent = "")
-{
-    result = {
-        proposition: newProposition,
-        children: newChildren,
-        leftContent: newLeftContent,
-        rightContent: newRightContent,
-        rowStart: null,
-        rowEnd: null,
-        colStart: null,
-        colEnd: null
-    };
+// (function()
+// {
 
-    return result;
-}
+    function buildTree(newRoot)
+    {
+        return {
+            root: newRoot
+        };
+    }
+
+    function buildNode(newProposition = "", newChildren = null, newLeftContent = "", newRightContent = "")
+    {
+        result = {
+            proposition: newProposition,
+            children: newChildren,
+            leftContent: newLeftContent,
+            rightContent: newRightContent,
+            rowStart: null,
+            rowEnd: null,
+            colStart: null,
+            colEnd: null
+        };
+
+        return result;
+    }
+
+    // return {
+    //     buildTree: buildTree,
+    //     buildNode: buildNode
+    // };
+
+// })();
+
+module.exports = {
+    buildNode: buildNode
+};
 
 function writeLeafHTML(treeName, leafName, leafObj)
 {
@@ -63,5 +79,13 @@ var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren];
 
 (function go()
 {
-    testTrees.forEach(t => console.log(t));
+    try
+    {
+        testTrees.forEach(t => console.log(t));
+    }
+    catch (e)
+    {
+        console.log(e.name);
+        console.log(e.message);
+    }
 })();

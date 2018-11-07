@@ -10,6 +10,8 @@ Proposal/*.out
 Proposal/*.gz
 
 .vscode
+yarn.lock
+node_modules/
 
 LiteratureMap.txt
 Notes.txt

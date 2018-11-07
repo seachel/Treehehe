@@ -1,0 +1,14 @@
+{
+  "name": "Project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/seachel/Treehehe.git",
+  "author": "Chelsea <chelsea.battell@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
