@@ -1,0 +1,49 @@
+/* Dev styles */
+
+.header-panel { background: rgb(243, 104, 104); }
+.example-selection-panel { background: rgb(245, 243, 144); }
+.rule-panel { background: rgb(255, 183, 233); }
+.tree-display-panel { background: rgb(68, 160, 88); }
+.selection-info-panel { background: rgb(104, 104, 219); }
+
+
+/* Page styles */
+
+body
+{
+    margin: 0;
+}
+
+.page-container
+{
+    display: grid;
+    grid-template: 10% 1fr 10% / 15% 1fr 15%;
+    width: 100%;
+    height: 100%;
+}
+
+
+.header-panel
+{
+    grid-area: 1 / 1 / span 1 / span 3;
+}
+
+.example-selection-panel
+{
+    grid-area: 2 / 1 / span 1;
+}
+
+.rule-panel
+{
+    grid-area: 3 / 1 / span 1 / span 3;
+}
+
+.tree-display-panel
+{
+    grid-area: 2 / 2;
+}
+
+.selection-info-panel
+{
+    grid-area: 2 / 3;
+}
