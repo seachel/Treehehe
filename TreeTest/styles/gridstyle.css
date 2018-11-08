@@ -212,69 +212,69 @@
 {
 	display: grid;
 	grid-template-rows: repeat(6, 1fr);
-	grid-template-columns:
+	grid-template-columns: repeat(10, minmax(50px, min-content));
 }
 
 .tree2_A_left
 {
-	grid-area: 2 / 3 / span 2;
+	grid-area: 4 / 3 / span 2;
 }
 
 .tree2_A
 {
-	grid-area: 3 / 4 / span 1 / span 6;
+	grid-area: 5 / 4 / span 2 / span 6;
 }
 
 .tree2_A_right
 {
-	grid-area: 2 / 10 / span 2;
+	grid-area: 4 / 10 / span 2;
 }
 
 
 .tree2_B_left
 {
-	grid-area: 1 / 1 / span 2;
+	grid-area: 2 / 1 / span 2;
 }
 
 .tree2_B
 {
-	grid-area: 2 / 2 / span 1 / span 5;
+	grid-area: 3 / 2 / span 2 / span 5;
 }
 
 .tree2_B_right
 {
-	grid-area: 1 / 7 / span 2;
+	grid-area: 2 / 7 / span 2;
 }
 
 
 .tree2_C_left
 {
-	grid-area: 1 / 8 / span 2;
+	grid-area: 2 / 8 / span 2;
 }
 
 .tree2_C
 {
-	grid-area: 2 / 9;
+	grid-area: 3 / 9 / span 2;
 }
 
 .tree2_C_right
 {
-	grid-area: 1 / 10 / span 2;
+	grid-area: 2 / 10 / span 2;
 }
 
 
 .tree2_D
 {
-	grid-area: 1 / 2;
+	grid-area: 1 / 2 / span 2;
 }
 
 .tree2_E
 {
-	grid-area: 1 / 4;
+	grid-area: 1 / 4 / span 2;
 }
 
 .tree2_F
 {
-	grid-area: 1 / 6;
+	grid-area: 1 / 6 / span 2;
 }
 
