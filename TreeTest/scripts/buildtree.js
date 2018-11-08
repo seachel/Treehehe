@@ -33,9 +33,9 @@
 
 // })();
 
-module.exports = {
-    buildNode: buildNode
-};
+// module.exports = {
+//     buildNode: buildNode
+// };
 
 function writeLeafHTML(treeName, leafName, leafObj)
 {
