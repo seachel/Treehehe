@@ -2,9 +2,11 @@
 
 .tree-display-panel { background: lightsteelblue; }
 .rule-text { background: aquamarine; }
+.node { background: white; }
+.leaf { background: lightgrey }
 .A { background: lightcoral; }
 .B { background: lemonchiffon; }
-.C { background: slateblue; }
+.C { background: rgb(136, 138, 248); }
 .D { background: rosybrown; }
 .E { background: rgb(204, 150, 255) }
 .F { background: rgb(85, 163, 228) }
@@ -34,6 +36,7 @@
 {
 	display: flex;
 	justify-content: center;
+	align-items: flex-end;
 	border-top: 1px solid black;
 }
 
@@ -213,55 +216,55 @@
 .tree2
 {
 	display: grid;
-	grid-template-rows: repeat(6, 1fr);
+	grid-template-rows: repeat(9, 1fr);
 	grid-template-columns: repeat(10, minmax(50px, min-content));
 }
 
 .tree2_A_left
 {
-	grid-area: 4 / 3 / span 2;
+	grid-area: 6 / 3 / span 2;
 }
 
 .tree2_A
 {
-	grid-area: 5 / 4 / span 2 / span 6;
+	grid-area: 7 / 4 / span 2 / span 6;
 }
 
 .tree2_A_right
 {
-	grid-area: 4 / 10 / span 2;
+	grid-area: 6 / 10 / span 2;
 }
 
 
 .tree2_B_left
 {
-	grid-area: 2 / 1 / span 2;
+	grid-area: 3 / 1 / span 2;
 }
 
 .tree2_B
 {
-	grid-area: 3 / 2 / span 2 / span 5;
+	grid-area: 4 / 2 / span 2 / span 5;
 }
 
 .tree2_B_right
 {
-	grid-area: 2 / 7 / span 2;
+	grid-area: 3 / 7 / span 2;
 }
 
 
 .tree2_C_left
 {
-	grid-area: 2 / 8 / span 2;
+	grid-area: 3 / 8 / span 2;
 }
 
 .tree2_C
 {
-	grid-area: 3 / 9 / span 2;
+	grid-area: 4 / 9 / span 2;
 }
 
 .tree2_C_right
 {
-	grid-area: 2 / 10 / span 2;
+	grid-area: 3 / 10 / span 2;
 }
 
 
@@ -280,3 +283,17 @@
 	grid-area: 1 / 6 / span 2;
 }
 
+/* .tree2_D
+{
+	grid-area: 2 / 2;
+}
+
+.tree2_E
+{
+	grid-area: 2 / 4;
+}
+
+.tree2_F
+{
+	grid-area: 2 / 6;
+} */
