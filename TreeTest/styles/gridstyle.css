@@ -6,6 +6,8 @@
 .B { background: lemonchiffon; }
 .C { background: slateblue; }
 .D { background: rosybrown; }
+.E { background: rgb(204, 150, 255) }
+.F { background: rgb(85, 163, 228) }
 
 
 /* Page styles */
