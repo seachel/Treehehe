@@ -17,6 +17,8 @@ Report/*.png
 yarn.lock
 node_modules/
 
+noteimg*.*
+
 LiteratureMap.txt
 Notes.txt
 comp5209-projectproposal-2018f.pdf
