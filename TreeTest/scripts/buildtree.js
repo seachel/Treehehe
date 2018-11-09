@@ -94,6 +94,38 @@ var threeChildVals = {
     cols: 7
 }
 
+// difference between rows?
+
+
+function computeNodeCoordinates(node)
+{
+    node.rowStart = 4;
+    node.rowSpan = 2;
+    node.colStart = 2;
+
+    if (node.children)
+    {
+        var childCount = node.children.length;
+
+        switch (childCount)
+        {
+            case 0:
+            case 1:
+                node.colSpan = 1;
+                break;
+            case 2:
+                node.colSpan = 3;
+                break;
+            case 3:
+                node.colSpan = 5;
+                break;
+        }
+    }
+    else
+    {
+        node.colSpan = 1;
+    }
+}
 
 // -------------------- Output --------------------
 
