@@ -28,7 +28,7 @@
 
 // -------------------- Tree Traversal --------------------
 
-function visitNodes(treeName, rootNode, nodeCallback, nodeCallbackArgs)
+function visitNodes(rootNode, nodeCallback, nodeCallbackArgs)
 {
     console.log(rootNode.name);
 
@@ -39,8 +39,19 @@ function visitNodes(treeName, rootNode, nodeCallback, nodeCallbackArgs)
 
     if (rootNode.children && (rootNode.children.length > 0))
     {
-        rootNode.children.forEach(child => 
-            visitNodes(treeName, child, nodeCallback, nodeCallbackArgs));
+        rootNode.children.forEach(child =>
+            {
+                child.parent = rootNode;
+                visitNodes(child, nodeCallback, nodeCallbackArgs);
+            });
+    }
+}
+
+function addField(node, fieldName, fieldValue)
+{
+    if (node)
+    {
+        node[fieldName] = fieldValue;
     }
 }
 
@@ -57,6 +68,14 @@ function renameTree(node, treeName)
     if (node)
     {
         node.treeName = treeName;
+    }
+}
+
+function addParentRef(parent, child)
+{
+    if (child && parent)
+    {
+        child.parent = parent;
     }
 }
 
