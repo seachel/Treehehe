@@ -297,3 +297,42 @@
 {
 	grid-area: 2 / 6;
 } */
+
+
+
+.treenest
+{
+	display: grid;
+	grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+}
+
+.treenest_A
+{
+	grid-area: 2 / 1 / span 1 / span 2;
+}
+
+.treenest_A_1
+{
+	display: grid;
+	grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+}
+
+.treenest_B
+{
+	grid-area: 2 / 1 / span 1 / span 2;
+}
+
+.treenest_C
+{
+	grid-area: 1 / 2;
+}
+
+.treenest_D
+{
+	grid-area: 1 / 1;
+}
+
+.treenest_E
+{
+	grid-area: 1 / 2;
+}
