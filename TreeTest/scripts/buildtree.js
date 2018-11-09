@@ -28,14 +28,35 @@
 
 // -------------------- Tree Traversal --------------------
 
-function visitNodes(treeName, rootNode)
+function visitNodes(treeName, rootNode, nodeCallback, nodeCallbackArgs)
 {
     console.log(rootNode.name);
+
+    if (nodeCallback)
+    {
+        nodeCallback(rootNode, ...nodeCallbackArgs);
+    }
 
     if (rootNode.children && (rootNode.children.length > 0))
     {
         rootNode.children.forEach(child => 
-            visitNodes(treeName, child));
+            visitNodes(treeName, child, nodeCallback, nodeCallbackArgs));
+    }
+}
+
+function rename(thing, fieldName, newName)
+{
+    if (thing)
+    {
+        thing[fieldName] = newName;
+    }
+}
+
+function renameTree(node, treeName)
+{
+    if (node)
+    {
+        node.treeName = treeName;
     }
 }
 
