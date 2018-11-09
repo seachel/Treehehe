@@ -1,7 +1,5 @@
-// import { setFlagsFromString } from "v8";
 
-// (function()
-// {
+// -------------------- Model --------------------
 
     function buildTree(newRoot)
     {
@@ -10,10 +8,11 @@
         };
     }
 
-    function buildNode(newProposition = "", newChildren = null, newLeftContent = "", newRightContent = "")
+    function buildNode(newProposition, newName, newChildren = null, newLeftContent = "", newRightContent = "")
     {
         result = {
             proposition: newProposition,
+            name: newName,
             children: newChildren,
             leftContent: newLeftContent,
             rightContent: newRightContent,
@@ -26,16 +25,22 @@
         return result;
     }
 
-    // return {
-    //     buildTree: buildTree,
-    //     buildNode: buildNode
-    // };
 
-// })();
+// -------------------- Tree Traversal --------------------
 
-// module.exports = {
-//     buildNode: buildNode
-// };
+function visitNodes(treeName, rootNode)
+{
+    console.log(rootNode.name);
+
+    if (rootNode.children && (rootNode.children.length > 0))
+    {
+        rootNode.children.forEach(child => 
+            visitNodes(treeName, child));
+    }
+}
+
+
+// -------------------- Output --------------------
 
 function writeLeafHTML(treeName, leafName, leafObj)
 {
@@ -66,16 +71,6 @@ function writeNodeHTML(treeName, leafName, nodeObj)
 function writeNodeCSS(treeName, leafName, nodeObj) {}
 
 
-var leaf1 = buildNode("leaf 1 conclusion");
-var leaf2 = buildNode("leaf 2 conclusion");
-var leaf3 = buildNode("leaf 3 conclusion");
-
-var zeroChildren = buildNode("zero conclusion", [], "left zero", "right zero");
-var oneChild = buildNode("one conclusion", [leaf1], "left one", "right one");
-var twoChildren = buildNode("two conclusion", [leaf1, leaf2], "left two", "right two");
-var threeChildren = buildNode("three conclusion", [leaf1, leaf2, leaf3], "left three", "right three");
-
-var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren];
 
 (function go()
 {
@@ -89,3 +84,47 @@ var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren];
         console.log(e.message);
     }
 })();
+
+
+// -------------------- Test Trees --------------------
+
+var leaf1 = buildNode("leaf 1 conclusion", "leaf1");
+var leaf2 = buildNode("leaf 2 conclusion", "leaf2");
+var leaf3 = buildNode("leaf 3 conclusion", "leaf3");
+
+var zeroChildren = buildNode("zero conclusion", "zero", [], "left zero", "right zero");
+var oneChild = buildNode("one conclusion", "one", [leaf1], "left one", "right one");
+var twoChildren = buildNode("two conclusion", "two", [leaf1, leaf2], "left two", "right two");
+var threeChildren = buildNode("three conclusion", "three", [leaf1, leaf2, leaf3], "left three", "right three");
+
+var tree2 = buildNode("A", "A",
+    [
+        buildNode("B", "B",
+            [
+                buildNode("D", "D"),
+                buildNode("E", "E")
+            ],
+            "B left",
+            "B right"),
+        buildNode("C", "C", [], "C left", "C right")
+    ],
+    "A left",
+    "A right");
+
+var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren, tree2];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
