@@ -53,14 +53,6 @@ function updateField(node, fieldName, fieldValue)
     }
 }
 
-function rename(thing, fieldName, newName)
-{
-    if (thing)
-    {
-        thing[fieldName] = newName;
-    }
-}
-
 function renameTree(rootNode, treeName)
 {
     visitNodes(rootNode, updateField, ["treeName", treeName]);
