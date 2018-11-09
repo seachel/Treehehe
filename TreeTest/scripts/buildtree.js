@@ -63,7 +63,7 @@ function rename(thing, fieldName, newName)
 
 function renameTree(rootNode, treeName)
 {
-    visitNodes(rootNode, updateField, ["treeName", this]);
+    visitNodes(rootNode, updateField, ["treeName", treeName]);
 }
 
 
