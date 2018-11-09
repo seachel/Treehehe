@@ -30,8 +30,6 @@
 
 function visitNodes(rootNode, nodeCallback, nodeCallbackArgs)
 {
-    console.log(rootNode.name);
-
     if (nodeCallback)
     {
         nodeCallback(rootNode, ...nodeCallbackArgs);
@@ -47,7 +45,7 @@ function visitNodes(rootNode, nodeCallback, nodeCallbackArgs)
     }
 }
 
-function addField(node, fieldName, fieldValue)
+function updateField(node, fieldName, fieldValue)
 {
     if (node)
     {
@@ -63,20 +61,37 @@ function rename(thing, fieldName, newName)
     }
 }
 
-function renameTree(node, treeName)
+function renameTree(rootNode, treeName)
 {
-    if (node)
-    {
-        node.treeName = treeName;
-    }
+    visitNodes(rootNode, updateField, ["treeName", this]);
 }
 
-function addParentRef(parent, child)
-{
-    if (child && parent)
-    {
-        child.parent = parent;
-    }
+
+// -------------------- Grid computations --------------------
+
+var leafVals = {
+    rows: 3,
+    cols: 3
+}
+
+var zeroChildVals = {
+    rows: 6,
+    cols: 3
+}
+
+var oneChildVals = {
+    rows: 6,
+    cols: 3
+}
+
+var twoChildVals = {
+    rows: 6,
+    cols: 5
+}
+
+var threeChildVals = {
+    rows: 6,
+    cols: 7
 }
 
 
