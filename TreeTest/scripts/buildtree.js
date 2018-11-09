@@ -28,7 +28,7 @@
 
 // -------------------- Tree Traversal --------------------
 
-function visitNodes(rootNode, nodeCallback, nodeCallbackArgs)
+function visitNodes(rootNode, nodeCallback, nodeCallbackArgs = [], childCallback = null, childCallbackArgs = [])
 {
     if (nodeCallback)
     {
@@ -39,11 +39,28 @@ function visitNodes(rootNode, nodeCallback, nodeCallbackArgs)
     {
         rootNode.children.forEach(child =>
             {
-                child.parent = rootNode;
-                visitNodes(child, nodeCallback, nodeCallbackArgs);
+                if (childCallback)
+                {
+                    childCallback(child, rootNode, ...childCallbackArgs);
+                }
+                visitNodes(child, nodeCallback, nodeCallbackArgs, childCallback, childCallbackArgs);
             });
     }
 }
+
+function updateParentsInTree(rootNode)
+{
+    visitNodes(rootNode, null, null, updateParent)
+}
+
+function renameTree(rootNode, treeName)
+{
+    visitNodes(rootNode, updateField, ["treeName", treeName]);
+}
+
+
+
+// -------------------- Helpers --------------------
 
 function updateField(node, fieldName, fieldValue)
 {
@@ -53,9 +70,12 @@ function updateField(node, fieldName, fieldValue)
     }
 }
 
-function renameTree(rootNode, treeName)
+function updateParent(child, parent)
 {
-    visitNodes(rootNode, updateField, ["treeName", treeName]);
+    if (child)
+    {
+        child.parent = parent;
+    }
 }
 
 
@@ -107,9 +127,11 @@ function computeNodeCoordinates(node)
                 break;
             case 2:
                 node.colSpan = 3;
+                // do something about node's parent's columns?
                 break;
             case 3:
                 node.colSpan = 5;
+                // do something about node's parent's columns?
                 break;
         }
     }
