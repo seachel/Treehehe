@@ -18,6 +18,7 @@ yarn.lock
 node_modules/
 
 noteimg*.*
+scrollsnap*.*
 
 LiteratureMap.txt
 Notes.txt
