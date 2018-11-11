@@ -301,21 +301,6 @@ function writeNodeHTML(treeName, leafName, nodeObj)
 function writeNodeCSS(treeName, leafName, nodeObj) {}
 
 
-
-(function go()
-{
-    try
-    {
-        testTrees.forEach(t => console.log(t));
-    }
-    catch (e)
-    {
-        console.log(e.name);
-        console.log(e.message);
-    }
-})();
-
-
 // -------------------- Test Trees --------------------
 
 var leaf1 = buildNode("leaf 1 conclusion", "leaf1");
@@ -372,15 +357,22 @@ var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren, tree
 
 
 
+// ------------------------------ Entry ------------------------------
 
 
+(function go()
+{
+    try
+    {
+        testTrees.forEach(t => console.log(t));
+    }
+    catch (e)
+    {
+        console.log(e.name);
+        console.log(e.message);
+    }
+})();
 
-
-
-
-
-
-
-
-
-
+module.exports = {
+    buildNode: buildNode
+}
