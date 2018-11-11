@@ -327,6 +327,31 @@ var tree2 = buildNode("A", "A",
     "A left",
     "A right");
 
+var TRexample = buildNode("O", "O",
+    [
+        buildNode("E", "E",
+        [
+            buildNode("A", "A"),
+            buildNode("D", "D",
+            [
+                buildNode("B", "B"),
+                buildNode("C", "C")
+            ])
+        ]),
+        buildNode("F", "F", []),
+        buildNode("N", "N", [
+            buildNode("G", "G"),
+            buildNode("M", "M",
+            [
+                buildNode("H", "H"),
+                buildNode("I", "I"),
+                buildNode("J", "J"),
+                buildNode("K", "K"),
+                buildNode("L", "L")
+            ])
+        ])
+    ],)
+
 var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren, tree2];
 
 
