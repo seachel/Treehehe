@@ -1,10 +1,14 @@
 
 // -------------------- Model --------------------
 
-    function buildTree(newRoot)
+    function buildTree(newRoot, newName)
     {
         return {
-            root: newRoot
+            root: newRoot,
+            name: newName,
+            numrows: 0,
+            numcols: 0,
+            height: 0
         };
     }
 
@@ -27,6 +31,22 @@
 
 
 // -------------------- Tree Traversal --------------------
+
+function visitNodes_postOrder(rootNode)
+{
+    if (rootNode.children)
+    {
+        if (rootNode.children.length > 0)
+        {
+            rootNode.children.forEach(child =>
+                {
+                    visitNodes_postOrder(child);
+                });
+        }
+    }
+
+    console.log(rootNode.name);
+}
 
 function visitNodes(rootNode, nodeCallback, nodeCallbackArgs = [], childCallback = null, childCallbackArgs = [])
 {
@@ -203,7 +223,8 @@ var tree2 = buildNode("A", "A",
         buildNode("B", "B",
             [
                 buildNode("D", "D"),
-                buildNode("E", "E")
+                buildNode("E", "E"),
+                buildNode("F", "F")
             ],
             "B left",
             "B right"),
