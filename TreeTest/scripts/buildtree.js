@@ -231,6 +231,17 @@ function computeNodeCoordinates(node)
 
 // -------------------- Output --------------------
 
+function writeTreeField_Terminal(rootNode, fieldName, indent = ``)
+{
+    visitNodes_preOrder(rootNode, writeNodeField_Terminal, [fieldName, indent]);
+}
+
+function writeNodeField_Terminal(node, fieldName, indent)
+{
+    console.log(`${indent} ${node[fieldName]}
+    `);
+}
+
 function writeLeafHTML(treeName, leafName, leafObj)
 {
     var leafClassContent = `${treeName}_${leafName} leaf`;
