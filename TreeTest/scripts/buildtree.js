@@ -171,6 +171,10 @@ function calculateInitialX(rootNode)
         });
 }
 
+function calculateY(rootNode)
+{
+    visitNodes_preOrder(rootNode, updateField, ["y"]);
+}
 
 // -------------------- Grid computations --------------------
 
