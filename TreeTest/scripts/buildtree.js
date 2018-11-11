@@ -23,7 +23,11 @@
             rowStart: null,
             rowEnd: null,
             colStart: null,
-            colEnd: null
+            colEnd: null,
+            x: -1,
+            y: -1,
+            mod: -1,
+            previousSibling: null
         };
 
         return result;
@@ -78,14 +82,16 @@ function visitNodes_preOrder(rootNode, nodeCallback, nodeCallbackArgs = [], chil
     }
 }
 
+// can use in preorder traversal
+
 function updateParentsInTree(rootNode)
 {
-    visitNodes(rootNode, null, null, updateParent)
+    visitNodes_preOrder(rootNode, null, null, updateParent)
 }
 
 function renameTree(rootNode, treeName)
 {
-    visitNodes(rootNode, updateField, ["treeName", treeName]);
+    visitNodes_preOrder(rootNode, updateField, ["treeName", treeName]);
 }
 
 
@@ -105,6 +111,32 @@ function updateParent(child, parent)
     if (child)
     {
         child.parent = parent;
+    }
+}
+
+function setPreviousSibling(node)
+{
+    if (node.parent)
+    {
+        if (node.parent.children)
+        {
+            var indexAsChild = node.parent.children.findIndex(child => child === node);
+
+            if (indexAsChild > 0)
+            {
+                node.previousSibling = node.parent.children[indexAsChild - 1];
+            }
+            else
+            {
+                node.previousSibling = null;
+            }
+        }
+        else
+        {
+            console.log(`Something not set correctly in setPreviousSibling. 
+            Node: ${node}`);
+
+        }
     }
 }
 
