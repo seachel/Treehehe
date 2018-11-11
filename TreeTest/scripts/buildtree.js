@@ -32,39 +32,49 @@
 
 // -------------------- Tree Traversal --------------------
 
-function visitNodes_postOrder(rootNode)
+function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], childCallback = null, childCallbackArgs = [])
 {
     if (rootNode.children)
     {
         if (rootNode.children.length > 0)
         {
             rootNode.children.forEach(child =>
+            {
+                if (childCallback)
                 {
-                    visitNodes_postOrder(child);
-                });
+                    childCallback(child, rootNode, ...childCallbackArgs);
+                }
+                visitNodes_postOrder(child, nodeCallback, nodeCallbackArgs, childCallback, childCallbackArgs);
+            });
         }
     }
 
-    console.log(rootNode.name);
+    if (nodeCallback)
+    {
+        nodeCallback(rootNode, ...nodeCallbackArgs);
+    }
 }
 
-function visitNodes(rootNode, nodeCallback, nodeCallbackArgs = [], childCallback = null, childCallbackArgs = [])
+function visitNodes_preOrder(rootNode, nodeCallback, nodeCallbackArgs = [], childCallback = null, childCallbackArgs = [])
 {
     if (nodeCallback)
     {
         nodeCallback(rootNode, ...nodeCallbackArgs);
     }
 
-    if (rootNode.children && (rootNode.children.length > 0))
+    if (rootNode.children)
     {
-        rootNode.children.forEach(child =>
+        if (rootNode.children.length > 0)
+        {
+            rootNode.children.forEach(child =>
             {
                 if (childCallback)
                 {
                     childCallback(child, rootNode, ...childCallbackArgs);
                 }
-                visitNodes(child, nodeCallback, nodeCallbackArgs, childCallback, childCallbackArgs);
+                visitNodes_preOrder(child, nodeCallback, nodeCallbackArgs, childCallback, childCallbackArgs);
             });
+        }
     }
 }
 
