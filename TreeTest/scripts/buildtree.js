@@ -42,7 +42,7 @@ function treeInit(rootNode)
 
 // -------------------- Tree Traversal --------------------
 
-function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], childCallback = null, childCallbackArgs = [])
+function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
 {
     if (rootNode.children)
     {
@@ -54,22 +54,24 @@ function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], chi
                 {
                     childCallback(child, rootNode, ...childCallbackArgs);
                 }
-                visitNodes_postOrder(child, nodeCallback, nodeCallbackArgs, childCallback, childCallbackArgs);
+                visitNodes_postOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
             });
         }
     }
 
     if (nodeCallback)
     {
-        nodeCallback(rootNode, ...nodeCallbackArgs);
+        nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
     }
+
+    iterationHeight++;
 }
 
-function visitNodes_preOrder(rootNode, nodeCallback, nodeCallbackArgs = [], childCallback = null, childCallbackArgs = [])
+function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
 {
     if (nodeCallback)
     {
-        nodeCallback(rootNode, ...nodeCallbackArgs);
+        nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
     }
 
     if (rootNode.children)
@@ -82,17 +84,19 @@ function visitNodes_preOrder(rootNode, nodeCallback, nodeCallbackArgs = [], chil
                 {
                     childCallback(child, rootNode, ...childCallbackArgs);
                 }
-                visitNodes_preOrder(child, nodeCallback, nodeCallbackArgs, childCallback, childCallbackArgs);
+                visitNodes_preOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
             });
         }
     }
+
+    iterationHeight++;
 }
 
 // can use in preorder traversal
 
 function updateParentsInTree(rootNode)
 {
-    visitNodes_preOrder(rootNode, null, null, updateParent)
+    visitNodes_preOrder(rootNode, null, null, 0, updateParent);
 }
 
 function renameTree(rootNode, treeName)
