@@ -235,14 +235,21 @@ function computeNodeCoordinates(node)
 
 // -------------------- Output --------------------
 
-function writeTreeField_Terminal(rootNode, fieldName, indent = ``)
+function writeTreeField_Terminal(rootNode, fieldName, indent = `    `)
 {
-    visitNodes_preOrder(rootNode, writeNodeField_Terminal, [fieldName, indent]);
+    visitNodes_preOrder(rootNode, writeNodeField_Terminal, [fieldName, indent], 0);
 }
 
-function writeNodeField_Terminal(node, fieldName, indent)
+function writeNodeField_Terminal(node, fieldName, indent, iterationHeight)
 {
-    console.log(`${indent} ${node[fieldName]}
+    var nodeIndent = "";
+
+    for (var i = 0; i < iterationHeight; i++)
+    {
+        nodeIndent += indent;
+    }
+
+    console.log(`${nodeIndent} ${node[fieldName]}
     `);
 }
 
