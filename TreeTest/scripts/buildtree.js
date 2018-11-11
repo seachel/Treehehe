@@ -33,6 +33,12 @@
         return result;
     }
 
+function treeInit(rootNode)
+{
+    updateParentsInTree(rootNode);
+    updatePreviousSiblingsInTree(rootNode);
+}
+
 
 // -------------------- Tree Traversal --------------------
 
@@ -94,6 +100,10 @@ function renameTree(rootNode, treeName)
     visitNodes_preOrder(rootNode, updateField, ["treeName", treeName]);
 }
 
+function updatePreviousSiblingsInTree(rootNode)
+{
+    visitNodes_preOrder(rootNode, setPreviousSibling);
+}
 
 
 // -------------------- Helpers --------------------
@@ -135,9 +145,26 @@ function setPreviousSibling(node)
         {
             console.log(`Something not set correctly in setPreviousSibling. 
             Node: ${node}`);
-
         }
     }
+}
+
+
+// -------------------- Tilford-Reingold Algorithm --------------------
+
+function calculateInitialX(rootNode)
+{
+    visitNodes_postOrder(rootNode,
+        function(node) {
+            if (node.previousSibling)
+            {
+                node.x = node.previousSibling.x + 1;
+            }
+            else
+            {
+                node.x = 0;
+            }
+        });
 }
 
 
@@ -168,7 +195,6 @@ var threeChildVals = {
     cols: 7
 }
 
-// difference between rows?
 
 
 function computeNodeCoordinates(node)
