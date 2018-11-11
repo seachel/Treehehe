@@ -109,6 +109,16 @@ function updatePreviousSiblingsInTree(rootNode)
     visitNodes_preOrder(rootNode, setPreviousSibling);
 }
 
+function writeFieldForTree_preOrder(rootNode, fieldName)
+{
+    visitNodes_preOrder(rootNode, logField, [fieldName]);
+}
+
+function writeFieldForTree_postOrder(rootNode, fieldName)
+{
+    visitNodes_postOrder(rootNode, logField, [fieldName]);
+}
+
 
 // -------------------- Helpers --------------------
 
@@ -118,6 +128,11 @@ function updateField(node, fieldName, fieldValue)
     {
         node[fieldName] = fieldValue;
     }
+}
+
+function logField(node, fieldName)
+{
+    console.log(node[fieldName]);
 }
 
 function updateParent(child, parent)
@@ -352,7 +367,7 @@ var TRexample = buildNode("O", "O",
         ])
     ],)
 
-var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren, tree2];
+var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren, tree2, TRexample];
 
 
 
