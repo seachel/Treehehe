@@ -1,6 +1,22 @@
-const { buildNode } = require('./buildtree')
+const { buildTree, buildNode } = require('./buildtree')
 
 // use .toEqual for deep equality, otherwise .toBe
+
+test('test initializing a tree with the `buildTree` function',
+    () =>
+    {
+        var root = buildNode("root prop", "root name");
+        var name = "test tree";
+        expect(buildTree(root, name)).toEqual(
+            {
+                root: root,
+                name: name,
+                numrows: 0,
+                numcols: 0,
+                height: 0
+            }
+        )
+    });
 
 test('test initializing a leaf with the `buildNode` function',
     () =>

@@ -1,11 +1,11 @@
 
 // -------------------- Model --------------------
 
-    function buildTree(newRoot, newName)
+    function buildTree(root, name)
     {
         return {
-            root: newRoot,
-            name: newName,
+            root: root,
+            name: name,
             numrows: 0,
             numcols: 0,
             height: 0
@@ -37,6 +37,8 @@ function treeInit(rootNode)
 {
     updateParentsInTree(rootNode);
     updatePreviousSiblingsInTree(rootNode);
+    calculateInitialX(rootNode);
+    calculateY(rootNode);
 }
 
 
@@ -374,5 +376,6 @@ var testTrees = [leaf1, zeroChildren, oneChild, twoChildren, threeChildren, tree
 })();
 
 module.exports = {
-    buildNode: buildNode
+    buildNode: buildNode,
+    buildTree: buildTree
 }
