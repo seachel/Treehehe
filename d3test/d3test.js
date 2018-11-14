@@ -3,7 +3,7 @@ d3.select('h3').style('font-size', '30px');
 
 
 
-var mystuff = ["chair", "blanket", "tree"]
+var mystuff = ["chair", "blanket", "tree", "$\\forall b \\rightarrow \\leftarrow$"]
 
 d3.select('ul').classed("testrm", false)
 	.selectAll('li')
@@ -79,7 +79,7 @@ var treeData =
 				"name": "Daughter of A",
 				"children" :
 				[
-					{ "name" : "$\\exists$" }
+					{ "name" : "$\\exists x$" }
 				]
 			}
         ]
@@ -276,24 +276,16 @@ function update(source) {
 	// MathJax.Hub.Config({
 	// 	tex2jax: {
 	// 	inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-	// 	processEscapes: true
+  //   processEscapes: true,
+  //   delayStartupUntil: onload
 	// 	}
   // });
-  
-  // config for SVG
-  MathJax.Hub.Config({
-    jax: ["input/TeX","input/MathML","input/AsciiMath","output/HTML-CSS","output/NativeMML", "output/PreviewHTML"],
-    extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js", "AssistiveMML.js", "a11y/accessibility-menu.js"],
-    TeX: {
-      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
-    }
-  });
 	
 	MathJax.Hub.Register.StartupHook("End", function() {
 		setTimeout(() => {
-			svg.selectAll('.node-txt').each(function(){
+			svg.selectAll('.node').each(function(){
 			var self = d3.select(this),
-				g = self.select('text>span>svg');
+			    g = self.select('text>span>svg');
 			g.remove();
 			self.append(function(){
 				return g.node();
@@ -305,5 +297,5 @@ function update(source) {
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg.node()]);
 	
-	}, 1);
+	}, 3000);
 }
