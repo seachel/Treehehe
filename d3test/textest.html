@@ -103,12 +103,13 @@
 		MathJax.Hub.Register.StartupHook("End", function() {
 		  setTimeout(() => {
 				svg.selectAll('.tick').each(function(){
-				var self = d3.select(this),
-					g = self.select('text>span>svg');
-				g.remove();
-				self.append(function(){
-				  return g.node();
-				});
+					var self = d3.select(this),
+							g = self.select('text>span>svg');
+							debugger;
+					g.remove();
+					self.append(function(){
+						return g.node();
+					});
 			  });
 			}, 1);
 		  });

@@ -156,12 +156,12 @@ function update(source) {
     .on('click', click);
 
   // Add Circle for the nodes
-  nodeEnter.append('circle')
-      .attr('class', 'node')
-      .attr('r', 1e-6)
-      .style("fill", function(d) {
-          return d._children ? "lightsteelblue" : "#fff";
-      });
+  // nodeEnter.append('circle')
+  //     .attr('class', 'node')
+  //     .attr('r', 1e-6)
+  //     .style("fill", function(d) {
+  //         return d._children ? "lightsteelblue" : "#fff";
+  //     });
 
   // Add labels for the nodes
   nodeEnter.append('text')
@@ -284,18 +284,21 @@ function update(source) {
 	MathJax.Hub.Register.StartupHook("End", function() {
 		setTimeout(() => {
 			svg.selectAll('.node').each(function(){
-			var self = d3.select(this),
-			    g = self.select('text>span>svg');
-			g.remove();
-			self.append(function(){
-				return g.node();
-			});
+        var self = d3.select(this),
+            g = self.select('text>span>svg');
+        if (g.node())
+        {
+          g.remove();
+          self.append(function(){
+            return g.node();
+          });
+        }
 			});
 		}, 1);
 		});
 	
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg.node()]);
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg.node()]);
 	
 	}, 3000);
 }
