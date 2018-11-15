@@ -88,10 +88,12 @@ var treeData =
     ]
   };
 
+
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 90, bottom: 30, left: 90},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
+
 
 // append the svg object to the body of the page
 // appends a 'group' element to 'svg'
@@ -107,6 +109,7 @@ var i = 0,
     duration = 750,
     root;
 
+
 // declares a tree layout and assigns the size
 var treemap = d3.tree().size([height, width]);
 
@@ -114,6 +117,7 @@ var treemap = d3.tree().size([height, width]);
 root = d3.hierarchy(treeData, function(d) { return d.children; });
 root.x0 = height / 2;
 root.y0 = 0;
+
 
 // Collapse after the second level
 //root.children.forEach(collapse);
@@ -129,6 +133,7 @@ function collapse(d) {
   }
 }
 
+// Pretty much everything happens here...
 function update(source) {
 
   // Assigns the x and y position for the nodes
@@ -156,12 +161,12 @@ function update(source) {
     .on('click', click);
 
   // Add Circle for the nodes
-  // nodeEnter.append('circle')
-  //     .attr('class', 'node')
-  //     .attr('r', 1e-6)
-  //     .style("fill", function(d) {
-  //         return d._children ? "lightsteelblue" : "#fff";
-  //     });
+  nodeEnter.append('circle')
+      .attr('class', 'node')
+      .attr('r', 1e-6)
+      .style("fill", function(d) {
+          return d._children ? "lightsteelblue" : "#fff";
+      });
 
   // Add labels for the nodes
   nodeEnter.append('text')
@@ -212,51 +217,51 @@ function update(source) {
 
   // ****************** links section ***************************
 
-  // Update the links...
-  var link = svg.selectAll('path.link')
-      .data(links, function(d) { return d.id; });
+  // // Update the links...
+  // var link = svg.selectAll('path.link')
+  //     .data(links, function(d) { return d.id; });
 
-  // Enter any new links at the parent's previous position.
-  var linkEnter = link.enter().insert('path', "g")
-      .attr("class", "link")
-      .attr('d', function(d){
-        var o = {x: source.x0, y: source.y0}
-        return diagonal(o, o)
-      });
+  // // Enter any new links at the parent's previous position.
+  // var linkEnter = link.enter().insert('path', "g")
+  //     .attr("class", "link")
+  //     .attr('d', function(d){
+  //       var o = {x: source.x0, y: source.y0}
+  //       return diagonal(o, o)
+  //     });
 
-  // UPDATE
-  var linkUpdate = linkEnter.merge(link);
+  // // UPDATE
+  // var linkUpdate = linkEnter.merge(link);
 
-  // Transition back to the parent element position
-  linkUpdate.transition()
-      .duration(duration)
-      .attr('d', function(d){ return diagonal(d, d.parent) });
+  // // Transition back to the parent element position
+  // linkUpdate.transition()
+  //     .duration(duration)
+  //     .attr('d', function(d){ return diagonal(d, d.parent) });
 
-  // Remove any exiting links
-  var linkExit = link.exit().transition()
-      .duration(duration)
-      .attr('d', function(d) {
-        var o = {x: source.x, y: source.y}
-        return diagonal(o, o)
-      })
-      .remove();
+  // // Remove any exiting links
+  // var linkExit = link.exit().transition()
+  //     .duration(duration)
+  //     .attr('d', function(d) {
+  //       var o = {x: source.x, y: source.y}
+  //       return diagonal(o, o)
+  //     })
+  //     .remove();
 
-  // Store the old positions for transition.
-  nodes.forEach(function(d){
-    d.x0 = d.x;
-    d.y0 = d.y;
-  });
+  // // Store the old positions for transition.
+  // nodes.forEach(function(d){
+  //   d.x0 = d.x;
+  //   d.y0 = d.y;
+  // });
 
-  // Creates a curved (diagonal) path from parent to the child nodes
-  function diagonal(s, d) {
+  // // Creates a curved (diagonal) path from parent to the child nodes
+  // function diagonal(s, d) {
 
-    path = `M ${s.y} ${s.x}
-            C ${(s.y + d.y) / 2} ${s.x},
-              ${(s.y + d.y) / 2} ${d.x},
-              ${d.y} ${d.x}`
+  //   path = `M ${s.y} ${s.x}
+  //           C ${(s.y + d.y) / 2} ${s.x},
+  //             ${(s.y + d.y) / 2} ${d.x},
+  //             ${d.y} ${d.x}`
 
-    return path
-  }
+  //   return path
+  // }
 
   // Toggle children on click.
   function click(d) {
