@@ -75,7 +75,25 @@ d3.select('svg g.nodes')
   .classed('node', true)
   .attr('x', d => d.x)
   .attr('y', d => svgheight - d.y)
-  .text(d => d.data.name);
+  .text(d => d.data.name)
+  .on('click', node_onclick);
+
+var index = 0;
+var colors = ['blue', 'red', 'yellow'];
+
+function node_onclick()
+{
+  d3.select('body').style('background', colors[index])
+  
+  if (index == (colors.length - 1))
+  {
+    index = 0;
+  }
+  else
+  {
+    index++;
+  }
+}
 
 
 
