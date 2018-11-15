@@ -39,15 +39,21 @@ function makeNode(name, children = [])
 	}
 }
 
-var root = makeNode("A", [
+var data = makeNode("A", [
 	makeNode("B"),
 	makeNode("C"),
 	makeNode("D")
 ]);
 
+var root = d3.hierarchy(data);
+
 var mytree = d3.tree();
 
-//var newRoot = mytree(root);
+mytree.size([400, 200]);
+
+mytree(root);
+
+// display it...
 
 
 
@@ -98,7 +104,8 @@ var margin = {top: 20, right: 90, bottom: 30, left: 90},
 // append the svg object to the body of the page
 // appends a 'group' element to 'svg'
 // moves the 'group' element to the top left margin
-var svg = d3.select("body").append("svg").style("background", "lavender")
+var svg = d3.select("body").append("svg").classed("main-svg", true)
+    .style("background", "lavender")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -111,7 +118,7 @@ var i = 0,
 
 
 // declares a tree layout and assigns the size
-var treemap = d3.tree().size([height, width]);
+var treemap = d3.tree().size([width, height]);
 
 // Assigns parent, children, height, depth
 root = d3.hierarchy(treeData, function(d) { return d.children; });
@@ -215,36 +222,6 @@ function update(source) {
   nodeExit.select('text')
     .style('fill-opacity', 1e-6);
 
-  // ****************** links section ***************************
-
-  // Update the links...
-  // var link = svg.selectAll('path.link')
-  //     .data(links, function(d) { return d.id; });
-
-  // Enter any new links at the parent's previous position.
-  // var linkEnter = link.enter().insert('path', "g")
-  //     .attr("class", "link")
-  //     .attr('d', function(d){
-  //       var o = {x: source.x0, y: source.y0}
-  //       return diagonal(o, o)
-  //     });
-
-  // UPDATE
-  //var linkUpdate = linkEnter.merge(link);
-
-  // Transition back to the parent element position
-  // linkUpdate.transition()
-  //     .duration(duration)
-  //     .attr('d', function(d){ return diagonal(d, d.parent) });
-
-  // // Remove any exiting links
-  // var linkExit = link.exit().transition()
-  //     .duration(duration)
-  //     .attr('d', function(d) {
-  //       var o = {x: source.x, y: source.y}
-  //       return diagonal(o, o)
-  //     })
-  //     .remove();
 
   // Store the old positions for transition.
   nodes.forEach(function(d){
