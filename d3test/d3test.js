@@ -15,17 +15,6 @@ d3.select('ul').classed("testrm", false)
 	.append('div')
 	.text(d => d[0]);
 
-var svg = d3.select('svg');
-
-svg.append('rect')
-	.attr('x', 50)
-	.attr('y', 50)
-	.attr('width', 200)
-	.attr('height', 100)
-	.attr('fill', 'green');
-
-d3.select('svg').style('background', 'blue');
-
 
 // ------------------------------ Trees ------------------------------
 
@@ -49,11 +38,34 @@ var root = d3.hierarchy(data);
 
 var mytree = d3.tree();
 
-mytree.size([400, 200]);
+mytree.size([400, 400]);
 
 mytree(root);
 
+
+var svg_ex1 = d3.select('body')
+                .append('svg')
+                .classed('ex1-svg', true)
+                .attr('width', 500)
+                .attr('height', 500)
+                .append('g').classed('nodes', true)
+                .attr('transform', 'translate(0, 10)'); // last line necessary?
+
+
 // display it...
+d3.select('svg g.nodes')
+  .selectAll('circle.node')
+  .data(root.descendants())
+  .enter()
+  .append('circle')
+  .classed('node', true)
+  .attr('cx', d => d.x)
+  .attr('cy', d => d.y)
+  .attr('r', 4);
+
+
+// var node_ex1 = svg_ex1.selectAll('g.node')
+//                       .data(nodes_ex1, function(d) {return d.id || (d.id = ++i); });
 
 
 
