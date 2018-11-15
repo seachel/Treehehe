@@ -28,19 +28,30 @@ function makeNode(name, children = [])
 	}
 }
 
+// ---------- Data for tree:
+
 var data = makeNode("A", [
 	makeNode("B"),
 	makeNode("C"),
 	makeNode("D")
 ]);
 
+// ---------- Data in d3 heirarchy object
+
 var root = d3.hierarchy(data);
 
-var mytree = d3.tree();
 
-mytree.size([100, 100]);
+// ---------- Create tree
+
+var mytree = d3.tree().size([100, 100]);
+
+
+// ---------- Initialize tree? Position elements
 
 mytree(root);
+
+
+// ---------- Set up DOM content
 
 var svgheight = 600;
 var svgwidth = 600;
@@ -54,7 +65,8 @@ var svg_ex1 = d3.select('body')
                 .attr('transform', 'translate(0, -10)'); // shift down so that root is fully visible
 
 
-// display it...
+// ---------- create svg objects to represent data and position them
+
 d3.select('svg g.nodes')
   .selectAll('circle.node')
   .data(root.descendants())
@@ -66,13 +78,10 @@ d3.select('svg g.nodes')
   .attr('r', 4);
 
 
-// var node_ex1 = svg_ex1.selectAll('g.node')
-//                       .data(nodes_ex1, function(d) {return d.id || (d.id = ++i); });
 
 
 
-
-
+// -------------------- Collapsible tree example --------------------
 
 var treeData =
   {
