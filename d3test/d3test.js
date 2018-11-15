@@ -177,7 +177,7 @@ function update(source) {
       })
       .attr("text-anchor", function(d) {
           return d.children || d._children ? "end" : "start";
-      })
+      }) // change location of text
       .text(function(d) { return d.data.name; });
 
   // UPDATE
@@ -217,11 +217,11 @@ function update(source) {
 
   // ****************** links section ***************************
 
-  // // Update the links...
+  // Update the links...
   // var link = svg.selectAll('path.link')
   //     .data(links, function(d) { return d.id; });
 
-  // // Enter any new links at the parent's previous position.
+  // Enter any new links at the parent's previous position.
   // var linkEnter = link.enter().insert('path', "g")
   //     .attr("class", "link")
   //     .attr('d', function(d){
@@ -229,10 +229,10 @@ function update(source) {
   //       return diagonal(o, o)
   //     });
 
-  // // UPDATE
-  // var linkUpdate = linkEnter.merge(link);
+  // UPDATE
+  //var linkUpdate = linkEnter.merge(link);
 
-  // // Transition back to the parent element position
+  // Transition back to the parent element position
   // linkUpdate.transition()
   //     .duration(duration)
   //     .attr('d', function(d){ return diagonal(d, d.parent) });
@@ -246,22 +246,22 @@ function update(source) {
   //     })
   //     .remove();
 
-  // // Store the old positions for transition.
-  // nodes.forEach(function(d){
-  //   d.x0 = d.x;
-  //   d.y0 = d.y;
-  // });
+  // Store the old positions for transition.
+  nodes.forEach(function(d){
+    d.x0 = d.x;
+    d.y0 = d.y;
+  });
 
-  // // Creates a curved (diagonal) path from parent to the child nodes
-  // function diagonal(s, d) {
+  // Creates a curved (diagonal) path from parent to the child nodes
+  function diagonal(s, d) {
 
-  //   path = `M ${s.y} ${s.x}
-  //           C ${(s.y + d.y) / 2} ${s.x},
-  //             ${(s.y + d.y) / 2} ${d.x},
-  //             ${d.y} ${d.x}`
+    path = `M ${s.y} ${s.x}
+            C ${(s.y + d.y) / 2} ${s.x},
+              ${(s.y + d.y) / 2} ${d.x},
+              ${d.y} ${d.x}`
 
-  //   return path
-  // }
+    return path
+  }
 
   // Toggle children on click.
   function click(d) {
