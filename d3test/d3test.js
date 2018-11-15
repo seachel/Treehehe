@@ -71,11 +71,11 @@ d3.select('svg g.nodes')
   .selectAll('circle.node')
   .data(root.descendants())
   .enter()
-  .append('circle')
+  .append('text')
   .classed('node', true)
-  .attr('cx', d => d.x)
-  .attr('cy', d => svgheight - d.y)
-  .attr('r', 4);
+  .attr('x', d => d.x)
+  .attr('y', d => svgheight - d.y)
+  .text(d => d.data.name);
 
 
 
