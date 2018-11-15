@@ -23,7 +23,8 @@ d3.select('ul').classed("testrm", false)
 function makeNode(name, children = [])
 {
 	return {
-		name: name,
+    name: name,
+    proposition: name,
 		children: children
 	}
 }
@@ -62,7 +63,7 @@ var svg_ex1 = d3.select('body')
                 .attr('width', svgwidth)
                 .attr('height', svgheight)
                 .append('g').classed('nodes', true)
-                .attr('transform', 'translate(0, -10)'); // shift down so that root is fully visible
+                .attr('transform', 'translate(0, -10)'); // shift up or down so that root is fully visible
 
 
 // ---------- create svg objects to represent data and position them
@@ -75,7 +76,7 @@ d3.select('svg g.nodes')
   .classed('node', true)
   .attr('x', d => d.x)
   .attr('y', d => svgheight - d.y)
-  .text(d => d.data.name)
+  .text(d => d.data.proposition)
   .on('click', node_onclick);
 
 var index = 0;
