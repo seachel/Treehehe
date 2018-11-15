@@ -38,18 +38,20 @@ var root = d3.hierarchy(data);
 
 var mytree = d3.tree();
 
-mytree.size([400, 400]);
+mytree.size([100, 100]);
 
 mytree(root);
 
+var svgheight = 600;
+var svgwidth = 600;
 
 var svg_ex1 = d3.select('body')
-                .append('svg')
+                .append('svg').style('background', 'grey')
                 .classed('ex1-svg', true)
-                .attr('width', 500)
-                .attr('height', 500)
+                .attr('width', svgwidth)
+                .attr('height', svgheight)
                 .append('g').classed('nodes', true)
-                .attr('transform', 'translate(0, 10)'); // last line necessary?
+                .attr('transform', 'translate(0, -10)'); // shift down so that root is fully visible
 
 
 // display it...
@@ -60,7 +62,7 @@ d3.select('svg g.nodes')
   .append('circle')
   .classed('node', true)
   .attr('cx', d => d.x)
-  .attr('cy', d => d.y)
+  .attr('cy', d => svgheight - d.y)
   .attr('r', 4);
 
 
