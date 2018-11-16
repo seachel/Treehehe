@@ -51,7 +51,14 @@
 			}
 
 			body
-			{height: 2000px}
+			{
+				height: 2000px
+			}
+
+			.node-text
+			{
+				width: 200px;
+			}
 
 		</style>
 	</head>
@@ -63,6 +70,34 @@
 
 		<ul class="testrm">
 		</ul>
+
+		<div>
+			<svg class="mysvgtest" height="200"  width="200">
+				<g transform="translate(0, 0)">
+					<rect width="100px" height="100px" fill="darkseagreen" fill-opacity="0.5">
+					</rect>
+					<text class="some-text" alignment-baseline="hanging">
+						some other text
+					</text>
+				</g>
+			</svg>
+		</div>
+
+		<div>
+			<svg width="760" height="140">
+				<g transform="translate(70,70)">
+					<g class="item" transform="translate(0, 0)">
+						<circle r="40" />
+					</g>
+					<g class="item" transform="translate(120, 0)">
+						<circle r="40" />
+					</g>
+					<g class="item" transform="translate(240, 0)">
+						<circle r="40" />
+					</g>
+				</g>
+			</svg>
+		</div>
 
 		<script src="d3test.js"></script>
 

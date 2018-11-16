@@ -20,21 +20,21 @@ d3.select('ul').classed("testrm", false)
 
 // d3.layout.tree();
 
-function makeNode(name, children = [])
+function makeNode(name, proposition, children = [])
 {
 	return {
     name: name,
-    proposition: name,
+    proposition: proposition,
 		children: children
 	}
 }
 
 // ---------- Data for tree:
 
-var data = makeNode("A", [
-	makeNode("B"),
-	makeNode("C"),
-	makeNode("D")
+var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$", [
+	makeNode("B dfgh fdgh fgdh ", "$\\forall x, P \; x$"),
+	makeNode("C ser ser seh", "$1 + 2 + 3 = :)$"),
+	makeNode("D fyuk yfk fy", "x")
 ]);
 
 // ---------- Data in d3 heirarchy object
@@ -44,7 +44,7 @@ var root = d3.hierarchy(data);
 
 // ---------- Create tree
 
-var mytree = d3.tree().size([100, 100]);
+var mytree = d3.tree().size([500, 150]);
 
 
 // ---------- Initialize tree? Position elements
@@ -54,8 +54,8 @@ mytree(root);
 
 // ---------- Set up DOM content
 
-var svgheight = 600;
-var svgwidth = 600;
+var svgheight = 400;
+var svgwidth = 400;
 
 var svg_ex1 = d3.select('body')
                 .append('svg').style('background', 'grey')
@@ -69,18 +69,25 @@ var svg_ex1 = d3.select('body')
 // ---------- create svg objects to represent data and position them
 
 d3.select('svg g.nodes')
-  .selectAll('circle.node')
+  .selectAll('g.node')
   .data(root.descendants())
   .enter()
-  .append('text')
+  .append('g')
   .classed('node', true)
-  .attr('x', d => d.x)
-  .attr('y', d => svgheight - d.y)
-  .text(d => d.data.proposition)
-  .on('click', node_onclick);
+  .attr('transform', d => `translate( ${d.x} , ${svgheight - d.y} )`) // modify to center?
+  .on('click', node_onclick)
+  // .append('rect')
+  // .attr('fill', 'white').attr('stroke', 'green').attr('width', 100).attr('height', 100);
+
+d3.selectAll('g.node')
+  .append('text')
+  // .attr('y', d => d.getBBox().height)
+  .classed('node-text', true)
+  // .style('text-anchor', 'bottom')
+  .text(d => d.data.name);
 
 var index = 0;
-var colors = ['blue', 'red', 'yellow'];
+var colors = ['blue', 'red', 'yellow', 'white'];
 
 function node_onclick()
 {
@@ -96,6 +103,18 @@ function node_onclick()
   }
 }
 
+
+
+// --- Other SVG example
+
+d3.selectAll('g.item')
+  .append('text')
+  .text(function(d, i) {
+    return i + 1;
+  })
+  .style('text-anchor', 'middle')
+  .attr('y', 50)
+  .attr('x', 30);
 
 
 
@@ -147,7 +166,7 @@ var margin = {top: 20, right: 90, bottom: 30, left: 90},
 // appends a 'group' element to 'svg'
 // moves the 'group' element to the top left margin
 var svg = d3.select("body").append("svg").classed("main-svg", true)
-    .style("background", "lavender")
+    .style("background", "lavender").style('margin', '100px')
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -304,12 +323,15 @@ function update(source) {
   //   delayStartupUntil: onload
 	// 	}
   // });
-	
-	MathJax.Hub.Register.StartupHook("End", function() {
+
+// need this startup hook for each svg
+
+  MathJax.Hub.Register.StartupHook("End", function() {
 		setTimeout(() => {
 			svg.selectAll('.node').each(function(){
         var self = d3.select(this),
             g = self.select('text>span>svg');
+        
         if (g.node())
         {
           g.remove();
@@ -320,8 +342,25 @@ function update(source) {
 			});
 		}, 1);
 		});
-	
-	// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+  
+    MathJax.Hub.Register.StartupHook("End", function() {
+      setTimeout(() => {
+        svg_ex1.selectAll('.node').each(function(){
+          var self = d3.select(this),
+              g = self.select('text>span>svg');
+          
+          if (g.node())
+          {
+            g.remove();
+            self.append(function(){
+              return g.node();
+            });
+          }
+        });
+      }, 1);
+      });
+
+	//MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 	MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg.node()]);
 	
 	}, 3000);
