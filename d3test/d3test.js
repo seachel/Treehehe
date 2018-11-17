@@ -97,6 +97,32 @@ d3.select('svg g.nodes')
   }) // update x based on node width here? or do all this in later selection?
   .attr('text-anchor', 'middle')
   .on('click', node_onclick)
+  .append('line')
+  .attr('x1', d =>
+  {
+	  if (d.children)
+	  {
+		  return d.children[0].x;
+	  }
+	  else
+	  {
+		  return 0;
+	  }
+  })
+  .attr('x2', d =>
+  {
+	  if (d.children)
+	  {
+		  return d.children[d.children.length - 1].x;
+	  }
+	  else
+	  {
+		  return 0;
+	  }
+  })
+  .attr('y1', d => d.y - (linkHeight / 2))
+  .attr('y2', d => d.y - (linkHeight / 2))
+  .attr('stroke', 'black')
   // .append('rect')
   // .attr('fill', 'white').attr('stroke', 'green').attr('width', 100).attr('height', 100);
 
