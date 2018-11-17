@@ -105,24 +105,7 @@ d3.select('svg g.nodes')
 	
     return result;
   }) // update x based on node width here? or do all this in later selection?
-  .attr('text-anchor', d =>
-	{
-		var result = 'middle';
-		
-		if (d.parent && d.parent.children)
-		{
-			if (d.parent.children[0] === d)
-			{
-				result = 'end'
-			}
-			else if (d.parent.children[d.parent.children.length - 1] === d)
-			{
-				result = 'start'
-			}
-		}
-
-		return result;
-	})
+  .attr('text-anchor', 'middle')
   .on('click', node_onclick)
   .append('line')
   .attr('x1', d =>
