@@ -20,12 +20,17 @@ d3.select('ul').classed("testrm", false)
 
 // d3.layout.tree();
 
+var id = 0;
+
 function makeNode(name, proposition, children = [], leftContent = "", rightContent = "")
 {
+	id++;
+
 	return {
-    name: name,
-    proposition: proposition,
-		children: children
+    	name: name,
+	    proposition: proposition,
+		children: children,
+		id: `node${id}`
 	}
 }
 
@@ -48,13 +53,13 @@ var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
 
 // ---------- Data in d3 heirarchy object
 
-var root = d3.hierarchy(data); // set x0 and y0 based on svg dimensions?
+var myroot = d3.hierarchy(data); // set x0 and y0 based on svg dimensions?
 
 
 // ---------- Create tree
 
 var heightPerProofRow = 30;
-var proofHeight = root.height + 1;
+var proofHeight = myroot.height + 1;
 
 var treeHeight = proofHeight * heightPerProofRow;
 
@@ -65,15 +70,15 @@ var mytree = d3.tree().size([treeWidth, treeHeight]);
 
 // ---------- Initialize tree? Position elements
 
-mytree(root);
+mytree(myroot);
 
 
 // ---------- Set up DOM content
 
-var svgheight = 600;
+var svgheight = 400;
 var svgwidth = 600;
 
-var linkHeight = root.links()[0].target.y - root.links()[0].source.y;
+var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
 var svg_ex1 = d3.select('div.tree-container')
                 .append('svg').style('background', 'grey')
@@ -88,11 +93,12 @@ var svg_ex1 = d3.select('div.tree-container')
 
 d3.select('svg g.nodes')
 	.selectAll('g.node')
-	.data(root.descendants())
+	.data(myroot.descendants())
 	.enter()
 	.append('svg')
 	.classed('node', true)
 	.style('overflow', 'visible')
+	.attr('id', d => d.data.id)
 	.attr('x', d => d.x)
 	.attr('y', d => svgheight - d.y) // update x based on node width here? or do all this in later selection?
 	.attr('text-anchor', 'middle')
