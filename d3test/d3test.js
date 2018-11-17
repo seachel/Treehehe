@@ -90,21 +90,7 @@ d3.select('svg g.nodes')
   .classed('node', true)
   .style('overflow', 'visible')
   .attr('x', d => d.x)
-  .attr('y', d =>
-  {
-    var result = svgheight - d.y;
-
-    if (d.parent)
-    {
-      if ((d.parent.children[0] === d) ||
-          (d.parent.children[d.parent.children.length - 1] === d))
-      {
-        result += linkHeight / 2;
-      }
-	}
-	
-    return result;
-  }) // update x based on node width here? or do all this in later selection?
+  .attr('y', d => svgheight - d.y) // update x based on node width here? or do all this in later selection?
   .attr('text-anchor', 'middle')
   .on('click', node_onclick)
   .append('line')
