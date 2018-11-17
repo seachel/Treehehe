@@ -58,7 +58,9 @@ var proofHeight = root.height + 1;
 
 var treeHeight = proofHeight * heightPerProofRow;
 
-var mytree = d3.tree().size([500, treeHeight]);
+var treeWidth = 600;
+
+var mytree = d3.tree().size([treeWidth, treeHeight]);
 
 
 // ---------- Initialize tree? Position elements
@@ -68,12 +70,12 @@ mytree(root);
 
 // ---------- Set up DOM content
 
-var svgheight = 400;
-var svgwidth = 500;
+var svgheight = 600;
+var svgwidth = 600;
 
 var linkHeight = root.links()[0].target.y - root.links()[0].source.y;
 
-var svg_ex1 = d3.select('body')
+var svg_ex1 = d3.select('div.tree-container')
                 .append('svg').style('background', 'grey')
                 .classed('ex1-svg', true)
                 .attr('width', svgwidth)
