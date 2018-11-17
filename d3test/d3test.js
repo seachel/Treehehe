@@ -20,7 +20,7 @@ d3.select('ul').classed("testrm", false)
 
 // d3.layout.tree();
 
-function makeNode(name, proposition, children = [])
+function makeNode(name, proposition, children = [], leftContent = "", rightContent = "")
 {
 	return {
     name: name,
@@ -35,7 +35,9 @@ var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$", [
 	makeNode("B dfgh fdgh fgdh ", "$\\forall x, P \; x$"),
 	makeNode("C ser ser seh", "$1 + 2 + 3 = :)$"),
 	makeNode("D fyuk yfk fy", "x")
-]);
+  ],
+  "A left",
+  "A right");
 
 // ---------- Data in d3 heirarchy object
 
@@ -57,13 +59,15 @@ mytree(root);
 var svgheight = 400;
 var svgwidth = 500;
 
+var linkHeight = root.links()[0].target.y - root.links()[0].source.y;
+
 var svg_ex1 = d3.select('body')
                 .append('svg').style('background', 'grey')
                 .classed('ex1-svg', true)
                 .attr('width', svgwidth)
                 .attr('height', svgheight)
                 .append('g').classed('nodes', true)
-                .attr('transform', 'translate(0, -10)'); // shift up or down so that root is fully visible, by node height?
+                .attr('transform', 'translate(0, -15)'); // shift up or down so that root is fully visible, by node height?
 
 
 // ---------- create svg objects to represent data and position them
@@ -76,7 +80,21 @@ d3.select('svg g.nodes')
   .classed('node', true)
   .style('overflow', 'visible')
   .attr('x', d => d.x)
-  .attr('y', d => svgheight - d.y) // update x based on node width here? or do all this in later selection?
+  .attr('y', d =>
+  {
+    var result = svgheight - d.y;
+
+    if (d.parent)
+    {
+      if ((d.parent.children[0] === d) ||
+          (d.parent.children[d.parent.children.length - 1] === d))
+      {
+        result += linkHeight / 2;
+      }
+	}
+	
+    return result;
+  }) // update x based on node width here? or do all this in later selection?
   .attr('text-anchor', 'middle')
   .on('click', node_onclick)
   // .append('rect')
@@ -87,7 +105,7 @@ d3.selectAll('g.nodes>svg.node')
   // .attr('y', d => d.getBBox().height)
   // .attr('dy', '0.35em')
   .classed('node-text', true)
-  .style('alignment-baseline', 'hanging')
+//   .style('alignment-baseline', 'hanging')
   .text(d => d.data.name);
 
 var index = 0;
