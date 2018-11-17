@@ -55,7 +55,7 @@ mytree(root);
 // ---------- Set up DOM content
 
 var svgheight = 400;
-var svgwidth = 400;
+var svgwidth = 500;
 
 var svg_ex1 = d3.select('body')
                 .append('svg').style('background', 'grey')
@@ -63,7 +63,7 @@ var svg_ex1 = d3.select('body')
                 .attr('width', svgwidth)
                 .attr('height', svgheight)
                 .append('g').classed('nodes', true)
-                .attr('transform', 'translate(0, -10)'); // shift up or down so that root is fully visible
+                .attr('transform', 'translate(0, -10)'); // shift up or down so that root is fully visible, by node height?
 
 
 // ---------- create svg objects to represent data and position them
@@ -72,18 +72,18 @@ d3.select('svg g.nodes')
   .selectAll('g.node')
   .data(root.descendants())
   .enter()
-  .append('g')
+  .append('svg')
   .classed('node', true)
-  .attr('transform', d => `translate( ${d.x} , ${svgheight - d.y} )`) // modify to center?
+  .attr('x', d => d.x).attr('y', d => svgheight - d.y)
   .on('click', node_onclick)
   // .append('rect')
   // .attr('fill', 'white').attr('stroke', 'green').attr('width', 100).attr('height', 100);
 
-d3.selectAll('g.node')
+d3.selectAll('g.nodes>svg.node')
   .append('text')
   // .attr('y', d => d.getBBox().height)
   .classed('node-text', true)
-  // .style('text-anchor', 'bottom')
+  .style('alignment-baseline', 'hanging')
   .text(d => d.data.name);
 
 var index = 0;
