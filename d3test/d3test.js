@@ -48,7 +48,7 @@ var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
 
 // ---------- Data in d3 heirarchy object
 
-var root = d3.hierarchy(data);
+var root = d3.hierarchy(data); // set x0 and y0 based on svg dimensions?
 
 
 // ---------- Create tree
@@ -85,18 +85,18 @@ var svg_ex1 = d3.select('body')
 // ---------- create svg objects to represent data and position them
 
 d3.select('svg g.nodes')
-  .selectAll('g.node')
-  .data(root.descendants())
-  .enter()
-  .append('svg')
-  .classed('node', true)
-  .style('overflow', 'visible')
-  .attr('x', d => d.x)
-  .attr('y', d => svgheight - d.y) // update x based on node width here? or do all this in later selection?
-  .attr('text-anchor', 'middle')
-  .on('click', node_onclick)
-  .append('line')
-  .attr('x1', d =>
+	.selectAll('g.node')
+	.data(root.descendants())
+	.enter()
+	.append('svg')
+	.classed('node', true)
+	.style('overflow', 'visible')
+	.attr('x', d => d.x)
+	.attr('y', d => svgheight - d.y) // update x based on node width here? or do all this in later selection?
+	.attr('text-anchor', 'middle')
+	.on('click', node_onclick)
+	.append('line')
+	.attr('x1', d =>
 	{
 		if (d.children)
 		{
@@ -107,7 +107,7 @@ d3.select('svg g.nodes')
 			return 0;
 		}
 	})
-  .attr('x2', d =>
+	.attr('x2', d =>
 	{
 		if (d.children)
 		{
@@ -118,11 +118,11 @@ d3.select('svg g.nodes')
 			return 0;
 		}
 	})
-  .attr('y1', d => d.y - (linkHeight / 2))
-  .attr('y2', d => d.y - (linkHeight / 2))
-  .attr('stroke', 'black')
-  // .append('rect')
-  // .attr('fill', 'white').attr('stroke', 'green').attr('width', 100).attr('height', 100);
+	.attr('y1', d => -1 * heightPerProofRow)
+	.attr('y2', d => -1 * heightPerProofRow)
+	.attr('stroke', 'black')
+	// .append('rect')
+	// .attr('fill', 'white').attr('stroke', 'green').attr('width', 100).attr('height', 100);
 
 d3.selectAll('g.nodes>svg.node')
   .append('text')
