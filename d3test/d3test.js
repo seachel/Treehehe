@@ -45,23 +45,20 @@ var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
   "A right");
 
 
-// ---------- Create tree
-
-var heightPerProofRow = 30;
-// var proofHeight = root.height + 1;
-
-// var treeHeight = proofHeight * heightPerProofRow;
-
-// var mytree = d3.tree().size([500, treeHeight]);
-
-var mytree = d3.tree().nodeSize([200, heightPerProofRow]);
-
 
 // ---------- Data in d3 heirarchy object
 
 var root = d3.hierarchy(data);
-debugger;
-root.x0 = mytree.width / 2;
+
+
+// ---------- Create tree
+
+var heightPerProofRow = 30;
+var proofHeight = root.height + 1;
+
+var treeHeight = proofHeight * heightPerProofRow;
+
+var mytree = d3.tree().size([500, treeHeight]);
 
 
 // ---------- Initialize tree? Position elements
