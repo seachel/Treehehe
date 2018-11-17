@@ -31,11 +31,16 @@ function makeNode(name, proposition, children = [], leftContent = "", rightConte
 
 // ---------- Data for tree:
 
-var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$", [
-	makeNode("B dfgh fdgh fgdh ", "$\\forall x, P \; x$"),
-	makeNode("C ser ser seh", "$1 + 2 + 3 = :)$"),
-	makeNode("D fyuk yfk fy", "x")
-  ],
+var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
+	[
+		makeNode("B dfgh fdgh fgdh ", "$\\forall x, P \; x$"),
+		makeNode("C ser ser seh", "$1 + 2 + 3 = :)$",
+		[
+			makeNode("E blah blah doop", '$x supset y$'),
+			makeNode("F wut wot lsdkjf", "$\\wedge$")
+		]),
+		makeNode("D fyuk yfk fy", "x")
+	],
   "A left",
   "A right");
 
@@ -46,7 +51,12 @@ var root = d3.hierarchy(data);
 
 // ---------- Create tree
 
-var mytree = d3.tree().size([500, 150]);
+var heightPerProofRow = 30;
+var proofHeight = root.height + 1;
+
+var treeHeight = proofHeight * heightPerProofRow;
+
+var mytree = d3.tree().size([500, treeHeight]);
 
 
 // ---------- Initialize tree? Position elements
@@ -98,7 +108,7 @@ d3.select('svg g.nodes')
   .attr('text-anchor', d =>
 	{
 		var result = 'middle';
-		debugger;
+		
 		if (d.parent && d.parent.children)
 		{
 			if (d.parent.children[0] === d)
