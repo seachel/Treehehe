@@ -41,7 +41,7 @@ function makeNode(name, proposition, children = [], leftContent = "", rightConte
 var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
 	[
 		makeNode("B dfgh fdgh fgdh ", "$\\forall x, P \; x$"),
-		makeNode("C ser ser seh", "$1 + 2 + 3 = :)$",
+		makeNode("C ser ser seh", "1 + 2 + 3 = :)",
 		[
 			makeNode("E blah blah doop", '$x \\supset y$'),
 			makeNode("F wut wot lsdkjf", "$\\wedge$")
@@ -174,7 +174,7 @@ function getNodeBoundingBox(nodeId)
 	else
 	{
 		// position rect based on text
-		var textNodeBox = d3.select(`g#${nodeId}>text#${nodeId}`).node().getBBox();
+		var textNodeBox = d3.select(`g#${nodeId}>text[node-id=${nodeId}]`).node().getBBox();
 
 		return {
 			x: textNodeBox.x,
