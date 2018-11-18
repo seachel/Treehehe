@@ -154,14 +154,39 @@ function AddProofTreeLines()
 	.attr('stroke', 'black');
 }
 
+function getNodeBoundingBox(nodeId)
+{
+	var texNode = d3.select(`g#${nodeId}>g.tex-container`).node();
+
+	if (texNode)
+	{
+		var boundingBox = texNode.getBBox();
+
+		return {
+			x: boundingBox.x,
+			y: boundingBox.y,
+			width: boundingBox.width,
+			height: boundingBox.height
+		};
+	}
+	else
+	{
+		// position rect based on text
+		var textNodeBox = d3.select(`g#${nodeId}>text#${nodeId}`).node().getBBox();
+
+		return {
+			x: textNodeBox.x,
+			y: textNodeBox.y,
+			width: textNodeBox.width,
+			height: textNodeBox.height
+		};
+	}
+}
+
 function PositionBoundingRect()
 {
 	d3.selectAll('rect.node')
-		.attr('x', d =>
-		{
-			// different cases based on dimensions of node-text... if 0, then we're dealing with latex and get sizes there
-			d3.selectAll('')
-		})
+		.attr('x', d => getNodeBoundingBox(d.data.id).x);
 }
 
 var index = 0;
@@ -185,7 +210,7 @@ function node_onclick()
 function PostRender()
 {
 	AddProofTreeLines();
-	// position and size rectangle
+	PositionBoundingRect();
 }
 
 
@@ -438,6 +463,7 @@ setTimeout(() => {
           {
             g.remove();
 			self.append('g')
+				.classed('tex-container', true)
 				.attr('width', '100%')
 				// .attr('height', '100%')
 				.style('overflow', 'visible')
