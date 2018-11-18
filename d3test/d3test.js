@@ -111,8 +111,9 @@ d3.select('svg g.nodes')
 // Add text
 d3.selectAll('g.nodes>g.node')
   .append('text')
-  .attr('dy', '0.35em')
   .classed('node-text', true)
+  .attr('node-id', d => d.data.id)
+  .attr('dy', '0.35em')
   .attr('alignment-baseline', 'text-before-edge')
   .text(d => d.data.proposition);
 
@@ -153,6 +154,16 @@ function AddProofTreeLines()
 	.attr('stroke', 'black');
 }
 
+function PositionBoundingRect()
+{
+	d3.selectAll('rect.node')
+		.attr('x', d =>
+		{
+			// different cases based on dimensions of node-text... if 0, then we're dealing with latex and get sizes there
+			d3.selectAll('')
+		})
+}
+
 var index = 0;
 var colors = ['blue', 'red', 'yellow', 'white'];
 
@@ -171,7 +182,7 @@ function node_onclick()
 }
 
 
-function PostTeXRender()
+function PostRender()
 {
 	AddProofTreeLines();
 	// position and size rectangle
@@ -444,11 +455,15 @@ setTimeout(() => {
 				.attr('x', '-25%');
           }
 		});
-		
-		PostTeXRender();
+
       }, 1);
       });
 
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
+
+	  setTimeout(() =>
+	  {
+		PostRender();
+	  });
 
 	}, 3000);
