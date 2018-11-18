@@ -147,8 +147,8 @@ function AddProofTreeLines()
 		return 0;
 	}
 	})
-	.attr('y1', d => -1 * heightPerProofRow)
-	.attr('y2', d => -1 * heightPerProofRow)
+	.attr('y1', d => -1 * heightPerProofRow / 2)
+	.attr('y2', d => -1 * heightPerProofRow / 2)
 	.attr('stroke', 'black');
 }
 
