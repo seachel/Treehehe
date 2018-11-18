@@ -128,34 +128,100 @@ function AddProofTreeLines()
 	.append('line')
 	.attr('x1', d =>
 	{
-	if (d.children)
-	{
-		var leftChild = d.children[0];
-		var leftChildWidth = d3.select(`g#${leftChild.data.id}`).node().getBBox().width;
-		return leftChild.x - d.x - (leftChildWidth / 2);
-	}
-	else
-	{
-		return 0;
-	}
+		if (d.children)
+		{
+			var leftChild = d.children[0];
+			var leftChildWidth = d3.select(`g#${leftChild.data.id}`).node().getBBox().width;
+			return leftChild.x - d.x - (leftChildWidth / 2);
+		}
+		else
+		{
+			return 0;
+		}
 	})
 	.attr('x2', d =>
 	{
-	if (d.children)
-	{
-		var rightChild = d.children[d.children.length - 1];
-		var rightChildWidth = d3.select(`g#${rightChild.data.id}`).node().getBBox().width;
-		return rightChild.x - d.x + (rightChildWidth / 2);
-	}
-	else
-	{
-		return 0;
-	}
+		if (d.children)
+		{
+			var rightChild = d.children[d.children.length - 1];
+			var rightChildWidth = d3.select(`g#${rightChild.data.id}`).node().getBBox().width;
+			return rightChild.x - d.x + (rightChildWidth / 2);
+		}
+		else
+		{
+			return 0;
+		}
 	})
 	.attr('y1', d => -1 * heightPerProofRow / 2)
 	.attr('y2', d => -1 * heightPerProofRow / 2)
 	.attr('stroke', 'black');
 }
+
+
+function PositionBoundingRect()
+{
+	d3.selectAll('rect.node')
+		.attr('x', d =>
+		{
+			return getNodeBoundingBox(d.data.id).x
+		})
+		.attr('y', d => getNodeBoundingBox(d.data.id).y)
+		.attr('width', d => getNodeBoundingBox(d.data.id).width)
+		.attr('height', d => getNodeBoundingBox(d.data.id).height);
+	
+	d3.selectAll('rect.rule-text-left')
+		.attr('x', d =>
+		{
+			return getNodeBoundingBox(d.data.id).x
+		})
+		.attr('y', d => getNodeBoundingBox(d.data.id).y)
+		.attr('width', d => getNodeBoundingBox(d.data.id).width)
+		.attr('height', d => getNodeBoundingBox(d.data.id).height);
+}
+
+function AddLeftRightContent()
+{
+	// select all nodes
+	// compare data id with node id
+	// if the data with that id has left content, position it:
+	//	- x coordinate matching first child x, but text-anchor end
+	//	- y coordinate calculated the same as for drawing inference lines
+	// if the data with that id has right content, position it:
+	//	- x coordinate matching last child x, but text-anchor start
+	//	- y coordinate calculated the same as for drawing inference lines
+	d3.selectAll('g.node')
+		.append('g')
+		.classed('rule-text-left', true)
+		.style('overflow', 'visible')
+		.attr('node-id', d => d.data.id)
+		.attr('transform', d =>
+		{
+			var x = 0;
+
+			if (d.children)
+			{
+				var leftChild = d.children[0];
+				var leftChildWidth = d3.select(`g#${leftChild.data.id}`).node().getBBox().width;
+				x = leftChild.x - d.x - (leftChildWidth / 2);
+			}
+			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
+		})
+		.attr('text-anchor', 'end')
+		.append('rect')
+		.classed('rule-text-left', true)
+		.attr('node-id', d => d.data.id)
+		.attr('fill', 'white').attr('stroke', 'green')
+	
+	d3.selectAll('g.rule-text-left')
+		.append('text')
+		.classed('rule-text', true)
+		.classed('node-text', true)
+		.attr('node-id', d => d.data.id)
+		.attr('dy', '0.35em')
+		.attr('alignment-baseline', 'text-after-edge')
+		.text(d => d.data.leftContent);
+}
+
 
 function getNodeBoundingBox(nodeId)
 {
@@ -184,15 +250,6 @@ function getNodeBoundingBox(nodeId)
 			height: textNodeBox.height
 		};
 	}
-}
-
-function PositionBoundingRect()
-{
-	d3.selectAll('rect.node')
-		.attr('x', d => getNodeBoundingBox(d.data.id).x)
-		.attr('y', d => getNodeBoundingBox(d.data.id).y)
-		.attr('width', d => getNodeBoundingBox(d.data.id).width)
-		.attr('height', d => getNodeBoundingBox(d.data.id).height);
 }
 
 var index = 0;
@@ -229,6 +286,7 @@ function selectedHNodeOutput(selectedHNode)
 function PostRender()
 {
 	AddProofTreeLines();
+	AddLeftRightContent();
 	PositionBoundingRect();
 }
 
