@@ -86,7 +86,7 @@ var svg_ex1 = d3.select('div.tree-container')
 				.attr('width', svgwidth)
 				.attr('height', svgheight)
 				.append('g').classed('nodes', true)
-				.attr('transform', 'translate(0, -15)'); // shift up or down so that root is fully visible, by node height?
+				.attr('transform', 'translate(0, -15)');
 
 
 // ---------- create svg objects to represent data and position them
@@ -95,13 +95,10 @@ d3.select('svg g.nodes')
 	.selectAll('g.node')
 	.data(myroot.descendants())
 	.enter()
-	// .append('svg')
 	.append('g')
 	.classed('node', true)
 	.style('overflow', 'visible')
 	.attr('id', d => d.data.id)
-	// .attr('x', d => d.x)
-	// .attr('y', d => svgheight - d.y) // update x based on node width here? or do all this in later selection?
 	.attr('transform', d => `translate(${d.x}, ${svgheight - d.y})`)
 	.attr('text-anchor', 'middle')
 	.on('click', node_onclick)
