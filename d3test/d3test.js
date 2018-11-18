@@ -181,14 +181,6 @@ function PositionBoundingRect()
 
 function AddLeftRightContent()
 {
-	// select all nodes
-	// compare data id with node id
-	// if the data with that id has left content, position it:
-	//	- x coordinate matching first child x, but text-anchor end
-	//	- y coordinate calculated the same as for drawing inference lines
-	// if the data with that id has right content, position it:
-	//	- x coordinate matching last child x, but text-anchor start
-	//	- y coordinate calculated the same as for drawing inference lines
 	d3.selectAll('g.node')
 		.append('g')
 		.classed('rule-text-left', true)
@@ -207,11 +199,7 @@ function AddLeftRightContent()
 			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
 		})
 		.attr('text-anchor', 'end')
-		.append('rect')
-		.classed('rule-text-left', true)
-		.attr('node-id', d => d.data.id)
-		.attr('fill', 'white').attr('stroke', 'green')
-	
+		
 	d3.selectAll('g.rule-text-left')
 		.append('text')
 		.classed('rule-text', true)
@@ -220,6 +208,11 @@ function AddLeftRightContent()
 		.attr('dy', '0.35em')
 		.attr('alignment-baseline', 'text-after-edge')
 		.text(d => d.data.leftContent);
+}
+
+function getNodeLeftRightContentBBox(nodeId)
+{
+	// find text node or latex svg for node's left and right content
 }
 
 
