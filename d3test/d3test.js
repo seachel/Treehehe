@@ -81,12 +81,12 @@ var svgwidth = 600;
 var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
 var svg_ex1 = d3.select('div.tree-container')
-                .append('svg').style('background', 'grey')
-                .classed('ex1-svg', true)
-                .attr('width', svgwidth)
-                .attr('height', svgheight)
-                .append('g').classed('nodes', true)
-                .attr('transform', 'translate(0, -15)'); // shift up or down so that root is fully visible, by node height?
+				.append('svg').style('background', 'grey')
+				.classed('ex1-svg', true)
+				.attr('width', svgwidth)
+				.attr('height', svgheight)
+				.append('g').classed('nodes', true)
+				.attr('transform', 'translate(0, -15)'); // shift up or down so that root is fully visible, by node height?
 
 
 // ---------- create svg objects to represent data and position them
@@ -116,55 +116,63 @@ d3.selectAll('g.nodes>svg.node')
   .text(d => d.data.proposition);
 
 
-  // Add lines
-// d3.selectAll('svg.node')
-// .append('line')
-// .attr('x1', d =>
-// {
-// 	if (d.children)
-// 	{
-// 		var leftChild = d.children[0];
-// 		var leftChildWidth = d3.select(`svg#${leftChild.data.id}`).node().getBBox().width;
-// 		return leftChild.x - d.x - (leftChildWidth / 2);
-// 	}
-// 	else
-// 	{
-// 		return 0;
-// 	}
-// })
-// .attr('x2', d =>
-// {
-// 	if (d.children)
-// 	{
-// 		var rightChild = d.children[d.children.length - 1];
-// 		var rightChildWidth = d3.select(`svg#${rightChild.data.id}`).node().getBBox().width;
-// 		return rightChild.x - d.x + (rightChildWidth / 2);
-// 	}
-// 	else
-// 	{
-// 		return 0;
-// 	}
-// })
-// .attr('y1', d => -1 * heightPerProofRow)
-// .attr('y2', d => -1 * heightPerProofRow)
-// .attr('stroke', 'black');
-
+// Add lines
+function AddProofTreeLines()
+{
+	d3.selectAll('svg.node')
+	.append('line')
+	.attr('x1', d =>
+	{
+	if (d.children)
+	{
+		var leftChild = d.children[0];
+		var leftChildWidth = d3.select(`svg#${leftChild.data.id}`).node().getBBox().width;
+		return leftChild.x - d.x - (leftChildWidth / 2);
+	}
+	else
+	{
+		return 0;
+	}
+	})
+	.attr('x2', d =>
+	{
+	if (d.children)
+	{
+		var rightChild = d.children[d.children.length - 1];
+		var rightChildWidth = d3.select(`svg#${rightChild.data.id}`).node().getBBox().width;
+		return rightChild.x - d.x + (rightChildWidth / 2);
+	}
+	else
+	{
+		return 0;
+	}
+	})
+	.attr('y1', d => -1 * heightPerProofRow)
+	.attr('y2', d => -1 * heightPerProofRow)
+	.attr('stroke', 'black');
+}
 
 var index = 0;
 var colors = ['blue', 'red', 'yellow', 'white'];
 
 function node_onclick()
 {
-  d3.select('body').style('background', colors[index])
-  
-  if (index == (colors.length - 1))
-  {
-    index = 0;
-  }
-  else
-  {
-    index++;
-  }
+	d3.select('body').style('background', colors[index])
+
+	if (index == (colors.length - 1))
+	{
+		index = 0;
+	}
+	else
+	{
+		index++;
+	}
+}
+
+
+function PostTeXRender()
+{
+	AddProofTreeLines();
 }
 
 
@@ -172,13 +180,13 @@ function node_onclick()
 // --- Other SVG example
 
 d3.selectAll('g.item')
-  .append('text')
-  .text(function(d, i) {
-    return i + 1;
-  })
-  .style('text-anchor', 'middle')
-  .attr('y', 50)
-  .attr('x', 30);
+	.append('text')
+	.text(function(d, i) {
+	return i + 1;
+	})
+	.style('text-anchor', 'middle')
+	.attr('y', 50)
+	.attr('x', 30);
 
 
 
@@ -427,5 +435,7 @@ function update(source) {
 	//MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 	MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg.node()]);
 	
+	PostTeXRender();
+
 	}, 3000);
 }
