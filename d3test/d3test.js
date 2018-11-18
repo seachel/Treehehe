@@ -110,10 +110,8 @@ d3.select('svg g.nodes')
 // Add text
 d3.selectAll('g.nodes>svg.node')
   .append('text')
-  // .attr('y', d => d.getBBox().height)
-  // .attr('dy', '0.35em')
+  .attr('dy', '-0.35em')
   .classed('node-text', true)
-//   .style('alignment-baseline', 'hanging')
   .text(d => d.data.name);
 
 
