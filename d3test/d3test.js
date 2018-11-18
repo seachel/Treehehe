@@ -103,35 +103,11 @@ d3.select('svg g.nodes')
 	.attr('y', d => svgheight - d.y) // update x based on node width here? or do all this in later selection?
 	.attr('text-anchor', 'middle')
 	.on('click', node_onclick)
-	.append('line')
-	.attr('x1', d =>
-	{
-		if (d.children)
-		{
-			return d.children[0].x - d.x;
-		}
-		else
-		{
-			return 0;
-		}
-	})
-	.attr('x2', d =>
-	{
-		if (d.children)
-		{
-			return d.children[d.children.length - 1].x - d.x;
-		}
-		else
-		{
-			return 0;
-		}
-	})
-	.attr('y1', d => -1 * heightPerProofRow)
-	.attr('y2', d => -1 * heightPerProofRow)
-	.attr('stroke', 'black')
 	// .append('rect')
 	// .attr('fill', 'white').attr('stroke', 'green').attr('width', 100).attr('height', 100);
 
+
+// Add text
 d3.selectAll('g.nodes>svg.node')
   .append('text')
   // .attr('y', d => d.getBBox().height)
@@ -139,6 +115,41 @@ d3.selectAll('g.nodes>svg.node')
   .classed('node-text', true)
 //   .style('alignment-baseline', 'hanging')
   .text(d => d.data.name);
+
+
+  // Add lines
+d3.selectAll('svg.node')
+.append('line')
+.attr('x1', d =>
+{
+	if (d.children)
+	{
+		var leftChild = d.children[0];
+		var leftChildWidth = d3.select(`svg#${leftChild.data.id}`).node().getBBox().width;
+		return leftChild.x - d.x - (leftChildWidth / 2);
+	}
+	else
+	{
+		return 0;
+	}
+})
+.attr('x2', d =>
+{
+	if (d.children)
+	{
+		var rightChild = d.children[d.children.length - 1];
+		var rightChildWidth = d3.select(`svg#${rightChild.data.id}`).node().getBBox().width;
+		return rightChild.x - d.x + (rightChildWidth / 2);
+	}
+	else
+	{
+		return 0;
+	}
+})
+.attr('y1', d => -1 * heightPerProofRow)
+.attr('y2', d => -1 * heightPerProofRow)
+.attr('stroke', 'black');
+
 
 var index = 0;
 var colors = ['blue', 'red', 'yellow', 'white'];
