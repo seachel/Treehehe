@@ -117,7 +117,8 @@ d3.selectAll('g.nodes>g.node')
   .attr('node-id', d => d.data.id)
   .attr('dy', '0.35em')
   .attr('alignment-baseline', 'text-before-edge')
-  .text(d => d.data.proposition);
+  .text(d => d.data.proposition)
+  .on('click', node_onclick);
 
 
 // Add lines
