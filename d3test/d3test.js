@@ -443,13 +443,12 @@ setTimeout(() => {
 				.attr('width', '50%')
 				.attr('x', '-25%');
           }
-        });
+		});
+		
+		PostTeXRender();
       }, 1);
       });
 
-	//MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
-	
-	PostTeXRender();
 
 	}, 3000);
