@@ -186,7 +186,10 @@ function getNodeBoundingBox(nodeId)
 function PositionBoundingRect()
 {
 	d3.selectAll('rect.node')
-		.attr('x', d => getNodeBoundingBox(d.data.id).x);
+		.attr('x', d => getNodeBoundingBox(d.data.id).x)
+		.attr('y', d => getNodeBoundingBox(d.data.id).y)
+		.attr('width', d => getNodeBoundingBox(d.data.id).width)
+		.attr('height', d => getNodeBoundingBox(d.data.id).height);
 }
 
 var index = 0;
