@@ -44,7 +44,7 @@ var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
 			makeNode("E blah blah doop", '$x \\supset y$'),
 			makeNode("F wut wot lsdkjf", "$\\wedge$")
 		]),
-		makeNode("D fyuk yfk fy", "$x$")
+		makeNode("D fyuk yfk fy", "$\\forall x$")
 	],
   "A left",
   "A right");
@@ -101,9 +101,11 @@ d3.select('svg g.nodes')
 	.attr('id', d => d.data.id)
 	.attr('transform', d => `translate(${d.x}, ${svgheight - d.y})`)
 	.attr('text-anchor', 'middle')
-	.on('click', node_onclick)
-	// .append('rect')
-	// .attr('fill', 'white').attr('stroke', 'green').attr('width', 150).attr('height', 10);
+	.append('rect')
+	.classed('node', true)
+	.attr('node-id', d => d.data.id)
+	.attr('fill', 'white').attr('stroke', 'green').attr('width', 10).attr('height', 10)
+	.on('click', node_onclick);
 
 
 // Add text
@@ -172,7 +174,7 @@ function node_onclick()
 function PostTeXRender()
 {
 	AddProofTreeLines();
-	mytree(myroot);
+	// position and size rectangle
 }
 
 
@@ -424,10 +426,11 @@ setTimeout(() => {
           if (g.node())
           {
             g.remove();
-			self.append('svg')
+			self.append('g')
 				.attr('width', '100%')
-				.attr('height', '100%')
+				// .attr('height', '100%')
 				.style('overflow', 'visible')
+				.on('click', node_onclick)
 				// .attr('x', d =>
 				// {
 				// 	debugger;
