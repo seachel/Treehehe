@@ -110,43 +110,44 @@ d3.select('svg g.nodes')
 // Add text
 d3.selectAll('g.nodes>svg.node')
   .append('text')
-  .attr('dy', '-0.35em')
+  .attr('dy', '0.35em')
   .classed('node-text', true)
-  .text(d => d.data.name);
+  .attr('alignment-baseline', 'text-before-edge')
+  .text(d => d.data.proposition);
 
 
   // Add lines
-d3.selectAll('svg.node')
-.append('line')
-.attr('x1', d =>
-{
-	if (d.children)
-	{
-		var leftChild = d.children[0];
-		var leftChildWidth = d3.select(`svg#${leftChild.data.id}`).node().getBBox().width;
-		return leftChild.x - d.x - (leftChildWidth / 2);
-	}
-	else
-	{
-		return 0;
-	}
-})
-.attr('x2', d =>
-{
-	if (d.children)
-	{
-		var rightChild = d.children[d.children.length - 1];
-		var rightChildWidth = d3.select(`svg#${rightChild.data.id}`).node().getBBox().width;
-		return rightChild.x - d.x + (rightChildWidth / 2);
-	}
-	else
-	{
-		return 0;
-	}
-})
-.attr('y1', d => -1 * heightPerProofRow)
-.attr('y2', d => -1 * heightPerProofRow)
-.attr('stroke', 'black');
+// d3.selectAll('svg.node')
+// .append('line')
+// .attr('x1', d =>
+// {
+// 	if (d.children)
+// 	{
+// 		var leftChild = d.children[0];
+// 		var leftChildWidth = d3.select(`svg#${leftChild.data.id}`).node().getBBox().width;
+// 		return leftChild.x - d.x - (leftChildWidth / 2);
+// 	}
+// 	else
+// 	{
+// 		return 0;
+// 	}
+// })
+// .attr('x2', d =>
+// {
+// 	if (d.children)
+// 	{
+// 		var rightChild = d.children[d.children.length - 1];
+// 		var rightChildWidth = d3.select(`svg#${rightChild.data.id}`).node().getBBox().width;
+// 		return rightChild.x - d.x + (rightChildWidth / 2);
+// 	}
+// 	else
+// 	{
+// 		return 0;
+// 	}
+// })
+// .attr('y1', d => -1 * heightPerProofRow)
+// .attr('y2', d => -1 * heightPerProofRow)
+// .attr('stroke', 'black');
 
 
 var index = 0;
