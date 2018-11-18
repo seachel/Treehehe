@@ -106,7 +106,7 @@ d3.select('svg g.nodes')
 	.append('rect')
 	.classed('node', true)
 	.attr('node-id', d => d.data.id)
-	.attr('fill', 'white').attr('stroke', 'green').attr('width', 10).attr('height', 10)
+	.attr('fill', 'white').attr('stroke', 'green')
 	.on('click', node_onclick);
 
 
