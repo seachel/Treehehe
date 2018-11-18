@@ -181,6 +181,7 @@ function PositionBoundingRect()
 
 function AddLeftRightContent()
 {
+	// left content
 	d3.selectAll('g.node')
 		.append('g')
 		.classed('rule-text-left', true)
@@ -199,15 +200,45 @@ function AddLeftRightContent()
 			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
 		})
 		.attr('text-anchor', 'end')
-		
+
+
 	d3.selectAll('g.rule-text-left')
 		.append('text')
 		.classed('rule-text', true)
 		.classed('node-text', true)
 		.attr('node-id', d => d.data.id)
 		.attr('dy', '0.35em')
-		.attr('alignment-baseline', 'text-after-edge')
+		.attr('alignment-baseline', 'alphabetical')
 		.text(d => d.data.leftContent);
+
+	// right content
+	d3.selectAll('g.node')
+		.append('g')
+		.classed('rule-text-right', true)
+		.style('overflow', 'visible')
+		.attr('node-id', d => d.data.id)
+		.attr('transform', d =>
+		{
+			var x = 0;
+
+			if (d.children)
+			{
+				var rightChild = d.children[d.children.length - 1];
+				var rightChildWidth = d3.select(`g#${rightChild.data.id}`).node().getBBox().width;
+				x = rightChild.x - d.x + (rightChildWidth / 2);
+			}
+			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
+		})
+		.attr('text-anchor', 'start')
+		
+	d3.selectAll('g.rule-text-right')
+		.append('text')
+		.classed('rule-text', true)
+		.classed('node-text', true)
+		.attr('node-id', d => d.data.id)
+		.attr('dy', '0.35em')
+		.attr('alignment-baseline', 'alphabetical')
+		.text(d => d.data.rightContent);
 }
 
 function getNodeLeftRightContentBBox(nodeId)
