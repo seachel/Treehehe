@@ -30,7 +30,9 @@ function makeNode(name, proposition, children = [], leftContent = "", rightConte
     	name: name,
 	    proposition: proposition,
 		children: children,
-		id: `node${id}`
+		id: `node${id}`,
+		leftContent: leftContent,
+		rightContent: rightContent
 	}
 }
 
@@ -195,7 +197,7 @@ function PositionBoundingRect()
 var index = 0;
 var colors = ['blue', 'red', 'yellow', 'white'];
 
-function node_onclick()
+function node_onclick(selectedHNode)
 {
 	d3.select('body').style('background', colors[index])
 
@@ -207,6 +209,19 @@ function node_onclick()
 	{
 		index++;
 	}
+
+	d3.select(`.tree-selection`)
+		.text(selectedHNodeOutput(selectedHNode));
+	
+	MathJax.Hub.Typeset();
+}
+
+function selectedHNodeOutput(selectedHNode)
+{
+	return `id: ${selectedHNode.data.id},
+	proposition: ${selectedHNode.data.proposition},
+	rule name: ${selectedHNode.data.rightContent},
+	side conditions: ${selectedHNode.data.leftContent}`
 }
 
 
