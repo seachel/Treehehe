@@ -275,23 +275,33 @@ function getNodeLeftRightContentBBox(nodeId)
 
 function getRuleDisplayLRBound(hierarchyObj)
 {
+	var id = hierarchyObj.data.id;
+
+	var currentPropBB = getPropositionBoundingBox(id)
+
 	var result = {
-		left: 0,
-		right: 0
+		left: currentPropBB.x,
+		right: currentPropBB.x + currentPropBB.width
 	};
 
 	if (hierarchyObj.children)
 	{
-		var leftChild = hierarchyObj.children[0];
-		var leftChildWidth = d3.select(`${webvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
-		
-		result.left = leftChild.x - hierarchyObj.x - (leftChildWidth / 2);
+		if (hierarchyObj.children.length > 0)
+		{
+			var firstChild = hierarchyObj.children[0];
+			var firstChildPropBB = getPropositionBoundingBox(firstChild.data.id);
 
+			result.left = Math.min(result.left, firstChildPropBB.x);
 
-		var rightChild = hierarchyObj.children[hierarchyObj.children.length - 1];
-		var rightChildWidth = d3.select(`${webvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
-		
-		result.right = rightChild.x - hierarchyObj.x + (rightChildWidth / 2);
+			var lastChild = hierarchyObj.children[hierarchyObj.children.length - 1];
+			var lastChildPropBB = getPropositionBoundingBox(lastChild.data.id);
+
+			result.right = Math.max(result.right, lastChildPropBB.x + lastChildPropBB.width);
+		}
+	}
+	else
+	{
+		result.right = result.left;
 	}
 
 	return result;
@@ -368,12 +378,6 @@ function PostRender()
 	PositionBoundingRect();
 }
 
-// setTimeout(() =>
-// {
-// 	PostRender();
-// 	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-// }, 1000);
-
 setTimeout(() =>
 {
 	MathJax.Hub.Register.StartupHook("End", function() {
@@ -403,36 +407,65 @@ setTimeout(() =>
 
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
 
-	PostRender();
+	setTimeout(() =>
+	{
+		PostRender();
+	}, 1);
 
 	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 
 }, 1000);
 
-setTimeout(() =>
-{
-	MathJax.Hub.Register.StartupHook("End", function() {
-		setTimeout(() => {
-			svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
-				var self = d3.select(this),
-					g = self.select(`${webvars.nodeTextTag} > span > svg`);
+setTimeout(() => {
+	svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+		var self = d3.select(this),
+			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
-				if (g.node())
-				{
-					g.remove();
-					self.append(webvars.texContainerTag)
-						.classed(webvars.texContainerClass, true)
-						.attr('width', '100%')
-						.style('overflow', 'visible')
-						.on('click', node_onclick)
-						.append(function(){
-							return g.node();
-						})
-						// .attr('width', '50%')
-						// .attr('x', '-25%');
-				}
-			});
-
-		}, 1);
+		if (g.node())
+		{
+			g.remove();
+			self.append(webvars.texContainerTag)
+				.classed(webvars.texContainerClass, true)
+				.attr('width', '100%')
+				.style('overflow', 'visible')
+				.on('click', node_onclick)
+				.append(function(){
+					return g.node();
+				})
+				// .attr('width', '50%')
+				// .attr('x', '-25%');
+		}
 	});
-}, 1500); // this timeout length must be after previous one
+
+}, 1500);
+
+function MathJaxRuleText()
+{
+	setTimeout(() =>
+	{
+		MathJax.Hub.Register.StartupHook("End", function() {
+			setTimeout(() => {
+				svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+					var self = d3.select(this),
+						g = self.select(`${webvars.nodeTextTag} > span > svg`);
+
+					if (g.node())
+					{
+						g.remove();
+						self.append(webvars.texContainerTag)
+							.classed(webvars.texContainerClass, true)
+							.attr('width', '100%')
+							.style('overflow', 'visible')
+							.on('click', node_onclick)
+							.append(function(){
+								return g.node();
+							})
+							// .attr('width', '50%')
+							// .attr('x', '-25%');
+					}
+				});
+
+			}, 1);
+		});
+	}, 1500); // this timeout length must be after previous one
+}
