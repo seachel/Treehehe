@@ -13,7 +13,6 @@ var webvars = {
 	ruleTextContainerTag: "g",
 	sideConditionClass: "rule-text-left",
 	ruleNameClass: "rule-text-right",
-	sideConditionClass: "rule-text-left",
 	nodeIdAttr: "node-id",
 	nodeTextTag: "text",
 	nodeTextClass: "node-text",
@@ -222,6 +221,7 @@ function AddLeftRightContent()
 	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
 		.append(webvars.ruleTextContainerTag)
 		.classed(webvars.sideConditionClass, true)
+		.classed(webvars.ruleTextClass, true)
 		.style('overflow', 'visible')
 		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('transform', d =>
@@ -246,6 +246,7 @@ function AddLeftRightContent()
 	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
 		.append(webvars.ruleTextContainerTag)
 		.classed(webvars.ruleNameClass, true)
+		.classed(webvars.ruleTextClass, true)
 		.style('overflow', 'visible')
 		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('transform', d =>
@@ -371,9 +372,9 @@ setTimeout(() =>
 {
 	MathJax.Hub.Register.StartupHook("End", function() {
 		setTimeout(() => {
-			svg_ex1.selectAll('.node').each(function(){
+			svg_ex1.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
 				var self = d3.select(this),
-					g = self.select('text>span>svg');
+					g = self.select(`${webvars.nodeTextTag} > span > svg`);
 				
 				if (g.node())
 				{
@@ -394,11 +395,37 @@ setTimeout(() =>
 		}, 1);
 	});
 
-	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
 
 	setTimeout(() =>
 	{
 		PostRender();
+		MathJax.Hub.Typeset();
+	}, 1);
+
+	MathJax.Hub.Register.StartupHook("End", function() {
+		setTimeout(() => {
+			svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+				var self = d3.select(this),
+					g = self.select(`${webvars.nodeTextTag} > span > svg`);
+
+				if (g.node())
+				{
+				g.remove();
+				self.append(webvars.texContainerTag)
+					.classed(webvars.texContainerClass, true)
+					// .attr('width', '100%')
+					.style('overflow', 'visible')
+					.on('click', node_onclick)
+					.append(function(){
+						return g.node();
+					})
+					// .attr('width', '50%')
+					// .attr('x', '-25%');
+				}
+			});
+
+		}, 1);
 	});
 
 }, 1000);
