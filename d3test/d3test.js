@@ -1,8 +1,9 @@
+// ------------------------------ Program and layout variables ------------------------------
 
 var webvars = {
 	treeContainerTag: "div",
 	treeContainerClass: "tree-container",
-	treeClassName: "tree-svg", // set by each example?
+	treeClassName: "tree-svg",
 	nodesContainerTag: "g",
 	nodesContainerClass: "nodes",
 	nodeContainerTag: "g",
@@ -21,7 +22,7 @@ var webvars = {
 	texContainerClass: "tex-container"	
 }
 
-// ------------------------------ Data ------------------------------
+// ------------------------------ Tree Data ------------------------------
 
 var id = 0;
 
@@ -56,7 +57,7 @@ function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondit
 	};
 }
 
-// ---------- Data for tree:
+// ---------- Examples
 
 var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
 	[
@@ -174,7 +175,8 @@ d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${we
   .on('click', node_onclick);
 
 
-// Add lines
+// ------------------------------ Functions to Update and Add to Tree Layout
+
 function AddProofTreeLines()
 {
 	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
@@ -379,15 +381,8 @@ setTimeout(() =>
 				self.append(webvars.texContainerTag)
 					.classed(webvars.texContainerClass, true)
 					.attr('width', '100%')
-					// .attr('height', '100%')
 					.style('overflow', 'visible')
 					.on('click', node_onclick)
-					// .attr('x', d =>
-					// {
-					// 	debugger;
-					// 	d3.select(`g.node#${d.data.id}`)
-					// })	// add x attribute, calculate half of width?
-					// .attr('transform', `translate(50%, 0)`)
 					.append(function(){
 						return g.node();
 					})
