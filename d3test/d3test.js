@@ -174,6 +174,29 @@ d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${we
   .on('click', node_onclick);
 
 
+function getRuleDisplayLRBound(hierarchyObj)
+{
+	var result = {
+		left: 0,
+		right: 0
+	};
+
+	if (hierarchyObj.children)
+	{
+		var leftChild = hierarchyObj.children[0];
+		var leftChildWidth = d3.select(`${webvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
+		
+		result.left = leftChild.x - hierarchyObj.x - (leftChildWidth / 2);
+
+
+		var rightChild = hierarchyObj.children[hierarchyObj.children.length - 1];
+		var rightChildWidth = d3.select(`${webvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
+		
+		result.right = rightChild.x - hierarchyObj.x + (rightChildWidth / 2);
+	}
+
+	return result;
+}
 
 // Add lines
 function AddProofTreeLines()
@@ -182,29 +205,11 @@ function AddProofTreeLines()
 	.append('line')
 	.attr('x1', d =>
 	{
-		if (d.children)
-		{
-			var leftChild = d.children[0];
-			var leftChildWidth = d3.select(`${webvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
-			return leftChild.x - d.x - (leftChildWidth / 2);
-		}
-		else
-		{
-			return 0;
-		}
+		return getRuleDisplayLRBound(d).left;
 	})
 	.attr('x2', d =>
 	{
-		if (d.children)
-		{
-			var rightChild = d.children[d.children.length - 1];
-			var rightChildWidth = d3.select(`${webvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
-			return rightChild.x - d.x + (rightChildWidth / 2);
-		}
-		else
-		{
-			return 0;
-		}
+		return getRuleDisplayLRBound(d).right;
 	})
 	.attr('y1', d => -1 * heightPerProofRow / 2)
 	.attr('y2', d => -1 * heightPerProofRow / 2)
@@ -243,14 +248,8 @@ function AddLeftRightContent()
 		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('transform', d =>
 		{
-			var x = 0;
+			var x = getRuleDisplayLRBound(d).left;
 
-			if (d.children)
-			{
-				var leftChild = d.children[0];
-				var leftChildWidth = d3.select(`${webvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
-				x = leftChild.x - d.x - (leftChildWidth / 2);
-			}
 			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
 		})
 		.attr('text-anchor', 'end')
@@ -273,14 +272,8 @@ function AddLeftRightContent()
 		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('transform', d =>
 		{
-			var x = 0;
+			var x = getRuleDisplayLRBound(d).right;
 
-			if (d.children)
-			{
-				var rightChild = d.children[d.children.length - 1];
-				var rightChildWidth = d3.select(`${webvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
-				x = rightChild.x - d.x + (rightChildWidth / 2);
-			}
 			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
 		})
 		.attr('text-anchor', 'start')
