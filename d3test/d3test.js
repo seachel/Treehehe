@@ -323,44 +323,45 @@ function PostRender()
 	PositionBoundingRect();
 }
 
-  
-MathJax.Hub.Register.StartupHook("End", function() {
-	setTimeout(() => {
-	svg_ex1.selectAll('.node').each(function(){
-		var self = d3.select(this),
-			g = self.select('text>span>svg');
-		
-		if (g.node())
-		{
-		g.remove();
-		self.append('g')
-			.classed('tex-container', true)
-			.attr('width', '100%')
-			// .attr('height', '100%')
-			.style('overflow', 'visible')
-			.on('click', node_onclick)
-			// .attr('x', d =>
-			// {
-			// 	debugger;
-			// 	d3.select(`g.node#${d.data.id}`)
-			// })	// add x attribute, calculate half of width?
-			// .attr('transform', `translate(50%, 0)`)
-			.append(function(){
-				return g.node();
-			})
-			.attr('width', '50%')
-			.attr('x', '-25%');
-		}
-	});
+setTimeout(() =>
+{
+	MathJax.Hub.Register.StartupHook("End", function() {
+		setTimeout(() => {
+			svg_ex1.selectAll('.node').each(function(){
+				var self = d3.select(this),
+					g = self.select('text>span>svg');
+				
+				if (g.node())
+				{
+				g.remove();
+				self.append('g')
+					.classed('tex-container', true)
+					.attr('width', '100%')
+					// .attr('height', '100%')
+					.style('overflow', 'visible')
+					.on('click', node_onclick)
+					// .attr('x', d =>
+					// {
+					// 	debugger;
+					// 	d3.select(`g.node#${d.data.id}`)
+					// })	// add x attribute, calculate half of width?
+					// .attr('transform', `translate(50%, 0)`)
+					.append(function(){
+						return g.node();
+					})
+					.attr('width', '50%')
+					.attr('x', '-25%');
+				}
+			});
 
-	}, 1);
+		}, 1);
 	});
 
 // MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
 
 	setTimeout(() =>
 	{
-	PostRender();
+		PostRender();
 	});
 
 }, 3000);
