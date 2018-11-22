@@ -1,5 +1,5 @@
 
-var progvars = {
+var webvars = {
 	treeContainerTag: "div",
 	treeContainerClass: "tree-container",
 	treeClassName: "ex1-svg", // set by each example?
@@ -21,30 +21,7 @@ var progvars = {
 	texContainerClass: "tex-container"	
 }
 
-var treeContainerTag = "div";
-var treeContainerClass = "tree-container";
-var treeClassName = "ex1-svg"; // set by each example?
-var nodesContainerTag = "g";
-var nodesContainerClass = "nodes";
-var nodeContainerTag = "g";
-var nodeContainerClass = "node";
-var backgroundTag = "rect";
-var nodeBackgroundClass = "node";
-var ruleTextContainerTag = "g";
-var sideConditionClass = "rule-text-left";
-var ruleNameClass = "rule-text-right";
-var sideConditionClass = "rule-text-left";
-var nodeIdAttr = "node-id";
-var nodeTextTag = "text";
-var nodeTextClass = "node-text";
-var ruleTextClass = "rule-text";
-var texContainerTag = "g";
-var texContainerClass = "tex-container";
-
-
-// Test: try making all tags unique?
-// which level of g has id set? node container?
-// put in program data object?
+var treeClassName = "" // need to fill in for each example
 
 // ------------------------------ Data ------------------------------
 
@@ -160,39 +137,39 @@ var svgwidth = 600;
 
 var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
-var svg_ex1 = d3.select(`${progvars.treeContainerTag}.${progvars.treeContainerClass}`)
+var svg_ex1 = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
 				.append('svg').style('background', 'grey')
-				.classed(progvars.treeClassName, true)
+				.classed(treeClassName, true)
 				.attr('width', svgwidth)
 				.attr('height', svgheight)
-				.append(progvars.nodesContainerTag).classed(progvars.nodesContainerClass, true)
+				.append(webvars.nodesContainerTag).classed(webvars.nodesContainerClass, true)
 				.attr('transform', 'translate(0, -15)');
 
 
 // ---------- create svg objects to represent data and position them
 
-d3.select(`svg ${progvars.nodesContainerTag}.${progvars.nodesContainerClass}`)
-	.selectAll(`${progvars.nodeContainerTag}.${progvars.nodeContainerClass}`)
+d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
+	.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
 	.data(myroot.descendants())
 	.enter()
-	.append(progvars.nodeContainerTag)
-	.classed(progvars.nodeContainerClass, true)
+	.append(webvars.nodeContainerTag)
+	.classed(webvars.nodeContainerClass, true)
 	.style('overflow', 'visible')
 	.attr('id', d => d.data.id)
 	.attr('transform', d => `translate(${d.x}, ${svgheight - d.y})`)
 	.attr('text-anchor', 'middle')
-	.append(progvars.backgroundTag)
-	.classed(progvars.nodeBackgroundClass, true)
-	.attr(progvars.nodeIdAttr, d => d.data.id)
+	.append(webvars.backgroundTag)
+	.classed(webvars.nodeBackgroundClass, true)
+	.attr(webvars.nodeIdAttr, d => d.data.id)
 	.attr('fill', 'white').attr('stroke', 'green')
 	.on('click', node_onclick);
 
 
 // Add text
-d3.selectAll(`${progvars.nodesContainerTag}.${progvars.nodesContainerClass} > ${progvars.nodeContainerTag}.${progvars.nodeContainerClass}`)
-  .append(progvars.nodeTextTag)
-  .classed(progvars.nodeTextClass, true)
-  .attr(progvars.nodeIdAttr, d => d.data.id)
+d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
+  .append(webvars.nodeTextTag)
+  .classed(webvars.nodeTextClass, true)
+  .attr(webvars.nodeIdAttr, d => d.data.id)
   .attr('dy', '0.35em')
   .attr('alignment-baseline', 'text-before-edge')
   .text(d => d.data.proposition)
@@ -203,14 +180,14 @@ d3.selectAll(`${progvars.nodesContainerTag}.${progvars.nodesContainerClass} > ${
 // Add lines
 function AddProofTreeLines()
 {
-	d3.selectAll(`${progvars.nodeContainerTag}.${progvars.nodeContainerClass}`)
+	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
 	.append('line')
 	.attr('x1', d =>
 	{
 		if (d.children)
 		{
 			var leftChild = d.children[0];
-			var leftChildWidth = d3.select(`${progvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
+			var leftChildWidth = d3.select(`${webvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
 			return leftChild.x - d.x - (leftChildWidth / 2);
 		}
 		else
@@ -223,7 +200,7 @@ function AddProofTreeLines()
 		if (d.children)
 		{
 			var rightChild = d.children[d.children.length - 1];
-			var rightChildWidth = d3.select(`${progvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
+			var rightChildWidth = d3.select(`${webvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
 			return rightChild.x - d.x + (rightChildWidth / 2);
 		}
 		else
@@ -239,7 +216,7 @@ function AddProofTreeLines()
 
 function PositionBoundingRect()
 {
-	d3.selectAll(`${progvars.backgroundTag}.${progvars.nodeBackgroundClass}`)
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
 		.attr('x', d =>
 		{
 			return getNodeBoundingBox(d.data.id).x
@@ -248,7 +225,7 @@ function PositionBoundingRect()
 		.attr('width', d => getNodeBoundingBox(d.data.id).width)
 		.attr('height', d => getNodeBoundingBox(d.data.id).height);
 	
-	d3.selectAll(`${progvars.backgroundTag}.${progvars.sideConditionClass}`)
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
 		.attr('x', d =>
 		{
 			return getNodeBoundingBox(d.data.id).x
@@ -261,11 +238,11 @@ function PositionBoundingRect()
 function AddLeftRightContent()
 {
 	// left content
-	d3.selectAll(`${progvars.nodeContainerTag}.${progvars.nodeContainerClass}`)
-		.append(progvars.ruleTextContainerTag)
-		.classed(progvars.sideConditionClass, true)
+	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
+		.append(webvars.ruleTextContainerTag)
+		.classed(webvars.sideConditionClass, true)
 		.style('overflow', 'visible')
-		.attr(progvars.nodeIdAttr, d => d.data.id)
+		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('transform', d =>
 		{
 			var x = 0;
@@ -273,7 +250,7 @@ function AddLeftRightContent()
 			if (d.children)
 			{
 				var leftChild = d.children[0];
-				var leftChildWidth = d3.select(`${progvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
+				var leftChildWidth = d3.select(`${webvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
 				x = leftChild.x - d.x - (leftChildWidth / 2);
 			}
 			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
@@ -281,21 +258,21 @@ function AddLeftRightContent()
 		.attr('text-anchor', 'end')
 
 
-	d3.selectAll(`${progvars.ruleTextContainerTag}.${progvars.sideConditionClass}`)
-		.append(progvars.nodeTextTag)
-		.classed(progvars.ruleTextClass, true)
-		.classed(progvars.nodeTextClass, true)
-		.attr(progvars.nodeIdAttr, d => d.data.id)
+	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
+		.append(webvars.nodeTextTag)
+		.classed(webvars.ruleTextClass, true)
+		.classed(webvars.nodeTextClass, true)
+		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('dy', '0.35em')
 		.attr('alignment-baseline', 'alphabetical')
 		.text(d => d.data.leftContent);
 
 	// right content
-	d3.selectAll(`${progvars.nodeContainerTag}.${progvars.nodeContainerClass}`)
-		.append(progvars.ruleTextContainerTag)
-		.classed(progvars.ruleNameClass, true)
+	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
+		.append(webvars.ruleTextContainerTag)
+		.classed(webvars.ruleNameClass, true)
 		.style('overflow', 'visible')
-		.attr(progvars.nodeIdAttr, d => d.data.id)
+		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('transform', d =>
 		{
 			var x = 0;
@@ -303,18 +280,18 @@ function AddLeftRightContent()
 			if (d.children)
 			{
 				var rightChild = d.children[d.children.length - 1];
-				var rightChildWidth = d3.select(`${progvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
+				var rightChildWidth = d3.select(`${webvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
 				x = rightChild.x - d.x + (rightChildWidth / 2);
 			}
 			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
 		})
 		.attr('text-anchor', 'start')
 
-	d3.selectAll(`${progvars.ruleTextContainerTag}.${progvars.ruleNameClass}`)
-		.append(progvars.nodeTextTag)
-		.classed(progvars.ruleTextClass, true)
-		.classed(progvars.nodeTextClass, true)
-		.attr(progvars.nodeIdAttr, d => d.data.id)
+	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
+		.append(webvars.nodeTextTag)
+		.classed(webvars.ruleTextClass, true)
+		.classed(webvars.nodeTextClass, true)
+		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('dy', '0.35em')
 		.attr('alignment-baseline', 'alphabetical')
 		.text(d => d.data.rightContent);
@@ -328,7 +305,7 @@ function getNodeLeftRightContentBBox(nodeId)
 
 function getNodeBoundingBox(nodeId)
 {
-	var texNode = d3.select(`${progvars.nodeContainerTag}#${nodeId} > ${progvars.texContainerTag}.${progvars.texContainerClass}`).node();
+	var texNode = d3.select(`${webvars.nodeContainerTag}#${nodeId} > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
 
 	if (texNode)
 	{
@@ -344,8 +321,8 @@ function getNodeBoundingBox(nodeId)
 	else
 	{
 		// position rect based on text
-		var textNodeBox = d3.select(`${progvars.nodeContainerTag}#${nodeId}
-									 > ${progvars.nodeTextTag}[${progvars.nodeIdAttr}=${nodeId}]`)
+		var textNodeBox = d3.select(`${webvars.nodeContainerTag}#${nodeId}
+									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
 							.node()
 							.getBBox();
 
@@ -407,8 +384,8 @@ setTimeout(() =>
 				if (g.node())
 				{
 				g.remove();
-				self.append(progvars.texContainerTag)
-					.classed(progvars.texContainerClass, true)
+				self.append(webvars.texContainerTag)
+					.classed(webvars.texContainerClass, true)
 					.attr('width', '100%')
 					// .attr('height', '100%')
 					.style('overflow', 'visible')
