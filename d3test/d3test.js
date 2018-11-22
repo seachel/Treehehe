@@ -115,7 +115,7 @@ var proofHeight = myroot.height + 1;
 
 var treeHeight = proofHeight * heightPerProofRow;
 
-var treeWidth = 600; // TODO: need to compute based on example
+var treeWidth = 700; // TODO: need to compute based on example
 
 // ---------- Create tree
 
@@ -131,7 +131,7 @@ mytree(myroot);
 // ---------- Set up DOM content
 
 var svgheight = 400;
-var svgwidth = 600;
+var svgwidth = 700;
 
 var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
@@ -284,6 +284,7 @@ function getRuleDisplayLRBound(hierarchyObj)
 		right: currentPropBB.x + currentPropBB.width
 	};
 
+
 	if (hierarchyObj.children)
 	{
 		if (hierarchyObj.children.length > 0)
@@ -291,12 +292,26 @@ function getRuleDisplayLRBound(hierarchyObj)
 			var firstChild = hierarchyObj.children[0];
 			var firstChildPropBB = getPropositionBoundingBox(firstChild.data.id);
 
-			result.left = Math.min(result.left, firstChildPropBB.x);
+			var xDiffLeft = hierarchyObj.x - firstChild.x;
+
+			if (xDiffLeft > 0)
+			{
+				result.left -= xDiffLeft;
+			}
+
+			//result.left = Math.min(result.left, firstChildPropBB.x);
 
 			var lastChild = hierarchyObj.children[hierarchyObj.children.length - 1];
 			var lastChildPropBB = getPropositionBoundingBox(lastChild.data.id);
 
-			result.right = Math.max(result.right, lastChildPropBB.x + lastChildPropBB.width);
+			var xDiffRight = lastChild.x - hierarchyObj.x;
+
+			if (xDiffRight > 0)
+			{
+				result.right += xDiffLeft;
+			}
+
+			// result.right = Math.max(result.right, firstChildPropBB.x + lastChildPropBB.width);
 		}
 	}
 	else
@@ -416,28 +431,28 @@ setTimeout(() =>
 
 }, 1000);
 
-setTimeout(() => {
-	svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
-		var self = d3.select(this),
-			g = self.select(`${webvars.nodeTextTag} > span > svg`);
+// setTimeout(() => {
+// 	svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+// 		var self = d3.select(this),
+// 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
-		if (g.node())
-		{
-			g.remove();
-			self.append(webvars.texContainerTag)
-				.classed(webvars.texContainerClass, true)
-				.attr('width', '100%')
-				.style('overflow', 'visible')
-				.on('click', node_onclick)
-				.append(function(){
-					return g.node();
-				})
-				// .attr('width', '50%')
-				// .attr('x', '-25%');
-		}
-	});
+// 		if (g.node())
+// 		{
+// 			g.remove();
+// 			self.append(webvars.texContainerTag)
+// 				.classed(webvars.texContainerClass, true)
+// 				.attr('width', '100%')
+// 				.style('overflow', 'visible')
+// 				.on('click', node_onclick)
+// 				.append(function(){
+// 					return g.node();
+// 				})
+// 				// .attr('width', '50%')
+// 				// .attr('x', '-25%');
+// 		}
+// 	});
 
-}, 1500);
+// }, 1500);
 
 function MathJaxRuleText()
 {
