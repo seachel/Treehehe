@@ -2,7 +2,7 @@
 var webvars = {
 	treeContainerTag: "div",
 	treeContainerClass: "tree-container",
-	treeClassName: "ex1-svg", // set by each example?
+	treeClassName: "tree-svg", // set by each example?
 	nodesContainerTag: "g",
 	nodesContainerClass: "nodes",
 	nodeContainerTag: "g",
@@ -20,8 +20,6 @@ var webvars = {
 	texContainerTag: "g",
 	texContainerClass: "tex-container"	
 }
-
-var treeClassName = "" // need to fill in for each example
 
 // ------------------------------ Data ------------------------------
 
@@ -139,7 +137,7 @@ var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
 var svg_ex1 = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
 				.append('svg').style('background', 'grey')
-				.classed(treeClassName, true)
+				.classed(webvars.treeClassName, true)
 				.attr('width', svgwidth)
 				.attr('height', svgheight)
 				.append(webvars.nodesContainerTag).classed(webvars.nodesContainerClass, true)
