@@ -142,7 +142,7 @@ var svg_ex1 = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClas
 				.attr('width', svgwidth)
 				.attr('height', svgheight)
 				.append(webvars.nodesContainerTag).classed(webvars.nodesContainerClass, true)
-				.attr('transform', 'translate(0, -15)');
+				.attr('transform', 'translate(0, -30)');
 
 
 // ---------- create svg objects to represent data and position them
