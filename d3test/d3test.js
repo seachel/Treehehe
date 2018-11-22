@@ -174,30 +174,6 @@ d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${we
   .on('click', node_onclick);
 
 
-function getRuleDisplayLRBound(hierarchyObj)
-{
-	var result = {
-		left: 0,
-		right: 0
-	};
-
-	if (hierarchyObj.children)
-	{
-		var leftChild = hierarchyObj.children[0];
-		var leftChildWidth = d3.select(`${webvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
-		
-		result.left = leftChild.x - hierarchyObj.x - (leftChildWidth / 2);
-
-
-		var rightChild = hierarchyObj.children[hierarchyObj.children.length - 1];
-		var rightChildWidth = d3.select(`${webvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
-		
-		result.right = rightChild.x - hierarchyObj.x + (rightChildWidth / 2);
-	}
-
-	return result;
-}
-
 // Add lines
 function AddProofTreeLines()
 {
@@ -222,20 +198,20 @@ function PositionBoundingRect()
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
 		.attr('x', d =>
 		{
-			return getNodeBoundingBox(d.data.id).x
+			return getPropositionBoundingBox(d.data.id).x
 		})
-		.attr('y', d => getNodeBoundingBox(d.data.id).y)
-		.attr('width', d => getNodeBoundingBox(d.data.id).width)
-		.attr('height', d => getNodeBoundingBox(d.data.id).height);
+		.attr('y', d => getPropositionBoundingBox(d.data.id).y)
+		.attr('width', d => getPropositionBoundingBox(d.data.id).width)
+		.attr('height', d => getPropositionBoundingBox(d.data.id).height);
 	
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
 		.attr('x', d =>
 		{
-			return getNodeBoundingBox(d.data.id).x
+			return getPropositionBoundingBox(d.data.id).x
 		})
-		.attr('y', d => getNodeBoundingBox(d.data.id).y)
-		.attr('width', d => getNodeBoundingBox(d.data.id).width)
-		.attr('height', d => getNodeBoundingBox(d.data.id).height);
+		.attr('y', d => getPropositionBoundingBox(d.data.id).y)
+		.attr('width', d => getPropositionBoundingBox(d.data.id).width)
+		.attr('height', d => getPropositionBoundingBox(d.data.id).height);
 }
 
 function AddLeftRightContent()
@@ -294,7 +270,32 @@ function getNodeLeftRightContentBBox(nodeId)
 }
 
 
-function getNodeBoundingBox(nodeId)
+function getRuleDisplayLRBound(hierarchyObj)
+{
+	var result = {
+		left: 0,
+		right: 0
+	};
+
+	if (hierarchyObj.children)
+	{
+		var leftChild = hierarchyObj.children[0];
+		var leftChildWidth = d3.select(`${webvars.nodeContainerTag}#${leftChild.data.id}`).node().getBBox().width;
+		
+		result.left = leftChild.x - hierarchyObj.x - (leftChildWidth / 2);
+
+
+		var rightChild = hierarchyObj.children[hierarchyObj.children.length - 1];
+		var rightChildWidth = d3.select(`${webvars.nodeContainerTag}#${rightChild.data.id}`).node().getBBox().width;
+		
+		result.right = rightChild.x - hierarchyObj.x + (rightChildWidth / 2);
+	}
+
+	return result;
+}
+
+
+function getPropositionBoundingBox(nodeId)
 {
 	var texNode = d3.select(`${webvars.nodeContainerTag}#${nodeId} > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
 
