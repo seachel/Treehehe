@@ -425,26 +425,20 @@ function getRuleDisplayLRBound(hierarchyObj)
 
 			var xDiffLeft = hierarchyObj.x - firstChild.x;
 
-			if (xDiffLeft > 0)
+			if (xDiffLeft >= 0 && (firstChildPropBB.x < currentPropBB.x))
 			{
 				result.left -= xDiffLeft + (firstChildPropBB.width / 2) - (currentPropBB.width / 2);
 			}
-
-			//result.left = Math.min(result.left, firstChildPropBB.x);
 
 			var lastChild = hierarchyObj.children[hierarchyObj.children.length - 1];
 			var lastChildPropBB = getPropositionBoundingBox(lastChild.data.id);
 
 			var xDiffRight = lastChild.x - hierarchyObj.x;
 
-			if (xDiffRight > 0)
+			if (xDiffRight >= 0 && (firstChildPropBB.x + firstChildPropBB.width > currentPropBB.x + currentPropBB.width))
 			{
 				result.right += xDiffLeft + (lastChildPropBB.width / 2) - (currentPropBB.width / 2);
 			}
-
-// need tree data fields to get centre, then use half the width to modify
-
-			// result.right = Math.max(result.right, firstChildPropBB.x + lastChildPropBB.width);
 		}
 	}
 	else
