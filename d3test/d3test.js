@@ -425,7 +425,12 @@ function getRuleDisplayLRBound(hierarchyObj)
 
 			var xDiffLeft = hierarchyObj.x - firstChild.x;
 
-			if (xDiffLeft >= 0 && (firstChildPropBB.x < currentPropBB.x))
+			if (hierarchyObj.data.proposition === "$p$")
+			{
+			}
+
+			if (xDiffLeft > 0 ||
+				((xDiffLeft == 0) && (firstChildPropBB.x < currentPropBB.x)))
 			{
 				result.left -= xDiffLeft + (firstChildPropBB.width / 2) - (currentPropBB.width / 2);
 			}
@@ -435,7 +440,7 @@ function getRuleDisplayLRBound(hierarchyObj)
 
 			var xDiffRight = lastChild.x - hierarchyObj.x;
 
-			if (xDiffRight >= 0 && (firstChildPropBB.x + firstChildPropBB.width > currentPropBB.x + currentPropBB.width))
+			if (xDiffRight >= 0 && (lastChild.x + lastChildPropBB.width >= hierarchyObj.x + currentPropBB.width))
 			{
 				result.right += xDiffLeft + (lastChildPropBB.width / 2) - (currentPropBB.width / 2);
 			}
