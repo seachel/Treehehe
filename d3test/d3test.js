@@ -56,6 +56,58 @@ function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondit
 	};
 }
 
+// ---------- Tree Traversal
+
+function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
+{
+    if (rootNode.children)
+    {
+        if (rootNode.children.length > 0)
+        {
+            rootNode.children.forEach(child =>
+            {
+                if (childCallback)
+                {
+                    childCallback(child, rootNode, ...childCallbackArgs);
+                }
+                visitNodes_postOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
+            });
+        }
+    }
+
+    if (nodeCallback)
+    {
+        nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
+    }
+
+    iterationHeight++;
+}
+
+function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
+{
+    if (nodeCallback)
+    {
+        nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
+    }
+
+    if (rootNode.children)
+    {
+        if (rootNode.children.length > 0)
+        {
+            rootNode.children.forEach(child =>
+            {
+                if (childCallback)
+                {
+                    childCallback(child, rootNode, ...childCallbackArgs);
+                }
+                visitNodes_preOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
+            });
+        }
+    }
+
+    iterationHeight++;
+}
+
 // ---------- Examples
 
 var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
@@ -98,6 +150,8 @@ var treeExample1 = makeNode("A", "$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 		"$\\wedge_I$")
 	],
 	"$\\rightarrow_{I^u}$");
+
+
 
 
 // ------------------------------ D3 ------------------------------
