@@ -205,14 +205,14 @@ function PositionBoundingRect()
 		.attr('width', d => getPropositionBoundingBox(d.data.id).width)
 		.attr('height', d => getPropositionBoundingBox(d.data.id).height);
 	
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
-		.attr('x', d =>
-		{
-			return getPropositionBoundingBox(d.data.id).x
-		})
-		.attr('y', d => getPropositionBoundingBox(d.data.id).y)
-		.attr('width', d => getPropositionBoundingBox(d.data.id).width)
-		.attr('height', d => getPropositionBoundingBox(d.data.id).height);
+	// d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
+	// 	.attr('x', d =>
+	// 	{
+	// 		return getPropositionBoundingBox(d.data.id).x
+	// 	})
+	// 	.attr('y', d => getPropositionBoundingBox(d.data.id).y)
+	// 	.attr('width', d => getPropositionBoundingBox(d.data.id).width)
+	// 	.attr('height', d => getPropositionBoundingBox(d.data.id).height);
 }
 
 function AddLeftRightContent()
@@ -368,11 +368,11 @@ function PostRender()
 	PositionBoundingRect();
 }
 
-setTimeout(() =>
-{
-	PostRender();
-	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-}, 1000);
+// setTimeout(() =>
+// {
+// 	PostRender();
+// 	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+// }, 1000);
 
 setTimeout(() =>
 {
@@ -428,8 +428,8 @@ setTimeout(() =>
 						.append(function(){
 							return g.node();
 						})
-						.attr('width', '50%')
-						.attr('x', '-25%');
+						// .attr('width', '50%')
+						// .attr('x', '-25%');
 				}
 			});
 
