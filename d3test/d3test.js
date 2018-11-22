@@ -370,39 +370,47 @@ function PostRender()
 
 setTimeout(() =>
 {
+	PostRender();
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+}, 1000);
+
+setTimeout(() =>
+{
 	MathJax.Hub.Register.StartupHook("End", function() {
 		setTimeout(() => {
 			svg_ex1.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
 				var self = d3.select(this),
 					g = self.select(`${webvars.nodeTextTag} > span > svg`);
-				
+
 				if (g.node())
 				{
-				g.remove();
-				self.append(webvars.texContainerTag)
-					.classed(webvars.texContainerClass, true)
-					.attr('width', '100%')
-					.style('overflow', 'visible')
-					.on('click', node_onclick)
-					.append(function(){
-						return g.node();
-					})
-					.attr('width', '50%')
-					.attr('x', '-25%');
+					g.remove();
+					self.append(webvars.texContainerTag)
+						.classed(webvars.texContainerClass, true)
+						.attr('width', '100%')
+						.style('overflow', 'visible')
+						.on('click', node_onclick)
+						.append(function(){
+							return g.node();
+						})
+						.attr('width', '50%')
+						.attr('x', '-25%');
 				}
 			});
 
 		}, 1);
 	});
 
-	MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
+	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
 
-	setTimeout(() =>
-	{
-		PostRender();
-		MathJax.Hub.Typeset();
-	}, 1);
+	PostRender();
 
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+
+}, 1000);
+
+setTimeout(() =>
+{
 	MathJax.Hub.Register.StartupHook("End", function() {
 		setTimeout(() => {
 			svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
@@ -411,21 +419,20 @@ setTimeout(() =>
 
 				if (g.node())
 				{
-				g.remove();
-				self.append(webvars.texContainerTag)
-					.classed(webvars.texContainerClass, true)
-					// .attr('width', '100%')
-					.style('overflow', 'visible')
-					.on('click', node_onclick)
-					.append(function(){
-						return g.node();
-					})
-					// .attr('width', '50%')
-					// .attr('x', '-25%');
+					g.remove();
+					self.append(webvars.texContainerTag)
+						.classed(webvars.texContainerClass, true)
+						.attr('width', '100%')
+						.style('overflow', 'visible')
+						.on('click', node_onclick)
+						.append(function(){
+							return g.node();
+						})
+						.attr('width', '50%')
+						.attr('x', '-25%');
 				}
 			});
 
 		}, 1);
 	});
-
-}, 1000);
+}, 1500); // this timeout length must be after previous one
