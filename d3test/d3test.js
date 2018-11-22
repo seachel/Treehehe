@@ -97,7 +97,7 @@ var treeExample1 = makeNode("A", "$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 		],
 		"$\\wedge_I$")
 	],
-	"$\\rightarrow$_{I^u}");
+	"$\\rightarrow_{I^u}$");
 
 
 // ------------------------------ D3 ------------------------------
