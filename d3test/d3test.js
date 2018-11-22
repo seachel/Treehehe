@@ -152,14 +152,14 @@ var treeExample1 = makeNode("A", "$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 	"$\\rightarrow_{I^u}$");
 
 
-
+var selectedTree = treeExample1;
 
 // ------------------------------ D3 ------------------------------
 
 
 // ---------- Data in d3 heirarchy object
 
-var myroot = d3.hierarchy(treeExample1); // set x0 and y0 based on svg dimensions?
+var myroot = d3.hierarchy(selectedTree); // set x0 and y0 based on svg dimensions?
 
 
 // ---------- D3 tree variables and utils
@@ -189,7 +189,7 @@ var svgwidth = 700;
 
 var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
-var svg_ex1 = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
+var svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
 				.append('svg').style('background', 'grey')
 				.classed(webvars.treeClassName, true)
 				.attr('width', svgwidth)
@@ -451,7 +451,7 @@ setTimeout(() =>
 {
 	MathJax.Hub.Register.StartupHook("End", function() {
 		setTimeout(() => {
-			svg_ex1.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
+			svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
 				var self = d3.select(this),
 					g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
@@ -474,7 +474,7 @@ setTimeout(() =>
 		}, 1);
 	});
 
-	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svg_ex1.node()]);
+	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svgtree.node()]);
 
 	setTimeout(() =>
 	{
@@ -486,7 +486,7 @@ setTimeout(() =>
 }, 1000);
 
 // setTimeout(() => {
-// 	svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+// 	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
 // 		var self = d3.select(this),
 // 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
@@ -514,7 +514,7 @@ function MathJaxRuleText()
 	{
 		MathJax.Hub.Register.StartupHook("End", function() {
 			setTimeout(() => {
-				svg_ex1.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+				svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
 					var self = d3.select(this),
 						g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
