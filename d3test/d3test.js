@@ -108,6 +108,83 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
     iterationHeight++;
 }
 
+function logNodeDimensions()
+{
+	visitNodes_preOrder(myroot, writeNodeDimensions);
+}
+
+function writeNodeDimensions(node)
+{ // if has a tex node, then use that one, getBBox and getBoundingClientRect
+
+	var texNode = d3.select(`${webvars.nodeContainerTag}#${node.data.id} > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+	
+	var boundingBoxCrop = {
+		x: -1,
+		y: -1,
+		width: -1,
+		height: -1
+	}
+
+	var clientBoundingRect = {
+		x: -1,
+		y: -1,
+		width: -1,
+		height: -1
+	}
+
+	var treeDataFields = {
+		x: node.x,
+		y: node.y
+	}
+
+	if (texNode)
+	{
+		var texNodeBBox = texNode.getBBox();
+
+		boundingBoxCrop.x = texNodeBBox.x;
+		boundingBoxCrop.y = texNodeBBox.y;
+		boundingBoxCrop.width = texNodeBBox.width;
+		boundingBoxCrop.height = texNodeBBox.height;
+
+		var texNodeBRect = texNode.getBoundingClientRect();
+
+		clientBoundingRect.x = texNodeBRect.x;
+		clientBoundingRect.y = texNodeBRect.y;
+		clientBoundingRect.width = texNodeBRect.width;
+		clientBoundingRect.height = texNodeBRect.height;
+	}
+	else
+	{
+		// position rect based on text
+		var textNodeBox = d3.select(`${webvars.nodeContainerTag}#${node.data.id}
+									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${node.data.id}]`)
+							.node()
+							.getBBox();
+
+		boundingBoxCrop.x = textNodeBox.x;
+		boundingBoxCrop.y = textNodeBox.y;
+		boundingBoxCrop.width = textNodeBox.width;
+		boundingBoxCrop.height = textNodeBox.height;
+
+		var textNodeBRect = d3.select(`${webvars.nodeContainerTag}#${node.data.id}
+									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${node.data.id}]`)
+							.node()
+							.getBoundingClientRect();
+
+		clientBoundingRect.x = textNodeBRect.x;
+		clientBoundingRect.y = textNodeBRect.y;
+		clientBoundingRect.width = textNodeBRect.width;
+		clientBoundingRect.height = textNodeBRect.height;
+	}
+
+
+
+	console.log(`proposition: ${node.proposition}
+	BBox: ${JSON.stringify(boundingBoxCrop)}
+	ClientRect: ${JSON.stringify(clientBoundingRect)}
+	Tree data fields: ${JSON.stringify(treeDataFields)}`);
+}
+
 // ---------- Examples
 
 var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
