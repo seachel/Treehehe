@@ -51,11 +51,38 @@ var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
   "A left",
   "A right");
 
+var treeExample1 = makeNode("A", "$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+	[
+		makeNode("B", "$q \\wedge s$",
+		[
+			makeNode("C", "$q$",
+			[
+				makeNode("D", "$p$",
+				[
+					makeNode("E", "$p \\wedge r$", [], "$u$")
+				],
+				"$\\wedge_{E_1}$"),
+				makeNode("F", "$p \\rightarrow q$", null)
+			]),
+			makeNode("G", "$s$",
+			[
+				makeNode("H", "$r$",
+				[
+					makeNode("I", "$p \\wedge u$", [], "$u$")
+				],
+				"$\\wedge_{E_2}$"),
+				makeNode("J", "$r \\rightarrow s$", null)
+			],
+			"$\\wedge_E$")
+		],
+		"$\\wedge_I$")
+	],
+	"$\\rightarrow$_{I^u}");
 
 
 // ---------- Data in d3 heirarchy object
 
-var myroot = d3.hierarchy(data); // set x0 and y0 based on svg dimensions?
+var myroot = d3.hierarchy(treeExample1); // set x0 and y0 based on svg dimensions?
 
 
 // ---------- Create tree
