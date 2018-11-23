@@ -539,11 +539,11 @@ window.onload = () =>
 			});
 
 			PostRender();
+
+			MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+
+			var queue = MathJax.Callback.Queue([MathJaxRuleText]);
 	});
-
-	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-
-	MathJaxRuleText();
 }
 
 // setTimeout(() =>
@@ -612,31 +612,49 @@ window.onload = () =>
 
 function MathJaxRuleText()
 {
-	setTimeout(() =>
-	{
-		MathJax.Hub.Register.StartupHook("End", function() {
-			setTimeout(() => {
-				svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
-					var self = d3.select(this),
-						g = self.select(`${webvars.nodeTextTag} > span > svg`);
-
-					if (g.node())
-					{
-						g.remove();
-						self.append(webvars.texContainerTag)
-							.classed(webvars.texContainerClass, true)
-							.attr('width', '100%')
-							.style('overflow', 'visible')
-							.on('click', node_onclick)
-							.append(function(){
-								return g.node();
-							})
-							// .attr('width', '50%')
-							// .attr('x', '-25%');
-					}
-				});
-
-			}, 1);
+	// setTimeout(() =>
+	// {
+		svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+			var self = d3.select(this),
+				g = self.select(`${webvars.nodeTextTag} > span > svg`);
+			debugger;
+			if (g.node())
+			{
+				g.remove();
+				self.append(webvars.texContainerTag)
+					.classed(webvars.texContainerClass, true)
+					.attr('width', '100%')
+					.style('overflow', 'visible')
+					.on('click', node_onclick)
+					.append(function(){
+						return g.node();
+					})
+					// .attr('width', '50%')
+					// .attr('x', '-25%');
+			}
 		});
-	}, 1500); // this timeout length must be after previous one
+
+// 		MathJax.Hub.Register.StartupHook("End", function() {
+
+// 				svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+// 					var self = d3.select(this),
+// 						g = self.select(`${webvars.nodeTextTag} > span > svg`);
+// console.log("Doing it.")
+// 					if (g.node())
+// 					{
+// 						g.remove();
+// 						self.append(webvars.texContainerTag)
+// 							.classed(webvars.texContainerClass, true)
+// 							.attr('width', '100%')
+// 							.style('overflow', 'visible')
+// 							.on('click', node_onclick)
+// 							.append(function(){
+// 								return g.node();
+// 							})
+// 							// .attr('width', '50%')
+// 							// .attr('x', '-25%');
+// 					}
+// 				});
+		// });
+	// }, 1500); // this timeout length must be after previous one
 }
