@@ -299,6 +299,9 @@ d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${we
   .text(d => d.data.proposition)
   .on('click', node_onclick);
 
+// Add left and right content
+AddLeftRightContent();
+
 
 // ------------------------------ Functions to Update and Add to Tree Layout
 
@@ -340,24 +343,16 @@ function PositionBoundingRect()
 	// 	.attr('width', d => getPropositionBoundingBox(d.data.id).width)
 	// 	.attr('height', d => getPropositionBoundingBox(d.data.id).height);
 }
-
+// split this into AddLeftRightContent and PositionLeftRightContent
 function AddLeftRightContent()
 {
-	// left content
 	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
 		.append(webvars.ruleTextContainerTag)
 		.classed(webvars.sideConditionClass, true)
 		.classed(webvars.ruleTextClass, true)
 		.style('overflow', 'visible')
 		.attr(webvars.nodeIdAttr, d => d.data.id)
-		.attr('transform', d =>
-		{
-			var x = getRuleDisplayLRBound(d).left;
-
-			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
-		})
-		.attr('text-anchor', 'end')
-
+		.attr('text-anchor', 'end');
 
 	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
 		.append(webvars.nodeTextTag)
@@ -375,13 +370,7 @@ function AddLeftRightContent()
 		.classed(webvars.ruleTextClass, true)
 		.style('overflow', 'visible')
 		.attr(webvars.nodeIdAttr, d => d.data.id)
-		.attr('transform', d =>
-		{
-			var x = getRuleDisplayLRBound(d).right;
-
-			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
-		})
-		.attr('text-anchor', 'start')
+		.attr('text-anchor', 'start');
 
 	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
 		.append(webvars.nodeTextTag)
@@ -391,6 +380,27 @@ function AddLeftRightContent()
 		.attr('dy', '0.35em')
 		.attr('alignment-baseline', 'alphabetical')
 		.text(d => d.data.ruleName);
+}
+
+function PositionLeftRightContent()
+{
+	// left content
+	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
+		.attr('transform', d =>
+		{
+			var x = getRuleDisplayLRBound(d).left;
+
+			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
+		});
+
+	// right content
+	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
+		.attr('transform', d =>
+		{
+			var x = getRuleDisplayLRBound(d).right;
+
+			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
+		});
 }
 
 function getNodeLeftRightContentBBox(nodeId)
@@ -511,7 +521,7 @@ function selectedHNodeOutput(selectedHNode)
 function PostRender()
 {
 	AddProofTreeLines();
-	AddLeftRightContent();
+	PositionLeftRightContent();
 	PositionBoundingRect();
 }
 
@@ -540,9 +550,7 @@ window.onload = () =>
 
 			PostRender();
 
-			MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-
-			var queue = MathJax.Callback.Queue([MathJaxRuleText]);
+			MathJaxRuleText();
 	});
 }
 
@@ -551,7 +559,7 @@ function MathJaxRuleText()
 	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
 		var self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
-		// debugger;
+
 		if (g.node())
 		{
 			g.remove();
@@ -562,9 +570,7 @@ function MathJaxRuleText()
 				.on('click', node_onclick)
 				.append(function(){
 					return g.node();
-				})
-				// .attr('width', '50%')
-				// .attr('x', '-25%');
+				});
 		}
 	});
 }
