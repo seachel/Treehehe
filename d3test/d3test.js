@@ -241,7 +241,7 @@ var proofHeight = myroot.height + 1;
 
 var treeHeight = proofHeight * heightPerProofRow;
 
-var treeWidth = 700; // TODO: need to compute based on example
+var treeWidth = 900; // TODO: need to compute based on example
 
 // ---------- Create tree
 
@@ -257,7 +257,7 @@ mytree(myroot);
 // ---------- Set up DOM content
 
 var svgheight = 400;
-var svgwidth = 700;
+var svgwidth = treeWidth;
 
 var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
@@ -440,10 +440,6 @@ function getRuleDisplayLRBound(hierarchyObj)
 	{
 		result.right = result.left;
 	}
-	else
-	{
-		debugger;
-	}
 
 	return result;
 }
@@ -519,7 +515,7 @@ function PostRender()
 	PositionBoundingRect();
 }
 
-setTimeout(() =>
+window.onload = () =>
 {
 	MathJax.Hub.Register.StartupHook("End", function() {
 		setTimeout(() => {
@@ -548,14 +544,55 @@ setTimeout(() =>
 
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svgtree.node()]);
 
-	setTimeout(() =>
-	{
-		PostRender();
-	}, 1);
+	MathJax.Hub.Queue(["PostRender"]);
+	// setTimeout(() =>
+	// {
+	// 	PostRender();
+	// }, 500);
 
-	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+	MathJax.Hub.Typeset();
+	// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+}
 
-}, 1000);
+// setTimeout(() =>
+// {
+// 	// add something like `onpageready`
+// 	MathJax.Hub.Register.StartupHook("End", function() {
+// 		setTimeout(() => {
+// 			svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
+// 				var self = d3.select(this),
+// 					g = self.select(`${webvars.nodeTextTag} > span > svg`);
+
+// 				if (g.node())
+// 				{
+// 					g.remove();
+// 					self.append(webvars.texContainerTag)
+// 						.classed(webvars.texContainerClass, true)
+// 						.attr('width', '100%')
+// 						.style('overflow', 'visible')
+// 						.on('click', node_onclick)
+// 						.append(function(){
+// 							return g.node();
+// 						})
+// 						.attr('width', '50%')
+// 						.attr('x', '-25%');
+// 				}
+// 			});
+
+// 		}, 1);
+// 	});
+
+// 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svgtree.node()]);
+
+// 	setTimeout(() =>
+// 	{
+// 		PostRender();
+// 	}, 1);
+
+// 	MathJax.Hub.Typeset();
+// 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+
+// }, 1);
 
 // setTimeout(() => {
 // 	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
