@@ -18,7 +18,9 @@ var webvars = {
 	nodeTextClass: "node-text",
 	ruleTextClass: "rule-text",
 	texContainerTag: "g",
-	texContainerClass: "tex-container"	
+	texContainerClass: "tex-container",
+	focusRectClass: "focus-rect",
+	visitedRectClass: "visited-rect"
 }
 
 // ------------------------------ Tree Data ------------------------------
@@ -403,11 +405,6 @@ function PositionLeftRightContent()
 		});
 }
 
-function getNodeLeftRightContentBBox(nodeId)
-{
-	// find text node or latex svg for node's left and right content
-}
-
 
 function getRuleDisplayLRBound(hierarchyObj)
 {
@@ -485,6 +482,18 @@ function getPropositionBoundingBox(nodeId)
 			height: textNodeBox.height
 		};
 	}
+}
+
+
+// ---------- Interaction
+
+function focusNode(selectedHNode)
+{
+	// what happens when a node gets focus
+	// update selection panel
+	// update style of selection.... update all styles, so that old selection not styled as if selected?
+	//	- will need to traverse tree again?
+	//	- find previous selection and remove its styling class?
 }
 
 var index = 0;

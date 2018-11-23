@@ -1,0 +1,11 @@
+.focused-node-rect
+{
+	stroke: red;
+	fill: pink;
+}
+
+.visited-node-rect
+{
+	stroke: darkgrey;
+	fill: lightgrey;
+}
