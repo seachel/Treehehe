@@ -21,6 +21,11 @@
 				//delayStartupUntil: onload
 				//skipStartupTypeset: true
 			});
+
+			MathJax.Hub.Register.StartupHook("End", function()
+			{
+				MathJaxSVGManipulation();
+			});
 		</script>
 
 		

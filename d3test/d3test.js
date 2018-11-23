@@ -525,38 +525,9 @@ function PostRender()
 	PositionBoundingRect();
 }
 
-window.onload = () =>
+function MathJaxSVGManipulation()
 {
-	MathJax.Hub.Register.StartupHook("End", function() {
-			svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
-				var self = d3.select(this),
-					g = self.select(`${webvars.nodeTextTag} > span > svg`);
-
-				if (g.node())
-				{
-					g.remove();
-					self.append(webvars.texContainerTag)
-						.classed(webvars.texContainerClass, true)
-						.attr('width', '100%')
-						.style('overflow', 'visible')
-						.on('click', node_onclick)
-						.append(function(){
-							return g.node();
-						})
-						.attr('width', '50%')
-						.attr('x', '-25%');
-				}
-			});
-
-			PostRender();
-
-			MathJaxRuleText();
-	});
-}
-
-function MathJaxRuleText()
-{
-	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+	svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
 		var self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
@@ -570,7 +541,29 @@ function MathJaxRuleText()
 				.on('click', node_onclick)
 				.append(function(){
 					return g.node();
-				});
+				})
+				.attr('width', '50%')
+				.attr('x', '-25%');
 		}
+
+		PostRender();
+
+		svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+			var self = d3.select(this),
+				g = self.select(`${webvars.nodeTextTag} > span > svg`);
+	
+			if (g.node())
+			{
+				g.remove();
+				self.append(webvars.texContainerTag)
+					.classed(webvars.texContainerClass, true)
+					.attr('width', '100%')
+					.style('overflow', 'visible')
+					.on('click', node_onclick)
+					.append(function(){
+						return g.node();
+					});
+			}
+		});
 	});
 }
