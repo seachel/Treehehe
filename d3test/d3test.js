@@ -34,14 +34,21 @@ function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondit
 {
 	var nodeId = makeId();
 
-	return {
+	var result = {
 		name: nodeId,
 		proposition: proposition,
 		children: children,
 		id: nodeId,
 		ruleName: ruleName,
 		sideCondition: sideCondition
-	};
+	}
+
+	if (children === null)
+	{
+		result["isPremise"] = true;
+	}
+
+	return result;
 }
 
 // ---------- Tree Traversal
@@ -403,7 +410,6 @@ function getRuleDisplayLRBound(hierarchyObj)
 		right: currentPropBB.x + currentPropBB.width
 	};
 
-// need cases for children undefined vs children null
 	if (hierarchyObj.children)
 	{
 		if (hierarchyObj.children.length > 0)
@@ -412,10 +418,6 @@ function getRuleDisplayLRBound(hierarchyObj)
 			var firstChildPropBB = getPropositionBoundingBox(firstChild.data.id);
 
 			var xDiffLeft = hierarchyObj.x - firstChild.x;
-
-			if (hierarchyObj.data.proposition === "$p$")
-			{
-			}
 
 			if (xDiffLeft > 0 ||
 				((xDiffLeft == 0) && (firstChildPropBB.x < currentPropBB.x)))
@@ -434,9 +436,13 @@ function getRuleDisplayLRBound(hierarchyObj)
 			}
 		}
 	}
-	else if (hierarchyObj.children === null)
+	else if (hierarchyObj.data.isPremise)
 	{
 		result.right = result.left;
+	}
+	else
+	{
+		debugger;
 	}
 
 	return result;
