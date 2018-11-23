@@ -30,18 +30,6 @@ var makeId = () => {
 	return `node${id}`;
 }
 
-function makeNode(name, proposition, children = [], leftContent = "", rightContent = "")
-{
-	return {
-    	name: name,
-	    proposition: proposition,
-		children: children,
-		id: makeId(),
-		leftContent: leftContent,
-		rightContent: rightContent
-	};
-}
-
 function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondition = "")
 {
 	var nodeId = makeId();
@@ -187,40 +175,40 @@ function writeNodeDimensions(node)
 
 // ---------- Examples
 
-var data = makeNode("A ofg dlfgh dlfkgjh ", "$x \\rightarrow y$",
+var data = makeProofTreeNode("$x \\rightarrow y$",
 	[
-		makeNode("B dfgh fdgh fgdh ", "$\\forall x, P \; x$"),
-		makeNode("C ser ser seh", "1 + 2 + 3 = :)",
+		makeProofTreeNode("$\\forall x, P \; x$"),
+		makeProofTreeNode("1 + 2 + 3 = :)",
 		[
-			makeNode("E blah blah doop", '$x \\supset y$'),
-			makeNode("F wut wot lsdkjf", "$\\wedge$")
+			makeProofTreeNode("$x \\supset y$"),
+			makeProofTreeNode("$\\wedge$")
 		]),
-		makeNode("D fyuk yfk fy", "$\\forall x$")
+		makeProofTreeNode("$\\forall x$")
 	],
-  "A left",
-  "A right");
+  "A right",
+  "A left");
 
-var treeExample1 = makeNode("A", "$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+var treeExample1 = makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 	[
-		makeNode("B", "$q \\wedge s$",
+		makeProofTreeNode("$q \\wedge s$",
 		[
-			makeNode("C", "$q$",
+			makeProofTreeNode("$q$",
 			[
-				makeNode("D", "$p$",
+				makeProofTreeNode("$p$",
 				[
-					makeNode("E", "$p \\wedge r$", [], "$u$")
+					makeProofTreeNode("$p \\wedge r$", [], "$u$")
 				],
 				"$\\wedge_{E_1}$"),
-				makeNode("F", "$p \\rightarrow q$", null)
+				makeProofTreeNode("$p \\rightarrow q$", null)
 			]),
-			makeNode("G", "$s$",
+			makeProofTreeNode("$s$",
 			[
-				makeNode("H", "$r$",
+				makeProofTreeNode("$r$",
 				[
-					makeNode("I", "$p \\wedge u$", [], "$u$")
+					makeProofTreeNode("$p \\wedge u$", [], "$u$")
 				],
 				"$\\wedge_{E_2}$"),
-				makeNode("J", "$r \\rightarrow s$", null)
+				makeProofTreeNode("$r \\rightarrow s$", null)
 			],
 			"$\\wedge_E$")
 		],
@@ -371,7 +359,7 @@ function AddLeftRightContent()
 		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('dy', '0.35em')
 		.attr('alignment-baseline', 'alphabetical')
-		.text(d => d.data.leftContent);
+		.text(d => d.data.sideCondition);
 
 	// right content
 	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
@@ -395,7 +383,7 @@ function AddLeftRightContent()
 		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('dy', '0.35em')
 		.attr('alignment-baseline', 'alphabetical')
-		.text(d => d.data.rightContent);
+		.text(d => d.data.ruleName);
 }
 
 function getNodeLeftRightContentBBox(nodeId)
@@ -513,8 +501,8 @@ function selectedHNodeOutput(selectedHNode)
 {
 	return `id: ${selectedHNode.data.id},
 	proposition: ${selectedHNode.data.proposition},
-	rule name: ${selectedHNode.data.rightContent},
-	side conditions: ${selectedHNode.data.leftContent}`
+	rule name: ${selectedHNode.data.ruleName},
+	side conditions: ${selectedHNode.data.sideCondition}`
 }
 
 
