@@ -515,8 +515,40 @@ function PostRender()
 	PositionBoundingRect();
 }
 
-// window.onload = () =>
+window.onload = () =>
+{
+	MathJax.Hub.Register.StartupHook("End", function() {
+			svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
+				var self = d3.select(this),
+					g = self.select(`${webvars.nodeTextTag} > span > svg`);
+
+				if (g.node())
+				{
+					g.remove();
+					self.append(webvars.texContainerTag)
+						.classed(webvars.texContainerClass, true)
+						.attr('width', '100%')
+						.style('overflow', 'visible')
+						.on('click', node_onclick)
+						.append(function(){
+							return g.node();
+						})
+						.attr('width', '50%')
+						.attr('x', '-25%');
+				}
+			});
+
+			PostRender();
+	});
+
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+
+	MathJaxRuleText();
+}
+
+// setTimeout(() =>
 // {
+// 	// add something like `onpageready`
 // 	MathJax.Hub.Register.StartupHook("End", function() {
 // 		setTimeout(() => {
 // 			svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
@@ -544,55 +576,16 @@ function PostRender()
 
 // 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svgtree.node()]);
 
-// 	// MathJax.Hub.Queue(["PostRender"]);
 // 	setTimeout(() =>
 // 	{
 // 		PostRender();
-// 	}, 500);
+// 	}, 1);
 
 // 	MathJax.Hub.Typeset();
 // 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-// }
 
-setTimeout(() =>
-{
-	// add something like `onpageready`
-	MathJax.Hub.Register.StartupHook("End", function() {
-		setTimeout(() => {
-			svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
-				var self = d3.select(this),
-					g = self.select(`${webvars.nodeTextTag} > span > svg`);
+// }, 1000);
 
-				if (g.node())
-				{
-					g.remove();
-					self.append(webvars.texContainerTag)
-						.classed(webvars.texContainerClass, true)
-						.attr('width', '100%')
-						.style('overflow', 'visible')
-						.on('click', node_onclick)
-						.append(function(){
-							return g.node();
-						})
-						.attr('width', '50%')
-						.attr('x', '-25%');
-				}
-			});
-
-		}, 1);
-	});
-
-	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svgtree.node()]);
-
-	setTimeout(() =>
-	{
-		PostRender();
-	}, 1);
-
-	MathJax.Hub.Typeset();
-	// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-
-}, 1000);
 
 // setTimeout(() => {
 // 	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
