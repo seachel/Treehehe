@@ -544,11 +544,11 @@ window.onload = () =>
 
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub, svgtree.node()]);
 
-	MathJax.Hub.Queue(["PostRender"]);
-	// setTimeout(() =>
-	// {
-	// 	PostRender();
-	// }, 500);
+	// MathJax.Hub.Queue(["PostRender"]);
+	setTimeout(() =>
+	{
+		PostRender();
+	}, 500);
 
 	MathJax.Hub.Typeset();
 	// MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
