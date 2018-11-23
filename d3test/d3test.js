@@ -415,7 +415,7 @@ function getRuleDisplayLRBound(hierarchyObj)
 		right: currentPropBB.x + currentPropBB.width
 	};
 
-
+// need cases for children undefined vs children null
 	if (hierarchyObj.children)
 	{
 		if (hierarchyObj.children.length > 0)
@@ -446,7 +446,7 @@ function getRuleDisplayLRBound(hierarchyObj)
 			}
 		}
 	}
-	else
+	else if (hierarchyObj.children === null)
 	{
 		result.right = result.left;
 	}
