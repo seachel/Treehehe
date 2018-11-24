@@ -9,7 +9,7 @@ var webvars = {
 	nodeContainerTag: "g",
 	nodeContainerClass: "node",
 	backgroundTag: "rect",
-	nodeBackgroundClass: "node",
+	nodeBackgroundClass: "node-rect",
 	ruleTextContainerTag: "g",
 	sideConditionClass: "rule-text-left",
 	ruleNameClass: "rule-text-right",
@@ -21,8 +21,7 @@ var webvars = {
 	texContainerClass: "tex-container",
 	focusRectClass: "focus-rect",
 	visitedRectClass: "visited-rect",
-	nodePadding: 5,
-	nodeBorderThickness: 3
+	nodePadding: 5
 }
 
 // ------------------------------ Tree Data ------------------------------
@@ -289,9 +288,6 @@ d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
 	.append(webvars.backgroundTag)
 	.classed(webvars.nodeBackgroundClass, true)
 	.attr(webvars.nodeIdAttr, d => d.data.id)
-	.attr('fill', 'white')
-	.attr('stroke', 'green')
-	.attr('stroke-width', webvars.nodeBorderThickness)
 	.on('click', node_onclick);
 
 
