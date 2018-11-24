@@ -490,7 +490,7 @@ function getPropositionBoundingBox(nodeId)
 
 // ---------- Interaction
 
-var myIterator = makeTreeIterator(myroot, focusNode);
+var myIterator = makeTreeIterator(myroot, visitNodes_preOrder, focusNode);
 
 d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
 	.on('click', myIterator.next);
@@ -528,12 +528,12 @@ function updateSelectionPanel(selectedHNode)
 	
 	MathJax.Hub.Typeset();
 }
-
-function makeTreeIterator(root, nodeCallback)
+// Bad: how to make sure the callbacks have the correct type?
+function makeTreeIterator(root, traversalFn, nodeCallback)
 {
 	let nodesInOrder = [];
 
-	visitNodes_postOrder(root, n => nodesInOrder.push(n));
+	traversalFn(root, n => nodesInOrder.push(n));
 	
 	let nextIndex = -1;
 	let iterationCount = 0;
