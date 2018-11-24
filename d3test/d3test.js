@@ -512,22 +512,8 @@ function updateSelectionPanel(selectedHNode)
 	MathJax.Hub.Typeset();
 }
 
-var index = 0;
-var colors = ['blue', 'red', 'yellow', 'white'];
-
 function node_onclick(selectedHNode)
 {
-	d3.select('body').style('background', colors[index])
-
-	if (index == (colors.length - 1))
-	{
-		index = 0;
-	}
-	else
-	{
-		index++;
-	}
-
 	focusNode(selectedHNode);
 }
 
