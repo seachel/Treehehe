@@ -518,17 +518,40 @@ function updateSelectionPanel(selectedHNode)
 	MathJax.Hub.Typeset();
 }
 
-var nodesInOrder = [];
-
-function makeTreeIterator()
+function makeTreeIterator(root)
 {
-	visitNodes_postOrder(myroot, n => nodesInOrder.push(n));
-	// return an object containing:
-	//  - a function `next`, which returns an object containing:
-	//    * `value`, representing next item
-	//    * `done`, which is true when all elements consumed, else false
+	let nodesInOrder = [];
 
-	// use a range iterator on an array holding the list of values in order?
+	visitNodes_postOrder(root, n => nodesInOrder.push(n));
+	
+	let nextIndex = 0;
+    let iterationCount = 0;
+	let end = nodesInOrder.length - 1;
+
+	const rangeIterator = {
+		next: function()
+		{
+			let result;
+
+			if (nextIndex <= end) {
+				result = { value: nextIndex, done: false };
+
+				focusNode(nodesInOrder[nextIndex]); // move later?
+
+				nextIndex += 1;
+				iterationCount++;
+			}
+			else
+			{
+				result = { value: iterationCount, done: true };
+			}
+		
+			return result;
+		},
+		nodeArray: nodesInOrder
+	};
+	
+    return rangeIterator;
 }
 
 // Tree traversal:
