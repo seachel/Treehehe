@@ -490,10 +490,26 @@ function getPropositionBoundingBox(nodeId)
 function focusNode(selectedHNode)
 {
 	// what happens when a node gets focus
-	// update selection panel
-	// update style of selection.... update all styles, so that old selection not styled as if selected?
-	//	- will need to traverse tree again?
-	//	- find previous selection and remove its styling class?
+	// any need to hold id of focused node as program state?
+	updateSelectionPanel(selectedHNode);
+	updateSelectionStyle(selectedHNode);
+}
+
+function updateSelectionStyle(selectedHNode)
+{
+	// traverse the tree for node ids,
+	//  - for the focused node, add class (classed(class-name, true))
+	//  - for all other nodes, remove class(classed(class-name, false))
+	// if node was previously focused and we're in walkthrough mode, make node that had focus style have new class "visited" or something
+}
+
+function updateSelectionPanel(selectedHNode)
+{
+	// make sure anything previously in the panel is cleared
+	d3.select(`.tree-selection`)
+		.text(selectedHNodeOutput(selectedHNode));
+	
+	MathJax.Hub.Typeset();
 }
 
 var index = 0;
@@ -512,10 +528,7 @@ function node_onclick(selectedHNode)
 		index++;
 	}
 
-	d3.select(`.tree-selection`)
-		.text(selectedHNodeOutput(selectedHNode));
-	
-	MathJax.Hub.Typeset();
+	focusNode(selectedHNode);
 }
 
 function selectedHNodeOutput(selectedHNode)
