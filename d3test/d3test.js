@@ -501,7 +501,21 @@ function updateSelectionStyle(selectedHNode)
 	//  - for the focused node, add class (classed(class-name, true))
 	//  - for all other nodes, remove class(classed(class-name, false))
 	// if node was previously focused and we're in walkthrough mode, make node that had focus style have new class "visited" or something
+	var selectedId = selectedHNode.data.id;
+
+	// if previously selected and will no longer be selected and we are in walkthrough mode, remove focused class and add previously focused class
+
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}[${webvars.nodeIdAttr}=${selectedId}]`)
+		.classed(`${webvars.focusRectClass}`, true);
+
+
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
+		.filter(d => d.data.id != selectedId)
+		.classed(`${webvars.focusRectClass}`, false);
+	// select all that do not match this id? remove previously focused?
 }
+
+
 
 function updateSelectionPanel(selectedHNode)
 {
