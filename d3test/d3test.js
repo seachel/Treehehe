@@ -507,10 +507,7 @@ function updateSelectionStyle(selectedHNode)
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
 		.filter(d => d.data.id != selectedId)
 		.classed(`${webvars.focusRectClass}`, false);
-	// select all that do not match this id? remove previously focused?
 }
-
-
 
 function updateSelectionPanel(selectedHNode)
 {
@@ -519,6 +516,19 @@ function updateSelectionPanel(selectedHNode)
 		.text(selectedHNodeOutput(selectedHNode));
 	
 	MathJax.Hub.Typeset();
+}
+
+var nodesInOrder = [];
+
+function makeTreeIterator()
+{
+	visitNodes_postOrder(myroot, n => nodesInOrder.push(n));
+	// return an object containing:
+	//  - a function `next`, which returns an object containing:
+	//    * `value`, representing next item
+	//    * `done`, which is true when all elements consumed, else false
+
+	// use a range iterator on an array holding the list of values in order?
 }
 
 // Tree traversal:
