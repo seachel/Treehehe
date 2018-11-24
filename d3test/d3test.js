@@ -533,7 +533,7 @@ function makeTreeIterator(root)
 		{
 			let result;
 
-			if (nextIndex <= end) {
+			if (nextIndex < end) {
 				nextIndex += 1;
 				iterationCount++;
 
@@ -552,7 +552,7 @@ function makeTreeIterator(root)
 		{
 			let result;
 
-			if (nextIndex >= 0) {
+			if (nextIndex > 0) {
 				nextIndex -= 1;
 				iterationCount--;
 
