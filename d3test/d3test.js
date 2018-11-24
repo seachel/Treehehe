@@ -21,7 +21,10 @@ var webvars = {
 	texContainerClass: "tex-container",
 	focusRectClass: "focus-rect",
 	visitedRectClass: "visited-rect",
-	nodePadding: 5
+	nodePadding: 5,
+	navButtonTag: "div",
+	forwardButtonClass: "btn-forward",
+	backButtonClass: "btn-backward"
 }
 
 // ------------------------------ Tree Data ------------------------------
@@ -487,6 +490,14 @@ function getPropositionBoundingBox(nodeId)
 
 // ---------- Interaction
 
+var myIterator = makeTreeIterator(myroot, focusNode);
+
+d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
+	.on('click', myIterator.next);
+
+d3.select(`${webvars.navButtonTag}.${webvars.backButtonClass}`)
+	.on('click', myIterator.previous);
+
 function focusNode(selectedHNode)
 {
 	// any need to hold id of focused node as program state?
@@ -518,7 +529,7 @@ function updateSelectionPanel(selectedHNode)
 	MathJax.Hub.Typeset();
 }
 
-function makeTreeIterator(root)
+function makeTreeIterator(root, nodeCallback)
 {
 	let nodesInOrder = [];
 
@@ -539,7 +550,10 @@ function makeTreeIterator(root)
 
 				result = { value: nextIndex, done: false, start: false };
 
-				focusNode(nodesInOrder[nextIndex]); // move later?
+				if (nodeCallback)
+				{
+					nodeCallback(nodesInOrder[nextIndex])
+				}
 			}
 			else
 			{
@@ -558,7 +572,10 @@ function makeTreeIterator(root)
 
 				result = { value: nextIndex, done: false, start: false };
 
-				focusNode(nodesInOrder[nextIndex]); // move later?
+				if (nodeCallback)
+				{
+					nodeCallback(nodesInOrder[nextIndex]);
+				}
 			}
 			else
 			{
@@ -572,12 +589,6 @@ function makeTreeIterator(root)
 	
     return rangeIterator;
 }
-
-// Tree traversal:
-//  - build array of nodes to visit in the desired order; use traversal functions to construct this
-//  - will need field for the currently focused node?
-//    * use iterator?
-// will need id instead of node to be passed?
 
 function node_onclick(selectedHNode)
 {
