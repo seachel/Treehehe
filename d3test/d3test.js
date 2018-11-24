@@ -524,8 +524,8 @@ function makeTreeIterator(root)
 
 	visitNodes_postOrder(root, n => nodesInOrder.push(n));
 	
-	let nextIndex = 0;
-    let iterationCount = 0;
+	let nextIndex = -1;
+	let iterationCount = 0;
 	let end = nodesInOrder.length - 1;
 
 	const rangeIterator = {
@@ -534,16 +534,35 @@ function makeTreeIterator(root)
 			let result;
 
 			if (nextIndex <= end) {
-				result = { value: nextIndex, done: false };
-
-				focusNode(nodesInOrder[nextIndex]); // move later?
-
 				nextIndex += 1;
 				iterationCount++;
+
+				result = { value: nextIndex, done: false, start: false };
+
+				focusNode(nodesInOrder[nextIndex]); // move later?
 			}
 			else
 			{
-				result = { value: iterationCount, done: true };
+				result = { value: iterationCount, done: true, start: false };
+			}
+		
+			return result;
+		},
+		previous: function()
+		{
+			let result;
+
+			if (nextIndex >= 0) {
+				nextIndex -= 1;
+				iterationCount--;
+
+				result = { value: nextIndex, done: false, start: false };
+
+				focusNode(nodesInOrder[nextIndex]); // move later?
+			}
+			else
+			{
+				result = { value: iterationCount, done: false, start: true };
 			}
 		
 			return result;
