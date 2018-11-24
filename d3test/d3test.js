@@ -20,7 +20,9 @@ var webvars = {
 	texContainerTag: "g",
 	texContainerClass: "tex-container",
 	focusRectClass: "focus-rect",
-	visitedRectClass: "visited-rect"
+	visitedRectClass: "visited-rect",
+	nodePadding: 5,
+	nodeBorderThickness: 3
 }
 
 // ------------------------------ Tree Data ------------------------------
@@ -287,7 +289,9 @@ d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
 	.append(webvars.backgroundTag)
 	.classed(webvars.nodeBackgroundClass, true)
 	.attr(webvars.nodeIdAttr, d => d.data.id)
-	.attr('fill', 'white').attr('stroke', 'green')
+	.attr('fill', 'white')
+	.attr('stroke', 'green')
+	.attr('stroke-width', webvars.nodeBorderThickness)
 	.on('click', node_onclick);
 
 
@@ -319,8 +323,8 @@ function AddProofTreeLines()
 	{
 		return getRuleDisplayLRBound(d).right;
 	})
-	.attr('y1', d => -1 * heightPerProofRow / 2)
-	.attr('y2', d => -1 * heightPerProofRow / 2)
+	.attr('y1', d => -1 * heightPerProofRow / 2 + 5)
+	.attr('y2', d => -1 * heightPerProofRow / 2 + 5)
 	.attr('stroke', 'black');
 }
 
@@ -330,11 +334,11 @@ function PositionBoundingRect()
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
 		.attr('x', d =>
 		{
-			return getPropositionBoundingBox(d.data.id).x
+			return getPropositionBoundingBox(d.data.id).x - webvars.nodePadding
 		})
-		.attr('y', d => getPropositionBoundingBox(d.data.id).y)
-		.attr('width', d => getPropositionBoundingBox(d.data.id).width)
-		.attr('height', d => getPropositionBoundingBox(d.data.id).height);
+		.attr('y', d => getPropositionBoundingBox(d.data.id).y - webvars.nodePadding)
+		.attr('width', d => getPropositionBoundingBox(d.data.id).width + 2 * webvars.nodePadding)
+		.attr('height', d => getPropositionBoundingBox(d.data.id).height + 2 * webvars.nodePadding);
 	
 	// d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
 	// 	.attr('x', d =>
@@ -489,7 +493,6 @@ function getPropositionBoundingBox(nodeId)
 
 function focusNode(selectedHNode)
 {
-	// what happens when a node gets focus
 	// any need to hold id of focused node as program state?
 	updateSelectionPanel(selectedHNode);
 	updateSelectionStyle(selectedHNode);
@@ -497,10 +500,6 @@ function focusNode(selectedHNode)
 
 function updateSelectionStyle(selectedHNode)
 {
-	// traverse the tree for node ids,
-	//  - for the focused node, add class (classed(class-name, true))
-	//  - for all other nodes, remove class(classed(class-name, false))
-	// if node was previously focused and we're in walkthrough mode, make node that had focus style have new class "visited" or something
 	var selectedId = selectedHNode.data.id;
 
 	// if previously selected and will no longer be selected and we are in walkthrough mode, remove focused class and add previously focused class
@@ -525,6 +524,12 @@ function updateSelectionPanel(selectedHNode)
 	
 	MathJax.Hub.Typeset();
 }
+
+// Tree traversal:
+//  - build array of nodes to visit in the desired order; use traversal functions to construct this
+//  - will need field for the currently focused node?
+//    * use iterator?
+// will need id instead of node to be passed?
 
 function node_onclick(selectedHNode)
 {
