@@ -662,3 +662,8 @@ function MathJaxSVGManipulation()
 		});
 	});
 }
+
+// center scrolling
+var scrollNode = d3.select('.scroll-container').node();
+var scrollContainerWidth = scrollNode.clientWidth;
+scrollNode.scrollTo((treeWidth - scrollContainerWidth) / 2, 0);

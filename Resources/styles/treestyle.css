@@ -16,3 +16,22 @@
 	stroke: red;
 	fill: pink;
 }
+
+.scroll-container
+{
+	/* display: flex;
+	align-items: center;
+	align-content: center;
+	scroll-snap-type: y mandatory; */
+	/* display: flex;
+	justify-content: center; */
+	width: 500px;
+	height: 500px;
+	background: green;
+	overflow: auto;
+}
+
+.tree-container
+{
+	/* scroll-snap-align: center; */
+}
