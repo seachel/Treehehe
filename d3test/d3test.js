@@ -213,7 +213,8 @@ var treeExample1 = makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$
 				],
 				"$\\wedge_{E_1}$"),
 				makeProofTreeNode("$p \\rightarrow q$", null)
-			]),
+			],
+			"$\\rightarrow_E$"),
 			makeProofTreeNode("$s$",
 			[
 				makeProofTreeNode("$r$",
@@ -262,7 +263,7 @@ mytree(myroot);
 
 // ---------- Set up DOM content
 
-var svgheight = 400;
+var svgheight = treeHeight + (proofHeight * 2 * webvars.nodePadding);
 var svgwidth = treeWidth;
 
 var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
