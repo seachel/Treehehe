@@ -348,7 +348,7 @@ function PositionBoundingRect()
 	// 	.attr('width', d => getPropositionBoundingBox(d.data.id).width)
 	// 	.attr('height', d => getPropositionBoundingBox(d.data.id).height);
 }
-// split this into AddLeftRightContent and PositionLeftRightContent
+
 function AddLeftRightContent()
 {
 	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
@@ -395,7 +395,7 @@ function PositionLeftRightContent()
 		{
 			var x = getRuleDisplayLRBound(d).left;
 
-			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
+			return `translate(${x - webvars.nodePadding}, ${-1 * heightPerProofRow / 2})`
 		});
 
 	// right content
@@ -404,7 +404,7 @@ function PositionLeftRightContent()
 		{
 			var x = getRuleDisplayLRBound(d).right;
 
-			return `translate(${x}, ${-1 * heightPerProofRow / 2})`
+			return `translate(${x + webvars.nodePadding}, ${-1 * heightPerProofRow / 2})`
 		});
 }
 
@@ -508,7 +508,7 @@ function focusNode(selectedHNode)
 function updateSelectionStyle(selectedHNode)
 {
 	var selectedId = selectedHNode.data.id;
-
+// need previously visited, but after, to lose visited status? or have a different kind of visited status?
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.focusRectClass}`)
 		.classed(`${webvars.visitedRectClass}`, true)
 		.classed(`${webvars.focusRectClass}`, false);
