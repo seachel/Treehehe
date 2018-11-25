@@ -663,7 +663,8 @@ function MathJaxSVGManipulation()
 	});
 }
 
-// center scrolling
+// scrolling
 var scrollNode = d3.select('.scroll-container').node();
 var scrollContainerWidth = scrollNode.clientWidth;
-scrollNode.scrollTo((treeWidth - scrollContainerWidth) / 2, 0);
+var scrollContainerHeight = scrollNode.clientHeight;
+scrollNode.scrollTo((treeWidth - scrollContainerWidth) / 2, treeHeight - scrollContainerHeight);
