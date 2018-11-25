@@ -5,14 +5,14 @@
 	fill: white;
 }
 
-.focus-rect
-{
-	stroke: red;
-	fill: pink;
-}
-
 .visited-rect
 {
 	stroke: darkgrey;
 	fill: lightgrey;
+}
+
+.focus-rect
+{
+	stroke: red;
+	fill: pink;
 }
