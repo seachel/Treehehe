@@ -452,6 +452,13 @@ function getRuleDisplayLRBound(hierarchyObj)
 		result.right = result.left;
 	}
 
+	// add padding
+	if (result.right != result.left)
+	{
+		result.left -= webvars.nodePadding;
+		result.right += webvars.nodePadding;
+	}
+
 	return result;
 }
 
