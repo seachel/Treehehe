@@ -509,11 +509,12 @@ function updateSelectionStyle(selectedHNode)
 {
 	var selectedId = selectedHNode.data.id;
 
-	// if previously selected and will no longer be selected and we are in walkthrough mode, remove focused class and add previously focused class
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.focusRectClass}`)
+		.classed(`${webvars.visitedRectClass}`, true)
+		.classed(`${webvars.focusRectClass}`, false);
 
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}[${webvars.nodeIdAttr}=${selectedId}]`)
 		.classed(`${webvars.focusRectClass}`, true);
-
 
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
 		.filter(d => d.data.id != selectedId)
