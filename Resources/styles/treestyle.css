@@ -30,4 +30,5 @@
 .tree-container
 {
 	/* scroll-snap-align: center; */
+	margin: 0 auto;
 }
