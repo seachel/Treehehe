@@ -11,7 +11,6 @@ var webvars = {
 	nodeContainerTag: "g",
 	nodeContainerClass: "node",
 	backgroundTag: "rect",
-	nodeBackgroundClass: "node-rect",
 	ruleTextContainerTag: "g",
 	sideConditionClass: "rule-text-left",
 	ruleNameClass: "rule-text-right",
@@ -304,7 +303,7 @@ d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
 	.attr('transform', d => `translate(${d.x}, ${svgheight - d.y})`)
 	.attr('text-anchor', 'middle')
 	.append(webvars.backgroundTag)
-	.classed(webvars.nodeBackgroundClass, true)
+	.classed(webvars.nodeContainerClass, true)
 	.attr(webvars.nodeIdAttr, d => d.data.id)
 	.on('click', node_onclick);
 
@@ -345,7 +344,7 @@ function AddProofTreeLines()
 
 function PositionBoundingRect()
 {
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
 		.attr('x', d =>
 		{
 			return getPropositionBounds(d.data.id).x - stylingvars.nodePadding
@@ -568,10 +567,10 @@ function updateSelectionStyle(selectedHNode)
 		.classed(`${webvars.visitedRectClass}`, true)
 		.classed(`${webvars.focusRectClass}`, false);
 
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}[${webvars.nodeIdAttr}=${selectedId}]`)
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${selectedId}]`)
 		.classed(`${webvars.focusRectClass}`, true);
 
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
 		.filter(d => d.data.id != selectedId)
 		.classed(`${webvars.focusRectClass}`, false);
 }
