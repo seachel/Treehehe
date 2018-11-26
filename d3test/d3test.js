@@ -515,34 +515,7 @@ function getVisualItemBoundingBox(nodeId, itemContainerSelector)
 
 function getPropositionBoundingBox(nodeId)
 {
-	var texNode = d3.select(`${nodeElementSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
-
-	if (texNode)
-	{
-		var boundingBox = texNode.getBBox();
-
-		return {
-			x: boundingBox.x,
-			y: boundingBox.y,
-			width: boundingBox.width,
-			height: boundingBox.height
-		};
-	}
-	else
-	{
-		// position rect based on text
-		var textNodeBox = d3.select(`${nodeElementSelector}[${webvars.nodeIdAttr}=${nodeId}]
-									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
-							.node()
-							.getBBox();
-
-		return {
-			x: textNodeBox.x,
-			y: textNodeBox.y,
-			width: textNodeBox.width,
-			height: textNodeBox.height
-		};
-	}
+	return getVisualItemBoundingBox(nodeId, nodeElementSelector);
 }
 
 
