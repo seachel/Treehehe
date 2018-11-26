@@ -1,0 +1,8 @@
+TEMPLATE: DES/DEV
+        Application Domain or Setting for Use (1 slide)
+        User Tasks and How Vis will help (1 slide)
+        InfoVis Elements, e.g. Formalisms, Focus+Context, etc.) (1 slide)
+        Design Sketches (? slides)
+        Technology (Systems, Languages, Libraries) (1 slide)
+        Status, Prototypes, Whatever is Working (? slides)
+        Discussion (1 slide)
