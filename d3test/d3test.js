@@ -353,16 +353,24 @@ function PositionBoundingRect()
 		.attr('y', d => getPropositionBounds(d.data.id).y - stylingvars.nodePadding)
 		.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
 		.attr('height', d => getPropositionBounds(d.data.id).height + 2 * stylingvars.nodePadding);
-	
+
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
 		.attr('x', d =>
-		{ // need bounding box of rule text, not proposition
-			//... maybe add a variable to `getPropositionBounds` for the selector? rect[node-id] instead of g#nodeId?
-			return getPropositionBounds(d.data.id).x
+		{
+			return getRightContentBounds(d.data.id).x
 		})
-		.attr('y', d => getPropositionBounds(d.data.id).y)
-		.attr('width', d => getPropositionBounds(d.data.id).width)
-		.attr('height', d => getPropositionBounds(d.data.id).height);
+		.attr('y', d => getRightContentBounds(d.data.id).y)
+		.attr('width', d => getRightContentBounds(d.data.id).width)
+		.attr('height', d => getRightContentBounds(d.data.id).height);
+	
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
+		.attr('x', d =>
+		{
+			return getLeftContentBounds(d.data.id).x
+		})
+		.attr('y', d => getLeftContentBounds(d.data.id).y)
+		.attr('width', d => getLeftContentBounds(d.data.id).width)
+		.attr('height', d => getLeftContentBounds(d.data.id).height);
 }
 
 function AddLeftRightContent()
@@ -373,7 +381,10 @@ function AddLeftRightContent()
 		.classed(webvars.ruleTextClass, true)
 		.style('overflow', 'visible')
 		.attr(webvars.nodeIdAttr, d => d.data.id)
-		.attr('text-anchor', 'end');
+		.attr('text-anchor', 'end')
+		.append(webvars.backgroundTag)
+		.classed(webvars.ruleTextLeftClass, true)
+		.attr(webvars.nodeIdAttr, d => d.data.id);
 
 	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
 		.append(webvars.nodeTextTag)
@@ -391,7 +402,10 @@ function AddLeftRightContent()
 		.classed(webvars.ruleTextClass, true)
 		.style('overflow', 'visible')
 		.attr(webvars.nodeIdAttr, d => d.data.id)
-		.attr('text-anchor', 'start');
+		.attr('text-anchor', 'start')
+		.append(webvars.backgroundTag)
+		.classed(webvars.ruleTextRightClass, true)
+		.attr(webvars.nodeIdAttr, d => d.data.id);
 
 	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
 		.append(webvars.nodeTextTag)
@@ -519,14 +533,14 @@ function getPropositionBounds(nodeId)
 	return getVisualItemBounds(nodeId, nodeElementSelector);
 }
 
-function getLeftTextBounds(nodeId)
+function getLeftContentBounds(nodeId)
 {
 	return getVisualItemBounds(nodeId, textLeftElementSelector);
 }
 
-function getRightContentBounds()
+function getRightContentBounds(nodeId)
 {
-	return getVisualItemBounds(nodeIf, textRightElementSelector);
+	return getVisualItemBounds(nodeId, textRightElementSelector);
 }
 
 
