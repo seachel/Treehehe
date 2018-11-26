@@ -1,3 +1,5 @@
+// module for whole file; module for node bounds computation?
+
 // ------------------------------ Program and layout variables ------------------------------
 
 var webvars = {
@@ -27,7 +29,8 @@ var webvars = {
 }
 
 var stylingvars = {
-	nodePadding: 5
+	nodePadding: 5,
+	texShift: -30 // need to be set for every example?
 };
 
 // ------------------------------ Tree Data ------------------------------
@@ -112,82 +115,88 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
     iterationHeight++;
 }
 
-function logNodeDimensions()
-{
-	visitNodes_preOrder(myroot, writeNodeDimensions);
-}
+// function logNodeDimensions()
+// {
+// 	visitNodes_preOrder(myroot, writeNodeDimensions);
+// }
 
-function writeNodeDimensions(node)
-{ // if has a tex node, then use that one, getBBox and getBoundingClientRect
+// function writeNodeDimensions(node)
+// { // if has a tex node, then use that one, getBBox and getBoundingClientRect
 
-	var texNode = d3.select(`${webvars.nodeContainerTag}#${node.data.id} > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+// 	var texNode = d3.select(`${webvars.nodeContainerTag}#${node.data.id} > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
 	
-	var boundingBoxCrop = {
-		x: -1,
-		y: -1,
-		width: -1,
-		height: -1
-	}
+// 	var boundingBoxCrop = {
+// 		x: -1,
+// 		y: -1,
+// 		width: -1,
+// 		height: -1
+// 	}
 
-	var clientBoundingRect = {
-		x: -1,
-		y: -1,
-		width: -1,
-		height: -1
-	}
+// 	var clientBoundingRect = {
+// 		x: -1,
+// 		y: -1,
+// 		width: -1,
+// 		height: -1
+// 	}
 
-	var treeDataFields = {
-		x: node.x,
-		y: node.y
-	}
+// 	var treeDataFields = {
+// 		x: node.x,
+// 		y: node.y
+// 	}
 
-	if (texNode)
-	{
-		var texNodeBBox = texNode.getBBox();
+// 	if (texNode)
+// 	{
+// 		var texNodeBBox = texNode.getBBox();
 
-		boundingBoxCrop.x = texNodeBBox.x;
-		boundingBoxCrop.y = texNodeBBox.y;
-		boundingBoxCrop.width = texNodeBBox.width;
-		boundingBoxCrop.height = texNodeBBox.height;
+// 		boundingBoxCrop.x = texNodeBBox.x;
+// 		boundingBoxCrop.y = texNodeBBox.y;
+// 		boundingBoxCrop.width = texNodeBBox.width;
+// 		boundingBoxCrop.height = texNodeBBox.height;
 
-		var texNodeBRect = texNode.getBoundingClientRect();
+// 		var texNodeBRect = texNode.getBoundingClientRect();
 
-		clientBoundingRect.x = texNodeBRect.x;
-		clientBoundingRect.y = texNodeBRect.y;
-		clientBoundingRect.width = texNodeBRect.width;
-		clientBoundingRect.height = texNodeBRect.height;
-	}
-	else
-	{
-		// position rect based on text
-		var textNodeBox = d3.select(`${webvars.nodeContainerTag}#${node.data.id}
-									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${node.data.id}]`)
-							.node()
-							.getBBox();
+// 		clientBoundingRect.x = texNodeBRect.x;
+// 		clientBoundingRect.y = texNodeBRect.y;
+// 		clientBoundingRect.width = texNodeBRect.width;
+// 		clientBoundingRect.height = texNodeBRect.height;
+// 	}
+// 	else
+// 	{
+// 		// position rect based on text
+// 		var textNodeBox = d3.select(`${webvars.nodeContainerTag}#${node.data.id}
+// 									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${node.data.id}]`)
+// 							.node()
+// 							.getBBox();
 
-		boundingBoxCrop.x = textNodeBox.x;
-		boundingBoxCrop.y = textNodeBox.y;
-		boundingBoxCrop.width = textNodeBox.width;
-		boundingBoxCrop.height = textNodeBox.height;
+// 		boundingBoxCrop.x = textNodeBox.x;
+// 		boundingBoxCrop.y = textNodeBox.y;
+// 		boundingBoxCrop.width = textNodeBox.width;
+// 		boundingBoxCrop.height = textNodeBox.height;
 
-		var textNodeBRect = d3.select(`${webvars.nodeContainerTag}#${node.data.id}
-									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${node.data.id}]`)
-							.node()
-							.getBoundingClientRect();
+// 		var textNodeBRect = d3.select(`${webvars.nodeContainerTag}#${node.data.id}
+// 									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${node.data.id}]`)
+// 							.node()
+// 							.getBoundingClientRect();
 
-		clientBoundingRect.x = textNodeBRect.x;
-		clientBoundingRect.y = textNodeBRect.y;
-		clientBoundingRect.width = textNodeBRect.width;
-		clientBoundingRect.height = textNodeBRect.height;
-	}
+// 		clientBoundingRect.x = textNodeBRect.x;
+// 		clientBoundingRect.y = textNodeBRect.y;
+// 		clientBoundingRect.width = textNodeBRect.width;
+// 		clientBoundingRect.height = textNodeBRect.height;
+// 	}
 
 
 
-	console.log(`proposition: ${node.proposition}
-	BBox: ${JSON.stringify(boundingBoxCrop)}
-	ClientRect: ${JSON.stringify(clientBoundingRect)}
-	Tree data fields: ${JSON.stringify(treeDataFields)}`);
-}
+// 	console.log(`proposition: ${node.proposition}
+// 	BBox: ${JSON.stringify(boundingBoxCrop)}
+// 	ClientRect: ${JSON.stringify(clientBoundingRect)}
+// 	Tree data fields: ${JSON.stringify(treeDataFields)}`);
+
+// 	return {
+// 		clientBoundingRect: clientBoundingRect,
+// 		boundingBox: boundingBoxCrop,
+// 		treeDataFields: treeDataFields
+// 	}
+// }
 
 // ---------- Examples
 
@@ -277,7 +286,7 @@ var svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClas
 				.attr('width', svgwidth)
 				.attr('height', svgheight)
 				.append(webvars.nodesContainerTag).classed(webvars.nodesContainerClass, true)
-				.attr('transform', 'translate(0, -30)');
+				.attr('transform', `translate(0, ${stylingvars.texShift})`);
 
 
 // ---------- create svg objects to represent data and position them
@@ -289,7 +298,7 @@ d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
 	.append(webvars.nodeContainerTag)
 	.classed(webvars.nodeContainerClass, true)
 	.style('overflow', 'visible')
-	.attr('id', d => d.data.id)
+	.attr('node-id', d => d.data.id)
 	.attr('transform', d => `translate(${d.x}, ${svgheight - d.y})`)
 	.attr('text-anchor', 'middle')
 	.append(webvars.backgroundTag)
@@ -466,10 +475,41 @@ function getRuleDisplayLRBound(hierarchyObj)
 	return result;
 }
 
+// function getVisualItemBoundingBox(itemContainerTag, )
+// {
+// 	var texNode = d3.select(`${itemContainerTag}#${nodeId} > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+
+// 	if (texNode)
+// 	{
+// 		var boundingBox = texNode.getBBox();
+
+// 		return {
+// 			x: boundingBox.x,
+// 			y: boundingBox.y,
+// 			width: boundingBox.width,
+// 			height: boundingBox.height
+// 		};
+// 	}
+// 	else
+// 	{
+// 		// position rect based on text
+// 		var textNodeBox = d3.select(`${webvars.nodeContainerTag}#${nodeId}
+// 									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
+// 							.node()
+// 							.getBBox();
+
+// 		return {
+// 			x: textNodeBox.x,
+// 			y: textNodeBox.y,
+// 			width: textNodeBox.width,
+// 			height: textNodeBox.height
+// 		};
+// 	}
+// }
 
 function getPropositionBoundingBox(nodeId)
 {
-	var texNode = d3.select(`${webvars.nodeContainerTag}#${nodeId} > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+	var texNode = d3.select(`${webvars.nodeContainerTag}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
 
 	if (texNode)
 	{
@@ -485,7 +525,7 @@ function getPropositionBoundingBox(nodeId)
 	else
 	{
 		// position rect based on text
-		var textNodeBox = d3.select(`${webvars.nodeContainerTag}#${nodeId}
+		var textNodeBox = d3.select(`${webvars.nodeContainerTag}[${webvars.nodeIdAttr}=${nodeId}]
 									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
 							.node()
 							.getBBox();
@@ -647,23 +687,23 @@ function MathJaxSVGManipulation()
 
 	PostRender();
 
-		svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
-			var self = d3.select(this),
-				g = self.select(`${webvars.nodeTextTag} > span > svg`);
-	
-			if (g.node())
-			{
-				g.remove();
-				self.append(webvars.texContainerTag)
-					.classed(webvars.texContainerClass, true)
-					.attr('width', '100%')
-					.style('overflow', 'visible')
-					.on('click', node_onclick)
-					.append(function(){
-						return g.node();
-					});
-			}
-		});
+	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+		var self = d3.select(this),
+			g = self.select(`${webvars.nodeTextTag} > span > svg`);
+
+		if (g.node())
+		{
+			g.remove();
+			self.append(webvars.texContainerTag)
+				.classed(webvars.texContainerClass, true)
+				.attr('width', '100%')
+				.style('overflow', 'visible')
+				.on('click', node_onclick)
+				.append(function(){
+					return g.node();
+				});
+		}
+	});
 }
 
 // scrolling
