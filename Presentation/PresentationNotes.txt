@@ -6,3 +6,10 @@ TEMPLATE: DES/DEV
         Technology (Systems, Languages, Libraries) (1 slide)
         Status, Prototypes, Whatever is Working (? slides)
         Discussion (1 slide)
+
+~20 minutes
+	- want to get feedback on project
+
+---
+
+- "visual baseball", need domain knowledge
