@@ -12,6 +12,7 @@ Report/*.png
 *.gz
 *.fls
 *.fdb_latexmk
+*.odp#
 
 .vscode
 yarn.lock
