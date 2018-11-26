@@ -312,7 +312,7 @@ AddLeftRightContent();
 // ------------------------------ Functions to Update and Add to Tree Layout
 
 function AddProofTreeLines()
-{
+{debugger;
 	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
 	.append('line')
 	.attr('x1', d =>
@@ -340,14 +340,15 @@ function PositionBoundingRect()
 		.attr('width', d => getPropositionBoundingBox(d.data.id).width + 2 * webvars.nodePadding)
 		.attr('height', d => getPropositionBoundingBox(d.data.id).height + 2 * webvars.nodePadding);
 	
-	// d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
-	// 	.attr('x', d =>
-	// 	{
-	// 		return getPropositionBoundingBox(d.data.id).x
-	// 	})
-	// 	.attr('y', d => getPropositionBoundingBox(d.data.id).y)
-	// 	.attr('width', d => getPropositionBoundingBox(d.data.id).width)
-	// 	.attr('height', d => getPropositionBoundingBox(d.data.id).height);
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
+		.attr('x', d =>
+		{ // need bounding box of rule text, not proposition
+			//... maybe add a variable to `getPropositionBoundingBox` for the selector? rect[node-id] instead of g#nodeId?
+			return getPropositionBoundingBox(d.data.id).x
+		})
+		.attr('y', d => getPropositionBoundingBox(d.data.id).y)
+		.attr('width', d => getPropositionBoundingBox(d.data.id).width)
+		.attr('height', d => getPropositionBoundingBox(d.data.id).height);
 }
 
 function AddLeftRightContent()
@@ -508,7 +509,6 @@ d3.select(`${webvars.navButtonTag}.${webvars.backButtonClass}`)
 
 function focusNode(selectedHNode)
 {
-	// any need to hold id of focused node as program state?
 	updateSelectionPanel(selectedHNode);
 	updateSelectionStyle(selectedHNode);
 }
@@ -640,8 +640,9 @@ function MathJaxSVGManipulation()
 				.attr('width', '50%')
 				.attr('x', '-25%');
 		}
+	});
 
-		PostRender();
+	PostRender();
 
 		svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
 			var self = d3.select(this),
@@ -660,7 +661,6 @@ function MathJaxSVGManipulation()
 					});
 			}
 		});
-	});
 }
 
 // scrolling
