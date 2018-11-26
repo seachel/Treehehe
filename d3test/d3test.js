@@ -19,6 +19,8 @@ var webvars = {
 	nodeTextTag: "text",
 	nodeTextClass: "node-text",
 	ruleTextClass: "rule-text",
+	ruleTextLeftClass: "rule-text-left",
+	ruleTextRightClass: "rule-text-right",
 	texContainerTag: "g",
 	texContainerClass: "tex-container",
 	focusRectClass: "focus-rect",
@@ -475,41 +477,13 @@ function getRuleDisplayLRBound(hierarchyObj)
 	return result;
 }
 
-// function getVisualItemBoundingBox(itemContainerTag, )
-// {
-// 	var texNode = d3.select(`${itemContainerTag}#${nodeId} > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+var nodeElementSelector = `${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`;
+var textLeftElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextLeftClass}`;
+var textRightElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextRightClass}`;
 
-// 	if (texNode)
-// 	{
-// 		var boundingBox = texNode.getBBox();
-
-// 		return {
-// 			x: boundingBox.x,
-// 			y: boundingBox.y,
-// 			width: boundingBox.width,
-// 			height: boundingBox.height
-// 		};
-// 	}
-// 	else
-// 	{
-// 		// position rect based on text
-// 		var textNodeBox = d3.select(`${webvars.nodeContainerTag}#${nodeId}
-// 									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
-// 							.node()
-// 							.getBBox();
-
-// 		return {
-// 			x: textNodeBox.x,
-// 			y: textNodeBox.y,
-// 			width: textNodeBox.width,
-// 			height: textNodeBox.height
-// 		};
-// 	}
-// }
-
-function getPropositionBoundingBox(nodeId)
+function getVisualItemBoundingBox(nodeId, itemContainerSelector)
 {
-	var texNode = d3.select(`${webvars.nodeContainerTag}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+	var texNode = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
 
 	if (texNode)
 	{
@@ -525,7 +499,39 @@ function getPropositionBoundingBox(nodeId)
 	else
 	{
 		// position rect based on text
-		var textNodeBox = d3.select(`${webvars.nodeContainerTag}[${webvars.nodeIdAttr}=${nodeId}]
+		var textNodeBox = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}]
+									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
+							.node()
+							.getBBox();
+
+		return {
+			x: textNodeBox.x,
+			y: textNodeBox.y,
+			width: textNodeBox.width,
+			height: textNodeBox.height
+		};
+	}
+}
+
+function getPropositionBoundingBox(nodeId)
+{
+	var texNode = d3.select(`${nodeElementSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+
+	if (texNode)
+	{
+		var boundingBox = texNode.getBBox();
+
+		return {
+			x: boundingBox.x,
+			y: boundingBox.y,
+			width: boundingBox.width,
+			height: boundingBox.height
+		};
+	}
+	else
+	{
+		// position rect based on text
+		var textNodeBox = d3.select(`${nodeElementSelector}[${webvars.nodeIdAttr}=${nodeId}]
 									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
 							.node()
 							.getBBox();
