@@ -21,11 +21,14 @@ var webvars = {
 	texContainerClass: "tex-container",
 	focusRectClass: "focus-rect",
 	visitedRectClass: "visited-rect",
-	nodePadding: 5,
 	navButtonTag: "div",
 	forwardButtonClass: "btn-forward",
 	backButtonClass: "btn-backward"
 }
+
+var stylingvars = {
+	nodePadding: 5
+};
 
 // ------------------------------ Tree Data ------------------------------
 
@@ -263,7 +266,7 @@ mytree(myroot);
 
 // ---------- Set up DOM content
 
-var svgheight = treeHeight + (proofHeight * 2 * webvars.nodePadding);
+var svgheight = treeHeight + (proofHeight * 2 * stylingvars.nodePadding);
 var svgwidth = treeWidth;
 
 var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
@@ -334,11 +337,11 @@ function PositionBoundingRect()
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
 		.attr('x', d =>
 		{
-			return getPropositionBoundingBox(d.data.id).x - webvars.nodePadding
+			return getPropositionBoundingBox(d.data.id).x - stylingvars.nodePadding
 		})
-		.attr('y', d => getPropositionBoundingBox(d.data.id).y - webvars.nodePadding)
-		.attr('width', d => getPropositionBoundingBox(d.data.id).width + 2 * webvars.nodePadding)
-		.attr('height', d => getPropositionBoundingBox(d.data.id).height + 2 * webvars.nodePadding);
+		.attr('y', d => getPropositionBoundingBox(d.data.id).y - stylingvars.nodePadding)
+		.attr('width', d => getPropositionBoundingBox(d.data.id).width + 2 * stylingvars.nodePadding)
+		.attr('height', d => getPropositionBoundingBox(d.data.id).height + 2 * stylingvars.nodePadding);
 	
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
 		.attr('x', d =>
@@ -397,7 +400,7 @@ function PositionLeftRightContent()
 		{
 			var x = getRuleDisplayLRBound(d).left;
 
-			return `translate(${x - webvars.nodePadding}, ${-1 * heightPerProofRow / 2})`
+			return `translate(${x - stylingvars.nodePadding}, ${-1 * heightPerProofRow / 2})`
 		});
 
 	// right content
@@ -406,7 +409,7 @@ function PositionLeftRightContent()
 		{
 			var x = getRuleDisplayLRBound(d).right;
 
-			return `translate(${x + webvars.nodePadding}, ${-1 * heightPerProofRow / 2})`
+			return `translate(${x + stylingvars.nodePadding}, ${-1 * heightPerProofRow / 2})`
 		});
 }
 
@@ -456,8 +459,8 @@ function getRuleDisplayLRBound(hierarchyObj)
 	// add padding
 	if (result.right != result.left)
 	{
-		result.left -= webvars.nodePadding;
-		result.right += webvars.nodePadding;
+		result.left -= stylingvars.nodePadding;
+		result.right += stylingvars.nodePadding;
 	}
 
 	return result;
