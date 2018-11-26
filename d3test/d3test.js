@@ -312,7 +312,7 @@ AddLeftRightContent();
 // ------------------------------ Functions to Update and Add to Tree Layout
 
 function AddProofTreeLines()
-{debugger;
+{
 	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
 	.append('line')
 	.attr('x1', d =>
