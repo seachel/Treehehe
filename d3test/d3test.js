@@ -348,21 +348,21 @@ function PositionBoundingRect()
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeBackgroundClass}`)
 		.attr('x', d =>
 		{
-			return getPropositionBoundingBox(d.data.id).x - stylingvars.nodePadding
+			return getPropositionBounds(d.data.id).x - stylingvars.nodePadding
 		})
-		.attr('y', d => getPropositionBoundingBox(d.data.id).y - stylingvars.nodePadding)
-		.attr('width', d => getPropositionBoundingBox(d.data.id).width + 2 * stylingvars.nodePadding)
-		.attr('height', d => getPropositionBoundingBox(d.data.id).height + 2 * stylingvars.nodePadding);
+		.attr('y', d => getPropositionBounds(d.data.id).y - stylingvars.nodePadding)
+		.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
+		.attr('height', d => getPropositionBounds(d.data.id).height + 2 * stylingvars.nodePadding);
 	
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
 		.attr('x', d =>
 		{ // need bounding box of rule text, not proposition
-			//... maybe add a variable to `getPropositionBoundingBox` for the selector? rect[node-id] instead of g#nodeId?
-			return getPropositionBoundingBox(d.data.id).x
+			//... maybe add a variable to `getPropositionBounds` for the selector? rect[node-id] instead of g#nodeId?
+			return getPropositionBounds(d.data.id).x
 		})
-		.attr('y', d => getPropositionBoundingBox(d.data.id).y)
-		.attr('width', d => getPropositionBoundingBox(d.data.id).width)
-		.attr('height', d => getPropositionBoundingBox(d.data.id).height);
+		.attr('y', d => getPropositionBounds(d.data.id).y)
+		.attr('width', d => getPropositionBounds(d.data.id).width)
+		.attr('height', d => getPropositionBounds(d.data.id).height);
 }
 
 function AddLeftRightContent()
@@ -429,7 +429,7 @@ function getRuleDisplayLRBound(hierarchyObj)
 {
 	var id = hierarchyObj.data.id;
 
-	var currentPropBB = getPropositionBoundingBox(id)
+	var currentPropBB = getPropositionBounds(id)
 
 	var result = {
 		left: currentPropBB.x,
@@ -441,7 +441,7 @@ function getRuleDisplayLRBound(hierarchyObj)
 		if (hierarchyObj.children.length > 0)
 		{
 			var firstChild = hierarchyObj.children[0];
-			var firstChildPropBB = getPropositionBoundingBox(firstChild.data.id);
+			var firstChildPropBB = getPropositionBounds(firstChild.data.id);
 
 			var xDiffLeft = hierarchyObj.x - firstChild.x;
 
@@ -452,7 +452,7 @@ function getRuleDisplayLRBound(hierarchyObj)
 			}
 
 			var lastChild = hierarchyObj.children[hierarchyObj.children.length - 1];
-			var lastChildPropBB = getPropositionBoundingBox(lastChild.data.id);
+			var lastChildPropBB = getPropositionBounds(lastChild.data.id);
 
 			var xDiffRight = lastChild.x - hierarchyObj.x;
 
@@ -477,7 +477,7 @@ function getRuleDisplayLRBound(hierarchyObj)
 	return result;
 }
 
-function getVisualItemBoundingBox(nodeId, itemContainerSelector)
+function getVisualItemBounds(nodeId, itemContainerSelector)
 {
 	var texNode = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
 
@@ -514,19 +514,19 @@ var nodeElementSelector = `${webvars.nodeContainerTag}.${webvars.nodeContainerCl
 var textLeftElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextLeftClass}`;
 var textRightElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextRightClass}`;
 
-function getPropositionBoundingBox(nodeId)
+function getPropositionBounds(nodeId)
 {
-	return getVisualItemBoundingBox(nodeId, nodeElementSelector);
+	return getVisualItemBounds(nodeId, nodeElementSelector);
 }
 
-function getLeftTextBoundingBox(nodeId)
+function getLeftTextBounds(nodeId)
 {
-	return getVisualItemBoundingBox(nodeId, textLeftElementSelector);
+	return getVisualItemBounds(nodeId, textLeftElementSelector);
 }
 
-function getRightContentBoundingBox()
+function getRightContentBounds()
 {
-	return getVisualItemBoundingBox(nodeIf, textRightElementSelector);
+	return getVisualItemBounds(nodeIf, textRightElementSelector);
 }
 
 
