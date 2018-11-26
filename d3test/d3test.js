@@ -477,10 +477,6 @@ function getRuleDisplayLRBound(hierarchyObj)
 	return result;
 }
 
-var nodeElementSelector = `${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`;
-var textLeftElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextLeftClass}`;
-var textRightElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextRightClass}`;
-
 function getVisualItemBoundingBox(nodeId, itemContainerSelector)
 {
 	var texNode = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
@@ -513,9 +509,24 @@ function getVisualItemBoundingBox(nodeId, itemContainerSelector)
 	}
 }
 
+
+var nodeElementSelector = `${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`;
+var textLeftElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextLeftClass}`;
+var textRightElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextRightClass}`;
+
 function getPropositionBoundingBox(nodeId)
 {
 	return getVisualItemBoundingBox(nodeId, nodeElementSelector);
+}
+
+function getLeftTextBoundingBox(nodeId)
+{
+	return getVisualItemBoundingBox(nodeId, textLeftElementSelector);
+}
+
+function getRightContentBoundingBox()
+{
+	return getVisualItemBoundingBox(nodeIf, textRightElementSelector);
 }
 
 
