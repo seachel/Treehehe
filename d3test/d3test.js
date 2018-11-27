@@ -480,107 +480,122 @@ let TreeBuilder = (function()
 
 // ---------- Interaction
 
+let Interaction = (function()
+{// pass selector for selection panel? or separate this out?
+	var myIterator = makeTreeIterator(TreeBuilder.focusRoot, visitNodes_preOrder, focusNode);
 
+	d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
+		.on('click', myIterator.next);
 
-var myIterator = makeTreeIterator(TreeBuilder.focusRoot, visitNodes_preOrder, focusNode);
+	d3.select(`${webvars.navButtonTag}.${webvars.backButtonClass}`)
+		.on('click', myIterator.previous);
 
-d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
-	.on('click', myIterator.next);
+	function focusNode(selectedHNode)
+	{
+		updateSelectionPanel(selectedHNode);
+		updateSelectionStyle(selectedHNode);
+	}
 
-d3.select(`${webvars.navButtonTag}.${webvars.backButtonClass}`)
-	.on('click', myIterator.previous);
+	function updateSelectionStyle(selectedHNode)
+	{
+		var selectedId = selectedHNode.data.id;
+	// need previously visited, but after, to lose visited status? or have a different kind of visited status?
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.focusRectClass}`)
+			.classed(`${webvars.visitedRectClass}`, true)
+			.classed(`${webvars.focusRectClass}`, false);
 
-function focusNode(selectedHNode)
-{
-	updateSelectionPanel(selectedHNode);
-	updateSelectionStyle(selectedHNode);
-}
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${selectedId}]`)
+			.classed(`${webvars.focusRectClass}`, true);
 
-function updateSelectionStyle(selectedHNode)
-{
-	var selectedId = selectedHNode.data.id;
-// need previously visited, but after, to lose visited status? or have a different kind of visited status?
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.focusRectClass}`)
-		.classed(`${webvars.visitedRectClass}`, true)
-		.classed(`${webvars.focusRectClass}`, false);
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
+			.filter(d => d.data.id != selectedId)
+			.classed(`${webvars.focusRectClass}`, false);
+	}
 
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${selectedId}]`)
-		.classed(`${webvars.focusRectClass}`, true);
+	function updateSelectionPanel(selectedHNode)
+	{
+		// make sure anything previously in the panel is cleared
+		d3.select(`.tree-selection`)
+			.text(selectedHNodeOutput(selectedHNode));
 
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
-		.filter(d => d.data.id != selectedId)
-		.classed(`${webvars.focusRectClass}`, false);
-}
+		MathJax.Hub.Typeset();
+	}
 
-function updateSelectionPanel(selectedHNode)
-{
-	// make sure anything previously in the panel is cleared
-	d3.select(`.tree-selection`)
-		.text(selectedHNodeOutput(selectedHNode));
+	function selectedHNodeOutput(selectedHNode)
+	{
+		return `id: ${selectedHNode.data.id},
+		proposition: ${selectedHNode.data.proposition},
+		rule name: ${selectedHNode.data.ruleName},
+		side conditions: ${selectedHNode.data.sideCondition}`
+	}
 
-	MathJax.Hub.Typeset();
-}
-// Bad: how to make sure the callbacks have the correct type?
-function makeTreeIterator(root, traversalFn, nodeCallback)
-{
-	let nodesInOrder = [];
+	// Bad: how to make sure the callbacks have the correct type?
+	function makeTreeIterator(root, traversalFn, nodeCallback)
+	{
+		let nodesInOrder = [];
 
-	traversalFn(root, n => nodesInOrder.push(n));
+		traversalFn(root, n => nodesInOrder.push(n));
 
-	let nextIndex = -1;
-	let iterationCount = 0;
-	let end = nodesInOrder.length - 1;
+		let nextIndex = -1;
+		let iterationCount = 0;
+		let end = nodesInOrder.length - 1;
 
-	const rangeIterator = {
-		next: function()
-		{
-			let result;
-
-			if (nextIndex < end) {
-				nextIndex += 1;
-				iterationCount++;
-
-				result = { value: nextIndex, done: false, start: false };
-
-				if (nodeCallback)
-				{
-					nodeCallback(nodesInOrder[nextIndex])
-				}
-			}
-			else
+		const rangeIterator = {
+			next: function()
 			{
-				result = { value: iterationCount, done: true, start: false };
-			}
+				let result;
 
-			return result;
-		},
-		previous: function()
-		{
-			let result;
+				if (nextIndex < end) {
+					nextIndex += 1;
+					iterationCount++;
 
-			if (nextIndex > 0) {
-				nextIndex -= 1;
-				iterationCount--;
+					result = { value: nextIndex, done: false, start: false };
 
-				result = { value: nextIndex, done: false, start: false };
-
-				if (nodeCallback)
-				{
-					nodeCallback(nodesInOrder[nextIndex]);
+					if (nodeCallback)
+					{
+						nodeCallback(nodesInOrder[nextIndex])
+					}
 				}
-			}
-			else
+				else
+				{
+					result = { value: iterationCount, done: true, start: false };
+				}
+
+				return result;
+			},
+			previous: function()
 			{
-				result = { value: iterationCount, done: false, start: true };
-			}
+				let result;
 
-			return result;
-		},
-		nodeArray: nodesInOrder
-	};
+				if (nextIndex > 0) {
+					nextIndex -= 1;
+					iterationCount--;
 
-	return rangeIterator;
-}
+					result = { value: nextIndex, done: false, start: false };
+
+					if (nodeCallback)
+					{
+						nodeCallback(nodesInOrder[nextIndex]);
+					}
+				}
+				else
+				{
+					result = { value: iterationCount, done: false, start: true };
+				}
+
+				return result;
+			},
+			nodeArray: nodesInOrder
+		};
+
+		return rangeIterator;
+	}
+
+	return {
+		iterator: myIterator,
+		focusNode: focusNode
+	}
+}());
 
 
 // ---------- Tree Traversal
@@ -640,15 +655,7 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 function node_onclick(selectedHNode)
 {
-	focusNode(selectedHNode);
-}
-
-function selectedHNodeOutput(selectedHNode)
-{
-	return `id: ${selectedHNode.data.id},
-	proposition: ${selectedHNode.data.proposition},
-	rule name: ${selectedHNode.data.ruleName},
-	side conditions: ${selectedHNode.data.sideCondition}`
+	Interaction.focusNode(selectedHNode);
 }
 
 
