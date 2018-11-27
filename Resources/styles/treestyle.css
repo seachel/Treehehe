@@ -5,6 +5,13 @@ rect.node
 	fill: white;
 }
 
+rect.rule-text
+{
+	stroke: blue;
+	stroke-width: 2px;
+	fill: white;
+}
+
 .visited-rect
 {
 	stroke: darkgrey;

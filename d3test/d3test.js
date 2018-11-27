@@ -385,6 +385,7 @@ function AddLeftRightContent()
 		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('text-anchor', 'end')
 		.append(webvars.backgroundTag)
+		.classed(webvars.ruleTextClass, true)
 		.classed(webvars.ruleTextLeftClass, true)
 		.attr(webvars.nodeIdAttr, d => d.data.id);
 
@@ -406,6 +407,7 @@ function AddLeftRightContent()
 		.attr(webvars.nodeIdAttr, d => d.data.id)
 		.attr('text-anchor', 'start')
 		.append(webvars.backgroundTag)
+		.classed(webvars.ruleTextClass, true)
 		.classed(webvars.ruleTextRightClass, true)
 		.attr(webvars.nodeIdAttr, d => d.data.id);
 
