@@ -608,10 +608,10 @@ function PostRenderProposition()
 
 function PostRenderRuleText()
 {
-	// PositionLeftRightBackground();
 	PositionRuleTextBoundingRect();
 }
 
+// used as startup hook for MathJax ending
 function MathJaxSVGManipulation()
 {
 	svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
