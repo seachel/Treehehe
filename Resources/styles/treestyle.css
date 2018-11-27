@@ -10,6 +10,11 @@ rect.node
 	fill: white;
 }
 
+rect.node:hover
+{
+	fill: lightgrey;
+}
+
 rect.rule-text
 {
 	stroke: blue;
