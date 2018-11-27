@@ -98,7 +98,7 @@ const TreeExamples = (function()
 	"A right",
 	"A left");
 
-	let treeExample1 = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s) \\sum$",
+	let treeExample1 = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 		[
 			TreeDataMaker.makeProofTreeNode("$q \\wedge s$",
 			[
