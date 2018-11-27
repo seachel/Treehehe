@@ -1,5 +1,3 @@
-// module for whole file; module for node bounds computation?
-
 // ------------------------------ Program and layout variables ------------------------------
 
 var webvars = {
@@ -38,7 +36,8 @@ var stylingvars = {
 
 var id = 0;
 
-var makeId = () => {
+var makeId = () =>
+{
 	id++;
 	return `node${id}`;
 }
