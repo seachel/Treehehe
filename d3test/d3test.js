@@ -342,7 +342,7 @@ function AddProofTreeLines()
 }
 
 
-function PositionBoundingRect()
+function PositionPropositionBoundingRect()
 {
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
 		.attr('x', d =>
@@ -352,7 +352,10 @@ function PositionBoundingRect()
 		.attr('y', d => getPropositionBounds(d.data.id).y - stylingvars.nodePadding)
 		.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
 		.attr('height', d => getPropositionBounds(d.data.id).height + 2 * stylingvars.nodePadding);
+}
 
+function PositionRuleTextBoundingRect()
+{
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
 		.attr('x', d =>
 		{
@@ -659,11 +662,16 @@ function selectedHNodeOutput(selectedHNode)
 }
 
 
-function PostRender()
+function PostRenderProposition()
 {
 	AddProofTreeLines();
 	PositionLeftRightContent();
-	PositionBoundingRect();
+	PositionPropositionBoundingRect();
+}
+
+function PostRenderRuleText()
+{
+	PositionRuleTextBoundingRect();
 }
 
 function MathJaxSVGManipulation()
@@ -688,7 +696,7 @@ function MathJaxSVGManipulation()
 		}
 	});
 
-	PostRender();
+	PostRenderProposition();
 
 	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
 		var self = d3.select(this),
@@ -707,6 +715,8 @@ function MathJaxSVGManipulation()
 				});
 		}
 	});
+
+	PostRenderRuleText();
 }
 
 // scrolling
