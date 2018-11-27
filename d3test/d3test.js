@@ -213,8 +213,6 @@ mytree(myroot);
 let svgheight = treeHeight + (proofHeight * 2 * stylingvars.nodePadding);
 let svgwidth = treeWidth;
 
-let linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
-
 let svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
 				.append('svg').style('background', 'grey')
 				.classed(webvars.treeClassName, true)
