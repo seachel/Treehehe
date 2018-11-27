@@ -12,13 +12,13 @@ rect.rule-text
 	fill: white;
 }
 
-.visited-rect
+rect.visited-rect
 {
 	stroke: darkgrey;
 	fill: lightgrey;
 }
 
-.focus-rect
+rect.focus-rect
 {
 	stroke: red;
 	fill: pink;
