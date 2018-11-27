@@ -145,15 +145,27 @@ const TreeExamples = (function()
 		getSelectedExample: getSelectedExample
 	};
 })();
+// whole thing in a module, with function `setTree` that makes a new tree builder and reruns MathJax? anything else?
+let currentTreeBuilder = TreeBuilder(TreeExamples.getSelectedExample());
 
-
-let TreeBuilder = (function()
+function UpdateTreeSelection(selection)
 {
+	currentTreeBuilder = TreeBuilder(selection);
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	// MathJax.Callback.Queue("MathJaxSVGManipulation");
+	setTimeout(MathJaxSVGManipulation, 500);
+}
+
+function TreeBuilder(selectedRoot)
+{
+	// clear previous svg?
+	d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass} > svg`).remove();
+
 	// ------------------------------ D3 ------------------------------
 
 	// ---------- Data in d3 heirarchy object
 
-	let myroot = d3.hierarchy(TreeExamples.getSelectedExample()); // set x0 and y0 based on svg dimensions?
+	let myroot = d3.hierarchy(selectedRoot); // set x0 and y0 based on svg dimensions?
 
 
 	// ---------- D3 tree variables and utils
@@ -506,14 +518,14 @@ let TreeBuilder = (function()
 		postRenderRuleText: PostRenderRuleText,
 		setFocusRoot: setFocusRoot
 	};
-}());
+}
 
 
 // ---------- Interaction
 
 let Interaction = (function()
 {// pass selector for selection panel? or separate this out?
-	var myIterator = makeTreeIterator(TreeBuilder.focusRoot, visitNodes_preOrder, focusNode);
+	var myIterator = makeTreeIterator(currentTreeBuilder.focusRoot, visitNodes_preOrder, focusNode);
 
 	d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
 		.on('click', myIterator.next);
@@ -694,7 +706,7 @@ function node_onclick(selectedHNode)
 // ------------------------------ MathJax ------------------------------
 function MathJaxSVGManipulation()
 {
-	TreeBuilder.svgtree.selectAll(`${selectors.nodeElementSelector}`).each(function(){
+	currentTreeBuilder.svgtree.selectAll(`${selectors.nodeElementSelector}`).each(function(){
 		let self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
@@ -716,9 +728,9 @@ function MathJaxSVGManipulation()
 		}
 	});
 
-	TreeBuilder.postRenderProposition();
+	currentTreeBuilder.postRenderProposition();
 
-	TreeBuilder.svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+	currentTreeBuilder.svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
 		let self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
@@ -736,14 +748,14 @@ function MathJaxSVGManipulation()
 		}
 	});
 
-	TreeBuilder.postRenderRuleText();
+	currentTreeBuilder.postRenderRuleText();
 }
 
 // scrolling
 let scrollNode = d3.select('.scroll-container').node();
 let scrollContainerWidth = scrollNode.clientWidth;
 let scrollContainerHeight = scrollNode.clientHeight;
-scrollNode.scrollTo((TreeBuilder.treeWidth - scrollContainerWidth) / 2, TreeBuilder.treeHeight - scrollContainerHeight);
+scrollNode.scrollTo((currentTreeBuilder.treeWidth - scrollContainerWidth) / 2, currentTreeBuilder.treeHeight - scrollContainerHeight);
 
 TreeExamples.examples.forEach(e =>
 	{
