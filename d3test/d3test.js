@@ -27,6 +27,12 @@ const webvars = {
 	backButtonClass: "btn-backward"
 }
 
+const selectors = {
+	nodeElementSelector: `${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`,
+	textLeftElementSelector: `${webvars.ruleTextContainerTag}.${webvars.ruleTextLeftClass}`,
+	textRightElementSelector: `${webvars.ruleTextContainerTag}.${webvars.ruleTextRightClass}`
+}
+
 let stylingvars = {
 	nodePadding: 5,
 	texShift: -30 // need to be set for every example?
@@ -463,23 +469,19 @@ function getVisualItemBounds(nodeId, itemContainerSelector)
 }
 
 
-const nodeElementSelector = `${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`;
-const textLeftElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextLeftClass}`;
-const textRightElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextRightClass}`;
-
 function getPropositionBounds(nodeId)
 {
-	return getVisualItemBounds(nodeId, nodeElementSelector);
+	return getVisualItemBounds(nodeId, selectors.nodeElementSelector);
 }
 
 function getLeftContentBounds(nodeId)
 {
-	return getVisualItemBounds(nodeId, textLeftElementSelector);
+	return getVisualItemBounds(nodeId, selectors.textLeftElementSelector);
 }
 
 function getRightContentBounds(nodeId)
 {
-	return getVisualItemBounds(nodeId, textRightElementSelector);
+	return getVisualItemBounds(nodeId, selectors.textRightElementSelector);
 }
 
 
