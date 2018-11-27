@@ -518,6 +518,7 @@ function TreeBuilder(selectedTree)
 	return {
 		svgtree: svgtree,
 		selectedTree: selectedTree,
+		hRoot: myroot,
 		treeWidth: treeWidth,
 		treeHeight: treeHeight,
 		postRenderProposition: PostRenderProposition,
@@ -530,7 +531,7 @@ function TreeBuilder(selectedTree)
 
 let Interaction = (function()
 {// pass selector for selection panel? or separate this out?
-	var myIterator = makeTreeIterator(currentTreeBuilder.selectedTree.root, visitNodes_preOrder, focusNode);
+	var myIterator = makeTreeIterator(currentTreeBuilder.hRoot, visitNodes_preOrder, focusNode);
 
 	d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
 		.on('click', myIterator.next);
@@ -579,7 +580,7 @@ let Interaction = (function()
 
 	// Bad: how to make sure the callbacks have the correct type?
 	function makeTreeIterator(root, traversalFn, nodeCallback)
-	{debugger;
+	{
 		let nodesInOrder = [];
 
 		traversalFn(root, n => nodesInOrder.push(n));
