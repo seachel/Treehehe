@@ -515,10 +515,20 @@ function TreeBuilder(selectedTree)
 	}
 	//#endregion
 
+	function getSelectedTree()
+	{
+		return selectedTree;
+	}
+
+	function getSelectedHRoot()
+	{
+		return myroot;
+	}
+
 	return {
 		svgtree: svgtree,
-		selectedTree: selectedTree,
-		hRoot: myroot,
+		getSelectedTree: getSelectedTree,
+		getSelectedHRoot: getSelectedHRoot,
 		treeWidth: treeWidth,
 		treeHeight: treeHeight,
 		postRenderProposition: PostRenderProposition,
@@ -531,7 +541,7 @@ function TreeBuilder(selectedTree)
 
 let Interaction = (function()
 {// pass selector for selection panel? or separate this out?
-	var myIterator = makeTreeIterator(currentTreeBuilder.hRoot, visitNodes_preOrder, focusNode);
+	var myIterator = makeTreeIterator(currentTreeBuilder.getSelectedHRoot(), visitNodes_preOrder, focusNode);
 
 	d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
 		.on('click', myIterator.next);
