@@ -354,18 +354,10 @@ function PositionPropositionBoundingRect()
 		.attr('height', d => getPropositionBounds(d.data.id).height + 2 * stylingvars.nodePadding);
 }
 
+
 function PositionRuleTextBoundingRect()
 {
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
-		.attr('x', d =>
-		{
-			return getRightContentBounds(d.data.id).x
-		})
-		.attr('y', d => getRightContentBounds(d.data.id).y)
-		.attr('width', d => getRightContentBounds(d.data.id).width)
-		.attr('height', d => getRightContentBounds(d.data.id).height);
-	
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
 		.attr('x', d =>
 		{
 			return getLeftContentBounds(d.data.id).x
@@ -373,6 +365,15 @@ function PositionRuleTextBoundingRect()
 		.attr('y', d => getLeftContentBounds(d.data.id).y)
 		.attr('width', d => getLeftContentBounds(d.data.id).width)
 		.attr('height', d => getLeftContentBounds(d.data.id).height);
+	
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
+		.attr('x', d =>
+		{
+			return getRightContentBounds(d.data.id).x
+		})
+		.attr('y', d => getRightContentBounds(d.data.id).y)
+		.attr('width', d => getRightContentBounds(d.data.id).width)
+		.attr('height', d => getRightContentBounds(d.data.id).height);
 }
 
 function AddLeftRightContent()
@@ -421,6 +422,8 @@ function AddLeftRightContent()
 		.text(d => d.data.ruleName);
 }
 
+var ruleTextYPosition = -1 * heightPerProofRow / 2;
+
 function PositionLeftRightContent()
 {
 	// left content
@@ -429,7 +432,7 @@ function PositionLeftRightContent()
 		{
 			var x = getRuleDisplayLRBound(d).left;
 
-			return `translate(${x - stylingvars.nodePadding}, ${-1 * heightPerProofRow / 2})`
+			return `translate(${x - stylingvars.nodePadding}, ${ruleTextYPosition})`
 		});
 
 	// right content
@@ -438,7 +441,7 @@ function PositionLeftRightContent()
 		{
 			var x = getRuleDisplayLRBound(d).right;
 
-			return `translate(${x + stylingvars.nodePadding}, ${-1 * heightPerProofRow / 2})`
+			return `translate(${x + stylingvars.nodePadding}, ${ruleTextYPosition})`
 		});
 }
 
@@ -673,6 +676,7 @@ function PostRenderProposition()
 
 function PostRenderRuleText()
 {
+	// PositionLeftRightBackground();
 	PositionRuleTextBoundingRect();
 }
 
