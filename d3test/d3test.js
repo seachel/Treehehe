@@ -130,7 +130,7 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 // ---------- Examples
 
-function TreeExamples()
+var TreeExamples = (function()
 {
 	var datamk = TreeDataMaker();
 
@@ -180,9 +180,9 @@ function TreeExamples()
 		ex1: data,
 		natded_ex1: treeExample1
 	}
-}
+})();
 
-let selectedTree = TreeExamples().natded_ex1;
+let selectedTree = TreeExamples.natded_ex1;
 
 // ------------------------------ D3 ------------------------------
 
