@@ -34,33 +34,45 @@ let stylingvars = {
 
 // ------------------------------ Tree Data ------------------------------
 
-let id = 0;
-
-let makeId = () =>
+function TreeDataMaker()
 {
-	id++;
-	return `node${id}`;
+	let id = 0;
+
+	let makeId = () =>
+	{
+		id++;
+		return `node${id}`;
+	}
+
+	function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondition = "")
+	{
+		let nodeId = makeId();
+
+		let result = {
+			name: nodeId,
+			proposition: proposition,
+			children: children,
+			id: nodeId,
+			ruleName: ruleName,
+			sideCondition: sideCondition
+		}
+
+		if (children === null)
+		{
+			result["isPremise"] = true;
+		}
+
+		return result;
+	}
+
+	return {
+		makeProofTreeNode: makeProofTreeNode
+	};
 }
 
-function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondition = "")
+function TreeExamples()
 {
-	let nodeId = makeId();
 
-	let result = {
-		name: nodeId,
-		proposition: proposition,
-		children: children,
-		id: nodeId,
-		ruleName: ruleName,
-		sideCondition: sideCondition
-	}
-
-	if (children === null)
-	{
-		result["isPremise"] = true;
-	}
-
-	return result;
 }
 
 // ---------- Tree Traversal
@@ -118,41 +130,43 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 // ---------- Examples
 
-let data = makeProofTreeNode("$x \\rightarrow y$",
+var datamk = TreeDataMaker();
+
+let data = datamk.makeProofTreeNode("$x \\rightarrow y$",
 	[
-		makeProofTreeNode("$\\forall x, P \; x$"),
-		makeProofTreeNode("1 + 2 + 3 = :)",
+		datamk.makeProofTreeNode("$\\forall x, P \; x$"),
+		datamk.makeProofTreeNode("1 + 2 + 3 = :)",
 		[
-			makeProofTreeNode("$x \\supset y$"),
-			makeProofTreeNode("$\\wedge$")
+			datamk.makeProofTreeNode("$x \\supset y$"),
+			datamk.makeProofTreeNode("$\\wedge$")
 		]),
-		makeProofTreeNode("$\\forall x$")
+		datamk.makeProofTreeNode("$\\forall x$")
 	],
   "A right",
   "A left");
 
-let treeExample1 = makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+let treeExample1 = datamk.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 	[
-		makeProofTreeNode("$q \\wedge s$",
+		datamk.makeProofTreeNode("$q \\wedge s$",
 		[
-			makeProofTreeNode("$q$",
+			datamk.makeProofTreeNode("$q$",
 			[
-				makeProofTreeNode("$p$",
+				datamk.makeProofTreeNode("$p$",
 				[
-					makeProofTreeNode("$p \\wedge r$", [], "$u$")
+					datamk.makeProofTreeNode("$p \\wedge r$", [], "$u$")
 				],
 				"$\\wedge_{E_1}$"),
-				makeProofTreeNode("$p \\rightarrow q$", null)
+				datamk.makeProofTreeNode("$p \\rightarrow q$", null)
 			],
 			"$\\rightarrow_E$"),
-			makeProofTreeNode("$s$",
+			datamk.makeProofTreeNode("$s$",
 			[
-				makeProofTreeNode("$r$",
+				datamk.makeProofTreeNode("$r$",
 				[
-					makeProofTreeNode("$p \\wedge u$", [], "$u$")
+					datamk.makeProofTreeNode("$p \\wedge u$", [], "$u$")
 				],
 				"$\\wedge_{E_2}$"),
-				makeProofTreeNode("$r \\rightarrow s$", null)
+				datamk.makeProofTreeNode("$r \\rightarrow s$", null)
 			],
 			"$\\wedge_E$")
 		],
