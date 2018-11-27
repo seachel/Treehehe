@@ -130,7 +130,7 @@ const TreeExamples = (function()
 	}
 })();
 
-let selectedTree = TreeExamples.natded_ex1;
+let selectedTree = TreeExamples.ex1;
 
 
 // ---------- Tree Traversal
@@ -252,7 +252,7 @@ d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${se
   .classed(webvars.nodeTextClass, true)
   .attr(webvars.nodeIdAttr, d => d.data.id)
   .attr('dy', '0.35em')
-  .attr('alignment-baseline', 'text-before-edge')
+  .attr('alignment-baseline', 'mathematical')
   .text(d => d.data.proposition)
   .on('click', node_onclick);
 
@@ -264,7 +264,7 @@ AddLeftRightContent();
 
 function AddProofTreeLines()
 {
-	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
+	d3.selectAll(`${selectors.nodeElementSelector}`)
 	.append('line')
 	.attr('x1', d =>
 	{
@@ -274,8 +274,8 @@ function AddProofTreeLines()
 	{
 		return getRuleDisplayLRBound(d).right;
 	})
-	.attr('y1', d => -1 * heightPerProofRow / 2 + 5)
-	.attr('y2', d => -1 * heightPerProofRow / 2 + 5)
+	.attr('y1', d => -1 * heightPerProofRow / 2)
+	.attr('y2', d => -1 * heightPerProofRow / 2)
 	.attr('stroke', 'black');
 }
 
