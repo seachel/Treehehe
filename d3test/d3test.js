@@ -27,16 +27,16 @@ const webvars = {
 	backButtonClass: "btn-backward"
 }
 
-var stylingvars = {
+let stylingvars = {
 	nodePadding: 5,
 	texShift: -30 // need to be set for every example?
 };
 
 // ------------------------------ Tree Data ------------------------------
 
-var id = 0;
+let id = 0;
 
-var makeId = () =>
+let makeId = () =>
 {
 	id++;
 	return `node${id}`;
@@ -44,9 +44,9 @@ var makeId = () =>
 
 function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondition = "")
 {
-	var nodeId = makeId();
+	let nodeId = makeId();
 
-	var result = {
+	let result = {
 		name: nodeId,
 		proposition: proposition,
 		children: children,
@@ -118,7 +118,7 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 // ---------- Examples
 
-var data = makeProofTreeNode("$x \\rightarrow y$",
+let data = makeProofTreeNode("$x \\rightarrow y$",
 	[
 		makeProofTreeNode("$\\forall x, P \; x$"),
 		makeProofTreeNode("1 + 2 + 3 = :)",
@@ -131,7 +131,7 @@ var data = makeProofTreeNode("$x \\rightarrow y$",
   "A right",
   "A left");
 
-var treeExample1 = makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+let treeExample1 = makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 	[
 		makeProofTreeNode("$q \\wedge s$",
 		[
@@ -161,29 +161,29 @@ var treeExample1 = makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$
 	"$\\rightarrow_{I^u}$");
 
 
-var selectedTree = treeExample1;
+let selectedTree = treeExample1;
 
 // ------------------------------ D3 ------------------------------
 
 
 // ---------- Data in d3 heirarchy object
 
-var myroot = d3.hierarchy(selectedTree); // set x0 and y0 based on svg dimensions?
+let myroot = d3.hierarchy(selectedTree); // set x0 and y0 based on svg dimensions?
 
 
 // ---------- D3 tree variables and utils
 
-var heightPerProofRow = 30;
-var proofHeight = myroot.height + 1;
+let heightPerProofRow = 30;
+let proofHeight = myroot.height + 1;
 
-var treeHeight = proofHeight * heightPerProofRow;
+let treeHeight = proofHeight * heightPerProofRow;
 
-var treeWidth = 900; // TODO: need to compute based on example
+let treeWidth = 900; // TODO: need to compute based on example
 
 // ---------- Create tree
 
 
-var mytree = d3.tree().size([treeWidth, treeHeight]);
+let mytree = d3.tree().size([treeWidth, treeHeight]);
 
 
 // ---------- Initialize tree? Position elements
@@ -193,12 +193,12 @@ mytree(myroot);
 
 // ---------- Set up DOM content
 
-var svgheight = treeHeight + (proofHeight * 2 * stylingvars.nodePadding);
-var svgwidth = treeWidth;
+let svgheight = treeHeight + (proofHeight * 2 * stylingvars.nodePadding);
+let svgwidth = treeWidth;
 
-var linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
+let linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
-var svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
+let svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
 				.append('svg').style('background', 'grey')
 				.classed(webvars.treeClassName, true)
 				.attr('width', svgwidth)
@@ -347,7 +347,7 @@ function PositionLeftRightContent()
 	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
 		.attr('transform', d =>
 		{
-			var x = getRuleDisplayLRBound(d).left;
+			let x = getRuleDisplayLRBound(d).left;
 
 			return `translate(${x - stylingvars.nodePadding}, ${ruleTextYPosition})`
 		});
@@ -356,7 +356,7 @@ function PositionLeftRightContent()
 	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
 		.attr('transform', d =>
 		{
-			var x = getRuleDisplayLRBound(d).right;
+			let x = getRuleDisplayLRBound(d).right;
 
 			return `translate(${x + stylingvars.nodePadding}, ${ruleTextYPosition})`
 		});
@@ -365,11 +365,11 @@ function PositionLeftRightContent()
 
 function getRuleDisplayLRBound(hierarchyObj)
 {
-	var id = hierarchyObj.data.id;
+	let id = hierarchyObj.data.id;
 
-	var currentPropBB = getPropositionBounds(id)
+	let currentPropBB = getPropositionBounds(id)
 
-	var result = {
+	let result = {
 		left: currentPropBB.x,
 		right: currentPropBB.x + currentPropBB.width
 	};
@@ -378,10 +378,10 @@ function getRuleDisplayLRBound(hierarchyObj)
 	{
 		if (hierarchyObj.children.length > 0)
 		{
-			var firstChild = hierarchyObj.children[0];
-			var firstChildPropBB = getPropositionBounds(firstChild.data.id);
+			let firstChild = hierarchyObj.children[0];
+			let firstChildPropBB = getPropositionBounds(firstChild.data.id);
 
-			var xDiffLeft = hierarchyObj.x - firstChild.x;
+			let xDiffLeft = hierarchyObj.x - firstChild.x;
 
 			if (xDiffLeft > 0 ||
 				((xDiffLeft == 0) && (firstChildPropBB.x < currentPropBB.x)))
@@ -389,10 +389,10 @@ function getRuleDisplayLRBound(hierarchyObj)
 				result.left -= xDiffLeft + (firstChildPropBB.width / 2) - (currentPropBB.width / 2);
 			}
 
-			var lastChild = hierarchyObj.children[hierarchyObj.children.length - 1];
-			var lastChildPropBB = getPropositionBounds(lastChild.data.id);
+			let lastChild = hierarchyObj.children[hierarchyObj.children.length - 1];
+			let lastChildPropBB = getPropositionBounds(lastChild.data.id);
 
-			var xDiffRight = lastChild.x - hierarchyObj.x;
+			let xDiffRight = lastChild.x - hierarchyObj.x;
 
 			if (xDiffRight >= 0 && (lastChild.x + lastChildPropBB.width >= hierarchyObj.x + currentPropBB.width))
 			{
@@ -417,11 +417,11 @@ function getRuleDisplayLRBound(hierarchyObj)
 
 function getVisualItemBounds(nodeId, itemContainerSelector)
 {
-	var texNode = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+	let texNode = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
 
 	if (texNode)
 	{
-		var boundingBox = texNode.getBBox();
+		let boundingBox = texNode.getBBox();
 
 		return {
 			x: boundingBox.x,
@@ -433,7 +433,7 @@ function getVisualItemBounds(nodeId, itemContainerSelector)
 	else
 	{
 		// position rect based on text
-		var textNodeBox = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}]
+		let textNodeBox = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}]
 									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
 							.node()
 							.getBBox();
@@ -448,9 +448,9 @@ function getVisualItemBounds(nodeId, itemContainerSelector)
 }
 
 
-var nodeElementSelector = `${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`;
-var textLeftElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextLeftClass}`;
-var textRightElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextRightClass}`;
+const nodeElementSelector = `${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`;
+const textLeftElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextLeftClass}`;
+const textRightElementSelector = `${webvars.ruleTextContainerTag}.${webvars.ruleTextRightClass}`;
 
 function getPropositionBounds(nodeId)
 {
@@ -600,7 +600,7 @@ function PostRenderRuleText()
 function MathJaxSVGManipulation()
 {
 	svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
-		var self = d3.select(this),
+		let self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
 		if (g.node())
@@ -622,7 +622,7 @@ function MathJaxSVGManipulation()
 	PostRenderProposition();
 
 	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
-		var self = d3.select(this),
+		let self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
 		if (g.node())
@@ -643,7 +643,7 @@ function MathJaxSVGManipulation()
 }
 
 // scrolling
-var scrollNode = d3.select('.scroll-container').node();
-var scrollContainerWidth = scrollNode.clientWidth;
-var scrollContainerHeight = scrollNode.clientHeight;
+let scrollNode = d3.select('.scroll-container').node();
+let scrollContainerWidth = scrollNode.clientWidth;
+let scrollContainerHeight = scrollNode.clientHeight;
 scrollNode.scrollTo((treeWidth - scrollContainerWidth) / 2, treeHeight - scrollContainerHeight);
