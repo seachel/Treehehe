@@ -7,42 +7,69 @@
 		<!------------------------------ Styles ------------------------------>
 
 		<link href="Resources/styles/style.css" rel="stylesheet" type="text/css">
+		<link href="Resources/styles/treestyle.css" rel="stylesheet" type="text/css">
 
 
 		<!------------------------------ Scripts ------------------------------>
 
 		<script type="text/javascript" src="Resources/scripts/jquery.js"></script>
+		<script src="https://d3js.org/d3.v5.min.js"></script>
 
 
 		<!------------------------------ MathJax ------------------------------>
 
 		<script type="text/x-mathjax-config">
 			MathJax.Hub.Config({
-			extensions: ["tex2jax.js"],
-			jax: ["input/TeX","output/HTML-CSS"],
-				tex2jax: { inlineMath : [['$','$'], ['\\(','\\)']] },
-				"HTML-CSS" : { preferredFont : "STIX" }
+				tex2jax: {
+				inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+				processEscapes: true
+				},
+				//delayStartupUntil: onload
+				//skipStartupTypeset: true
+			});
+
+			MathJax.Hub.Register.StartupHook("End", function()
+			{
+				MathJaxSVGManipulation();
 			});
 		</script>
+
 
 		<!-- Remote MathJax -->
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 
 		<!-- Local MathJax -->
 		<!-- <script type="text/javascript" src='Resources/scripts/MathJax/MathJax.js' async></script>		 -->
+
 	</head>
 	<body>
 		<div class="page-container">
-			<div class="header-panel">header</div>
-			<div class="example-selection-panel">examples</div>
-			<div class="rule-panel">rules</div>
-			<div class="tree-display-panel">
-				<div class="tree-wrapper">
-					<div class="node">scroll snap to centre test</div>
-					<div class="node">large child with smaller parent container</div>
+			<div class="header-panel">
+				<div class="btn-forward">
+					Forward
+				</div>
+				<div class="btn-backward">
+					Backward
 				</div>
 			</div>
-			<div class="selection-info-panel">selection information</div>
+
+			<div class="example-selection-panel">examples</div>
+
+			<div class="rule-panel">rules</div>
+
+			<div class="tree-display-panel">
+				<div class="scroll-container">
+					<div class="tree-container">
+
+					</div>
+				</div>
+			</div>
+
+			<div class="selection-info-panel">
+				<span class="tree-selection"></span>
+			</div>
 		</div>
+
+		<script src="Resources/scripts/d3Tree.js"></script>
 	</body>
 </html>
