@@ -36,6 +36,7 @@ const selectors = {
 let stylingvars = {
 	nodePadding: 5,
 	propositionBorderThickness: 3,
+	propositionBackgroundHeight: 25,
 	texShift: -30 // need to be set for every example?
 };
 
@@ -197,7 +198,7 @@ let myroot = d3.hierarchy(selectedTree); // set x0 and y0 based on svg dimension
 
 // ---------- D3 tree variables and utils
 
-let heightPerProofRow = 30;
+let heightPerProofRow = 35;
 let proofHeight = myroot.height + 1;
 
 let treeHeight = proofHeight * heightPerProofRow;
@@ -330,7 +331,6 @@ function AddProofTreeLines()
 	.attr('stroke', 'black');
 }
 
-
 function PositionPropositionBoundingRect()
 {
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
@@ -341,10 +341,10 @@ function PositionPropositionBoundingRect()
 		.attr('y', d =>
 		{
 			var bounds = getPropositionBounds(d.data.id);
-			return bounds.y - ((heightPerProofRow - bounds.height) / 2);
+			return bounds.y - ((stylingvars.propositionBackgroundHeight - bounds.height) / 2);
 		})
 		.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
-		.attr('height', d => heightPerProofRow);
+		.attr('height', d => stylingvars.propositionBackgroundHeight);
 }
 
 
@@ -369,7 +369,7 @@ function PositionRuleTextBoundingRect()
 		.attr('height', d => getRightContentBounds(d.data.id).height);
 }
 
-var ruleCenterY = -1 * (heightPerProofRow / 2) + stylingvars.nodePadding + stylingvars.propositionBorderThickness;
+var ruleCenterY = -1 * (linkHeight / 2) + stylingvars.nodePadding + stylingvars.propositionBorderThickness;
 
 function PositionLeftRightContent()
 {
@@ -392,6 +392,7 @@ function PositionLeftRightContent()
 		});
 }
 
+// ------------------------------ Computing Bounds ------------------------------
 
 function getRuleDisplayLRBound(hierarchyObj)
 {
