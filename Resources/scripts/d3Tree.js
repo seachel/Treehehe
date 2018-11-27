@@ -127,22 +127,33 @@ const TreeExamples = (function()
 		],
 		"$\\rightarrow_{I^u}$");
 
-	return {
-		examples: [data, treeExample1]
+	let selectedExample = data;
+
+	function setSelectedExample(selection)
+	{
+		selectedExample = selection;
 	}
+
+	function getSelectedExample()
+	{
+		return selectedExample;
+	}
+
+	return {
+		examples: [data, treeExample1],
+		setSelectedExample: setSelectedExample,
+		getSelectedExample: getSelectedExample
+	};
 })();
 
-let selectedTree = TreeExamples.examples[1];
-
-
-
-	// ------------------------------ D3 ------------------------------
 
 let TreeBuilder = (function()
 {
+	// ------------------------------ D3 ------------------------------
+
 	// ---------- Data in d3 heirarchy object
 
-	let myroot = d3.hierarchy(selectedTree); // set x0 and y0 based on svg dimensions?
+	let myroot = d3.hierarchy(TreeExamples.getSelectedExample()); // set x0 and y0 based on svg dimensions?
 
 
 	// ---------- D3 tree variables and utils
@@ -476,13 +487,24 @@ let TreeBuilder = (function()
 	}
 	//#endregion
 
+	function setFocusRoot(root)
+	{debugger;
+		myroot = root;
+	}
+
+	function getFocusRoot()
+	{
+		return myroot;
+	}
+
 	return {
 		svgtree: svgtree,
 		focusRoot: myroot,
 		treeWidth: treeWidth,
 		treeHeight: treeHeight,
 		postRenderProposition: PostRenderProposition,
-		postRenderRuleText: PostRenderRuleText
+		postRenderRuleText: PostRenderRuleText,
+		setFocusRoot: setFocusRoot
 	};
 }());
 
