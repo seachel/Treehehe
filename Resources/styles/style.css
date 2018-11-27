@@ -6,15 +6,6 @@
 .selection-info-panel { background: rgb(104, 104, 219); }
 .tree-display-panel { background: rgb(68, 160, 88); }
 
-.node
-{
-	background: black;
-	color: white;
-	align-self: center;
-	width: min-content;
-	margin: 0 auto;
-}
-
 /* Page styles */
 
 body
