@@ -231,7 +231,7 @@ let svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClas
 // ---------- create svg objects to represent data and position them
 
 d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
-	.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
+	.selectAll(`${selectors.nodeElementSelector}`)
 	.data(myroot.descendants())
 	.enter()
 	.append(webvars.nodeContainerTag)
@@ -247,7 +247,7 @@ d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
 
 
 // Add text
-d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
+d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${selectors.nodeElementSelector}`)
   .append(webvars.nodeTextTag)
   .classed(webvars.nodeTextClass, true)
   .attr(webvars.nodeIdAttr, d => d.data.id)
@@ -316,7 +316,7 @@ function PositionRuleTextBoundingRect()
 
 function AddLeftRightContent()
 {
-	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
+	d3.selectAll(`${selectors.nodeElementSelector}`)
 		.append(webvars.ruleTextContainerTag)
 		.classed(webvars.sideConditionClass, true)
 		.classed(webvars.ruleTextClass, true)
@@ -338,7 +338,7 @@ function AddLeftRightContent()
 		.text(d => d.data.sideCondition);
 
 	// right content
-	d3.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`)
+	d3.selectAll(`${selectors.nodeElementSelector}`)
 		.append(webvars.ruleTextContainerTag)
 		.classed(webvars.ruleNameClass, true)
 		.classed(webvars.ruleTextClass, true)
@@ -616,7 +616,7 @@ function PostRenderRuleText()
 // used as startup hook for MathJax ending
 function MathJaxSVGManipulation()
 {
-	svgtree.selectAll(`${webvars.nodeContainerTag}.${webvars.nodeContainerClass}`).each(function(){
+	svgtree.selectAll(`${selectors.nodeElementSelector}`).each(function(){
 		let self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
