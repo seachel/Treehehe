@@ -338,9 +338,13 @@ function PositionPropositionBoundingRect()
 		{
 			return getPropositionBounds(d.data.id).x - stylingvars.nodePadding
 		})
-		.attr('y', d => getPropositionBounds(d.data.id).y - stylingvars.nodePadding)
+		.attr('y', d =>
+		{
+			var bounds = getPropositionBounds(d.data.id);
+			return bounds.y - ((heightPerProofRow - bounds.height) / 2);
+		})
 		.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
-		.attr('height', d => heightPerProofRow); // getPropositionBounds(d.data.id).height + 2 * stylingvars.nodePadding);
+		.attr('height', d => heightPerProofRow);
 }
 
 
