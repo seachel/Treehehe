@@ -37,6 +37,7 @@ let stylingvars = {
 	nodePadding: 5,
 	propositionBorderThickness: 3,
 	propositionBackgroundHeight: 25,
+	heightPerProofRow: 35,
 	texShift: -30 // need to be set for every example?
 };
 
@@ -136,42 +137,42 @@ let selectedTree = TreeExamples.natded_ex1;
 
 
 
-// ------------------------------ D3 ------------------------------
-
-
-// ---------- Data in d3 heirarchy object
-
-let myroot = d3.hierarchy(selectedTree); // set x0 and y0 based on svg dimensions?
-
-
-// ---------- D3 tree variables and utils
-
-let heightPerProofRow = 35;
-let proofHeight = myroot.height + 1;
-
-let treeHeight = proofHeight * heightPerProofRow;
-
-let treeWidth = 900; // TODO: need to compute based on example
-
-// ---------- Create tree
-
-
-let mytree = d3.tree().size([treeWidth, treeHeight]);
-
-
-// ---------- Initialize tree? Position elements
-
-mytree(myroot);
-
-let linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
-
-// ---------- Set up DOM content
-
-let svgheight = treeHeight + (proofHeight * (2 * stylingvars.nodePadding) + (2 * stylingvars.propositionBorderThickness));
-let svgwidth = treeWidth;
+	// ------------------------------ D3 ------------------------------
 
 let TreeBuilder = (function()
 {
+	// ---------- Data in d3 heirarchy object
+
+	let myroot = d3.hierarchy(selectedTree); // set x0 and y0 based on svg dimensions?
+
+
+	// ---------- D3 tree variables and utils
+
+	let proofHeight = myroot.height + 1;
+
+	let treeHeight = proofHeight * stylingvars.heightPerProofRow;
+
+	let treeWidth = 900; // TODO: need to compute based on example
+
+
+	// ---------- Create tree
+
+	let mytree = d3.tree().size([treeWidth, treeHeight]);
+
+
+	// ---------- Initialize tree? Position elements
+
+	mytree(myroot);
+
+	let linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
+
+
+	// ---------- Set up DOM content
+
+	let svgheight = treeHeight + (proofHeight * (2 * stylingvars.nodePadding) + (2 * stylingvars.propositionBorderThickness));
+	let svgwidth = treeWidth;
+
+
 	let svgtree = AddSVGTreeAndNodesContainer();
 
 	AddNodeGroupsAndBackground();
@@ -468,6 +469,9 @@ let TreeBuilder = (function()
 
 	return {
 		svgtree: svgtree,
+		focusRoot: myroot,
+		treeWidth: treeWidth,
+		treeHeight: treeHeight,
 		postRenderProposition: PostRenderProposition,
 		postRenderRuleText: PostRenderRuleText
 	};
@@ -476,7 +480,9 @@ let TreeBuilder = (function()
 
 // ---------- Interaction
 
-var myIterator = makeTreeIterator(myroot, visitNodes_preOrder, focusNode);
+
+
+var myIterator = makeTreeIterator(TreeBuilder.focusRoot, visitNodes_preOrder, focusNode);
 
 d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
 	.on('click', myIterator.next);
@@ -699,4 +705,4 @@ function MathJaxSVGManipulation()
 let scrollNode = d3.select('.scroll-container').node();
 let scrollContainerWidth = scrollNode.clientWidth;
 let scrollContainerHeight = scrollNode.clientHeight;
-scrollNode.scrollTo((treeWidth - scrollContainerWidth) / 2, treeHeight - scrollContainerHeight);
+scrollNode.scrollTo((TreeBuilder.treeWidth - scrollContainerWidth) / 2, TreeBuilder.treeHeight - scrollContainerHeight);
