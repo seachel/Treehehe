@@ -68,52 +68,52 @@ function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondit
 
 function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
 {
-    if (rootNode.children)
-    {
-        if (rootNode.children.length > 0)
-        {
-            rootNode.children.forEach(child =>
-            {
-                if (childCallback)
-                {
-                    childCallback(child, rootNode, ...childCallbackArgs);
-                }
-                visitNodes_postOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
-            });
-        }
-    }
+	if (rootNode.children)
+	{
+		if (rootNode.children.length > 0)
+		{
+			rootNode.children.forEach(child =>
+			{
+				if (childCallback)
+				{
+					childCallback(child, rootNode, ...childCallbackArgs);
+				}
+				visitNodes_postOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
+			});
+		}
+	}
 
-    if (nodeCallback)
-    {
-        nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
-    }
+	if (nodeCallback)
+	{
+		nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
+	}
 
-    iterationHeight++;
+	iterationHeight++;
 }
 
 function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
 {
-    if (nodeCallback)
-    {
-        nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
-    }
+	if (nodeCallback)
+	{
+		nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
+	}
 
-    if (rootNode.children)
-    {
-        if (rootNode.children.length > 0)
-        {
-            rootNode.children.forEach(child =>
-            {
-                if (childCallback)
-                {
-                    childCallback(child, rootNode, ...childCallbackArgs);
-                }
-                visitNodes_preOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
-            });
-        }
-    }
+	if (rootNode.children)
+	{
+		if (rootNode.children.length > 0)
+		{
+			rootNode.children.forEach(child =>
+			{
+				if (childCallback)
+				{
+					childCallback(child, rootNode, ...childCallbackArgs);
+				}
+				visitNodes_preOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
+			});
+		}
+	}
 
-    iterationHeight++;
+	iterationHeight++;
 }
 
 
@@ -283,7 +283,7 @@ function PositionRuleTextBoundingRect()
 		.attr('y', d => getLeftContentBounds(d.data.id).y)
 		.attr('width', d => getLeftContentBounds(d.data.id).width)
 		.attr('height', d => getLeftContentBounds(d.data.id).height);
-	
+
 	d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
 		.attr('x', d =>
 		{
@@ -506,7 +506,7 @@ function updateSelectionPanel(selectedHNode)
 	// make sure anything previously in the panel is cleared
 	d3.select(`.tree-selection`)
 		.text(selectedHNodeOutput(selectedHNode));
-	
+
 	MathJax.Hub.Typeset();
 }
 // Bad: how to make sure the callbacks have the correct type?
@@ -515,7 +515,7 @@ function makeTreeIterator(root, traversalFn, nodeCallback)
 	let nodesInOrder = [];
 
 	traversalFn(root, n => nodesInOrder.push(n));
-	
+
 	let nextIndex = -1;
 	let iterationCount = 0;
 	let end = nodesInOrder.length - 1;
@@ -540,7 +540,7 @@ function makeTreeIterator(root, traversalFn, nodeCallback)
 			{
 				result = { value: iterationCount, done: true, start: false };
 			}
-		
+
 			return result;
 		},
 		previous: function()
@@ -562,13 +562,13 @@ function makeTreeIterator(root, traversalFn, nodeCallback)
 			{
 				result = { value: iterationCount, done: false, start: true };
 			}
-		
+
 			return result;
 		},
 		nodeArray: nodesInOrder
 	};
-	
-    return rangeIterator;
+
+	return rangeIterator;
 }
 
 function node_onclick(selectedHNode)
