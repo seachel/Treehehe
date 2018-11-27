@@ -128,12 +128,11 @@ const TreeExamples = (function()
 		"$\\rightarrow_{I^u}$");
 
 	return {
-		ex1: data,
-		natded_ex1: treeExample1
+		examples: [data, treeExample1]
 	}
 })();
 
-let selectedTree = TreeExamples.natded_ex1;
+let selectedTree = TreeExamples.examples[1];
 
 
 
@@ -723,3 +722,11 @@ let scrollNode = d3.select('.scroll-container').node();
 let scrollContainerWidth = scrollNode.clientWidth;
 let scrollContainerHeight = scrollNode.clientHeight;
 scrollNode.scrollTo((TreeBuilder.treeWidth - scrollContainerWidth) / 2, TreeBuilder.treeHeight - scrollContainerHeight);
+
+TreeExamples.examples.forEach(e =>
+	{
+		d3.select('.example-list')
+			.append('option')
+			.attr('label', e.proposition)
+			.text(e.proposition);
+	})
