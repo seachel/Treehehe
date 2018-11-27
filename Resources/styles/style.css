@@ -36,6 +36,9 @@ body
 .header-panel
 {
 	grid-area: 1 / 1 / span 1 / span 3;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .example-selection-panel
@@ -68,6 +71,12 @@ body
 {
 	background: white;
 	padding: 10px;
+}
+
+.navigation
+{
+	display: flex;
+	flex-direction: row;
 }
 
 .btn-backward, .btn-forward
