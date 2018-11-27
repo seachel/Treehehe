@@ -1,6 +1,6 @@
 // ------------------------------ Program and layout variables ------------------------------
 
-var webvars = {
+const webvars = {
 	treeContainerTag: "div",
 	treeContainerClass: "tree-container",
 	treeClassName: "tree-svg",
