@@ -35,6 +35,7 @@ const selectors = {
 
 let stylingvars = {
 	nodePadding: 5,
+	propositionBorderThickness: 3,
 	texShift: -30 // need to be set for every example?
 };
 
@@ -95,7 +96,7 @@ const TreeExamples = (function()
 	"A right",
 	"A left");
 
-	let treeExample1 = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+	let treeExample1 = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s) \\sum$",
 		[
 			TreeDataMaker.makeProofTreeNode("$q \\wedge s$",
 			[
@@ -130,7 +131,7 @@ const TreeExamples = (function()
 	}
 })();
 
-let selectedTree = TreeExamples.ex1;
+let selectedTree = TreeExamples.natded_ex1;
 
 
 // ---------- Tree Traversal
@@ -213,10 +214,12 @@ let mytree = d3.tree().size([treeWidth, treeHeight]);
 
 mytree(myroot);
 
+var linkHeights = myroot.links().map(l => l.target.y - l.source.y)
+let linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
 // ---------- Set up DOM content
 
-let svgheight = treeHeight + (proofHeight * 2 * stylingvars.nodePadding);
+let svgheight = treeHeight + (proofHeight * (2 * stylingvars.nodePadding) + (2 * stylingvars.propositionBorderThickness));
 let svgwidth = treeWidth;
 
 let svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
@@ -224,7 +227,8 @@ let svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClas
 				.classed(webvars.treeClassName, true)
 				.attr('width', svgwidth)
 				.attr('height', svgheight)
-				.append(webvars.nodesContainerTag).classed(webvars.nodesContainerClass, true)
+				.append(webvars.nodesContainerTag)
+				.classed(webvars.nodesContainerClass, true)
 				.attr('transform', `translate(0, ${stylingvars.texShift})`);
 
 
@@ -248,74 +252,20 @@ d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
 
 // Add text
 d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${selectors.nodeElementSelector}`)
-  .append(webvars.nodeTextTag)
-  .classed(webvars.nodeTextClass, true)
-  .attr(webvars.nodeIdAttr, d => d.data.id)
-  .attr('dy', '0.35em')
-  .attr('alignment-baseline', 'mathematical')
-  .text(d => d.data.proposition)
-  .on('click', node_onclick);
+	.append(webvars.nodeTextTag)
+	.classed(webvars.nodeTextClass, true)
+	.attr(webvars.nodeIdAttr, d => d.data.id)
+	.attr('dy', '0.35em')
+	.attr('alignment-baseline', 'mathematical')
+	.text(d => d.data.proposition)
+	.on('click', node_onclick);
 
 // Add left and right content
 AddLeftRightContent();
 
-
-// ------------------------------ Functions to Update and Add to Tree Layout
-
-function AddProofTreeLines()
-{
-	d3.selectAll(`${selectors.nodeElementSelector}`)
-	.append('line')
-	.attr('x1', d =>
-	{
-		return getRuleDisplayLRBound(d).left;
-	})
-	.attr('x2', d =>
-	{
-		return getRuleDisplayLRBound(d).right;
-	})
-	.attr('y1', d => -1 * heightPerProofRow / 2)
-	.attr('y2', d => -1 * heightPerProofRow / 2)
-	.attr('stroke', 'black');
-}
-
-
-function PositionPropositionBoundingRect()
-{
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
-		.attr('x', d =>
-		{
-			return getPropositionBounds(d.data.id).x - stylingvars.nodePadding
-		})
-		.attr('y', d => getPropositionBounds(d.data.id).y - stylingvars.nodePadding)
-		.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
-		.attr('height', d => getPropositionBounds(d.data.id).height + 2 * stylingvars.nodePadding);
-}
-
-
-function PositionRuleTextBoundingRect()
-{
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
-		.attr('x', d =>
-		{
-			return getLeftContentBounds(d.data.id).x
-		})
-		.attr('y', d => getLeftContentBounds(d.data.id).y)
-		.attr('width', d => getLeftContentBounds(d.data.id).width)
-		.attr('height', d => getLeftContentBounds(d.data.id).height);
-
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
-		.attr('x', d =>
-		{
-			return getRightContentBounds(d.data.id).x
-		})
-		.attr('y', d => getRightContentBounds(d.data.id).y)
-		.attr('width', d => getRightContentBounds(d.data.id).width)
-		.attr('height', d => getRightContentBounds(d.data.id).height);
-}
-
 function AddLeftRightContent()
 {
+	// left content
 	d3.selectAll(`${selectors.nodeElementSelector}`)
 		.append(webvars.ruleTextContainerTag)
 		.classed(webvars.sideConditionClass, true)
@@ -360,7 +310,62 @@ function AddLeftRightContent()
 		.text(d => d.data.ruleName);
 }
 
-var ruleTextYPosition = -1 * heightPerProofRow / 2;
+
+// ------------------------------ Functions to Update and Add to Tree Layout
+
+function AddProofTreeLines()
+{
+	d3.selectAll(`${selectors.nodeElementSelector}`)
+	.append('line')
+	.attr('x1', d =>
+	{
+		return getRuleDisplayLRBound(d).left;
+	})
+	.attr('x2', d =>
+	{
+		return getRuleDisplayLRBound(d).right;
+	})
+	.attr('y1', d => ruleCenterY)
+	.attr('y2', d => ruleCenterY)
+	.attr('stroke', 'black');
+}
+
+
+function PositionPropositionBoundingRect()
+{
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
+		.attr('x', d =>
+		{
+			return getPropositionBounds(d.data.id).x - stylingvars.nodePadding
+		})
+		.attr('y', d => getPropositionBounds(d.data.id).y - stylingvars.nodePadding)
+		.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
+		.attr('height', d => heightPerProofRow); // getPropositionBounds(d.data.id).height + 2 * stylingvars.nodePadding);
+}
+
+
+function PositionRuleTextBoundingRect()
+{
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
+		.attr('x', d =>
+		{
+			return getLeftContentBounds(d.data.id).x
+		})
+		.attr('y', d => getLeftContentBounds(d.data.id).y)
+		.attr('width', d => getLeftContentBounds(d.data.id).width)
+		.attr('height', d => getLeftContentBounds(d.data.id).height);
+
+	d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
+		.attr('x', d =>
+		{
+			return getRightContentBounds(d.data.id).x
+		})
+		.attr('y', d => getRightContentBounds(d.data.id).y)
+		.attr('width', d => getRightContentBounds(d.data.id).width)
+		.attr('height', d => getRightContentBounds(d.data.id).height);
+}
+
+var ruleCenterY = -1 * (heightPerProofRow / 2) + stylingvars.nodePadding + stylingvars.propositionBorderThickness;
 
 function PositionLeftRightContent()
 {
@@ -370,7 +375,7 @@ function PositionLeftRightContent()
 		{
 			let x = getRuleDisplayLRBound(d).left;
 
-			return `translate(${x - stylingvars.nodePadding}, ${ruleTextYPosition})`
+			return `translate(${x - stylingvars.nodePadding}, ${ruleCenterY - 8})`
 		});
 
 	// right content
@@ -379,7 +384,7 @@ function PositionLeftRightContent()
 		{
 			let x = getRuleDisplayLRBound(d).right;
 
-			return `translate(${x + stylingvars.nodePadding}, ${ruleTextYPosition})`
+			return `translate(${x + stylingvars.nodePadding}, ${ruleCenterY - 8})`
 		});
 }
 
@@ -627,10 +632,12 @@ function MathJaxSVGManipulation()
 				.classed(webvars.texContainerClass, true)
 				.attr('width', '100%')
 				.style('overflow', 'visible')
+				// .attr('dominant-baseline', 'middle')
 				.on('click', node_onclick)
 				.append(function(){
 					return g.node();
 				})
+				// .attr('dominant-baseline', 'middle')
 				.attr('width', '50%')
 				.attr('x', '-25%');
 		}
