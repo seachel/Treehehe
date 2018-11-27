@@ -48,15 +48,21 @@ TreeDataMaker = (function()
 {
 	let id = 0;
 
-	let makeId = () =>
+	let makeNodeId = () =>
 	{
 		id++;
 		return `node${id}`;
 	}
 
+	let makeTreeId = () =>
+	{
+		id++;
+		return `tree${id}`;
+	}
+
 	function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondition = "")
 	{
-		let nodeId = makeId();
+		let nodeId = makeNodeId();
 
 		let result = {
 			name: nodeId,
@@ -75,8 +81,17 @@ TreeDataMaker = (function()
 		return result;
 	}
 
+	function makeTree(root)
+	{
+		return {
+			root: root,
+			id: makeTreeId()
+		};
+	}
+
 	return {
-		makeProofTreeNode: makeProofTreeNode
+		makeProofTreeNode: makeProofTreeNode,
+		makeTree: makeTree
 	};
 })();
 
@@ -85,7 +100,7 @@ TreeDataMaker = (function()
 
 const TreeExamples = (function()
 {
-	let data = TreeDataMaker.makeProofTreeNode("$x \\rightarrow y$",
+	let dataRoot = TreeDataMaker.makeProofTreeNode("$x \\rightarrow y$",
 		[
 			TreeDataMaker.makeProofTreeNode("$\\forall x, P \; x$"),
 			TreeDataMaker.makeProofTreeNode("1 + 2 + 3 = :)",
@@ -98,7 +113,7 @@ const TreeExamples = (function()
 	"A right",
 	"A left");
 
-	let treeExample1 = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+	let natded_ex1Root = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 		[
 			TreeDataMaker.makeProofTreeNode("$q \\wedge s$",
 			[
@@ -127,7 +142,7 @@ const TreeExamples = (function()
 		],
 		"$\\rightarrow_{I^u}$");
 
-	let selectedExample = data;
+	let selectedExample = TreeDataMaker.makeTree(dataRoot);
 
 	function setSelectedExample(selection)
 	{
@@ -140,7 +155,7 @@ const TreeExamples = (function()
 	}
 
 	return {
-		examples: [data, treeExample1],
+		examples: [TreeDataMaker.makeTree(dataRoot), TreeDataMaker.makeTree(natded_ex1Root)],
 		setSelectedExample: setSelectedExample,
 		getSelectedExample: getSelectedExample
 	};
@@ -156,7 +171,7 @@ function UpdateTreeSelection(selection)
 	setTimeout(MathJaxSVGManipulation, 500);
 }
 
-function TreeBuilder(selectedRoot)
+function TreeBuilder(selectedTree)
 {
 	// clear previous svg?
 	d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass} > svg`).remove();
@@ -165,7 +180,7 @@ function TreeBuilder(selectedRoot)
 
 	// ---------- Data in d3 heirarchy object
 
-	let myroot = d3.hierarchy(selectedRoot); // set x0 and y0 based on svg dimensions?
+	let myroot = d3.hierarchy(selectedTree.root); // set x0 and y0 based on svg dimensions?
 
 
 	// ---------- D3 tree variables and utils
@@ -398,6 +413,7 @@ function TreeBuilder(selectedRoot)
 	//#endregion
 
 	//#region Bounds Computation
+
 	function getRuleDisplayLRBound(hierarchyObj)
 	{
 		let id = hierarchyObj.data.id;
@@ -499,24 +515,13 @@ function TreeBuilder(selectedRoot)
 	}
 	//#endregion
 
-	function setFocusRoot(root)
-	{debugger;
-		myroot = root;
-	}
-
-	function getFocusRoot()
-	{
-		return myroot;
-	}
-
 	return {
 		svgtree: svgtree,
-		focusRoot: myroot,
+		selectedTree: selectedTree,
 		treeWidth: treeWidth,
 		treeHeight: treeHeight,
 		postRenderProposition: PostRenderProposition,
-		postRenderRuleText: PostRenderRuleText,
-		setFocusRoot: setFocusRoot
+		postRenderRuleText: PostRenderRuleText
 	};
 }
 
@@ -525,7 +530,7 @@ function TreeBuilder(selectedRoot)
 
 let Interaction = (function()
 {// pass selector for selection panel? or separate this out?
-	var myIterator = makeTreeIterator(currentTreeBuilder.focusRoot, visitNodes_preOrder, focusNode);
+	var myIterator = makeTreeIterator(currentTreeBuilder.selectedTree.root, visitNodes_preOrder, focusNode);
 
 	d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
 		.on('click', myIterator.next);
@@ -574,7 +579,7 @@ let Interaction = (function()
 
 	// Bad: how to make sure the callbacks have the correct type?
 	function makeTreeIterator(root, traversalFn, nodeCallback)
-	{
+	{debugger;
 		let nodesInOrder = [];
 
 		traversalFn(root, n => nodesInOrder.push(n));
@@ -701,6 +706,10 @@ function node_onclick(selectedHNode)
 	Interaction.focusNode(selectedHNode);
 }
 
+function exampleSelect_onchange(selectNode)
+{
+
+}
 
 
 // ------------------------------ MathJax ------------------------------
@@ -762,5 +771,11 @@ TreeExamples.examples.forEach(e =>
 		d3.select('.example-list')
 			.append('option')
 			.attr('label', e.proposition)
+			.on('select', UpdateTreeSelection)
+			.on('focus', UpdateTreeSelection)
 			.text(e.proposition);
 	})
+
+
+// d3.select('.example-list')
+// 	.on(change, UpdateTreeSelection);
