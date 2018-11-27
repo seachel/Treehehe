@@ -130,52 +130,59 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 // ---------- Examples
 
-var datamk = TreeDataMaker();
+function TreeExamples()
+{
+	var datamk = TreeDataMaker();
 
-let data = datamk.makeProofTreeNode("$x \\rightarrow y$",
-	[
-		datamk.makeProofTreeNode("$\\forall x, P \; x$"),
-		datamk.makeProofTreeNode("1 + 2 + 3 = :)",
+	let data = datamk.makeProofTreeNode("$x \\rightarrow y$",
 		[
-			datamk.makeProofTreeNode("$x \\supset y$"),
-			datamk.makeProofTreeNode("$\\wedge$")
-		]),
-		datamk.makeProofTreeNode("$\\forall x$")
-	],
-  "A right",
-  "A left");
-
-let treeExample1 = datamk.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
-	[
-		datamk.makeProofTreeNode("$q \\wedge s$",
-		[
-			datamk.makeProofTreeNode("$q$",
+			datamk.makeProofTreeNode("$\\forall x, P \; x$"),
+			datamk.makeProofTreeNode("1 + 2 + 3 = :)",
 			[
-				datamk.makeProofTreeNode("$p$",
-				[
-					datamk.makeProofTreeNode("$p \\wedge r$", [], "$u$")
-				],
-				"$\\wedge_{E_1}$"),
-				datamk.makeProofTreeNode("$p \\rightarrow q$", null)
-			],
-			"$\\rightarrow_E$"),
-			datamk.makeProofTreeNode("$s$",
-			[
-				datamk.makeProofTreeNode("$r$",
-				[
-					datamk.makeProofTreeNode("$p \\wedge u$", [], "$u$")
-				],
-				"$\\wedge_{E_2}$"),
-				datamk.makeProofTreeNode("$r \\rightarrow s$", null)
-			],
-			"$\\wedge_E$")
+				datamk.makeProofTreeNode("$x \\supset y$"),
+				datamk.makeProofTreeNode("$\\wedge$")
+			]),
+			datamk.makeProofTreeNode("$\\forall x$")
 		],
-		"$\\wedge_I$")
-	],
-	"$\\rightarrow_{I^u}$");
+	"A right",
+	"A left");
 
+	let treeExample1 = datamk.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+		[
+			datamk.makeProofTreeNode("$q \\wedge s$",
+			[
+				datamk.makeProofTreeNode("$q$",
+				[
+					datamk.makeProofTreeNode("$p$",
+					[
+						datamk.makeProofTreeNode("$p \\wedge r$", [], "$u$")
+					],
+					"$\\wedge_{E_1}$"),
+					datamk.makeProofTreeNode("$p \\rightarrow q$", null)
+				],
+				"$\\rightarrow_E$"),
+				datamk.makeProofTreeNode("$s$",
+				[
+					datamk.makeProofTreeNode("$r$",
+					[
+						datamk.makeProofTreeNode("$p \\wedge u$", [], "$u$")
+					],
+					"$\\wedge_{E_2}$"),
+					datamk.makeProofTreeNode("$r \\rightarrow s$", null)
+				],
+				"$\\wedge_E$")
+			],
+			"$\\wedge_I$")
+		],
+		"$\\rightarrow_{I^u}$");
 
-let selectedTree = treeExample1;
+	return {
+		ex1: data,
+		natded_ex1: treeExample1
+	}
+}
+
+let selectedTree = TreeExamples().natded_ex1;
 
 // ------------------------------ D3 ------------------------------
 
