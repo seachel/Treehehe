@@ -13,6 +13,18 @@ body
 	margin: 0;
 }
 
+.title
+{
+	font-size: 1.8em;
+	font-weight: bold;
+}
+
+.subheader
+{
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
 .page-container
 {
 	display: grid;
