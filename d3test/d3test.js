@@ -322,22 +322,32 @@ let TreeBuilder = (function()
 	function PositionRuleTextBoundingRect()
 	{
 		d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
+			.filter(d =>
+			{
+				let bounds = getLeftContentBounds(d.data.id);
+				return bounds.x != bounds.y;
+			})
 			.attr('x', d =>
 			{
-				return getLeftContentBounds(d.data.id).x
+				return getLeftContentBounds(d.data.id).x - stylingvars.nodePadding;
 			})
-			.attr('y', d => getLeftContentBounds(d.data.id).y)
-			.attr('width', d => getLeftContentBounds(d.data.id).width)
-			.attr('height', d => getLeftContentBounds(d.data.id).height);
+			.attr('y', d => getLeftContentBounds(d.data.id).y - stylingvars.nodePadding)
+			.attr('width', d => getLeftContentBounds(d.data.id).width + 2 * stylingvars.nodePadding)
+			.attr('height', d => getLeftContentBounds(d.data.id).height + 2 * stylingvars.nodePadding);
 
 		d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
+			.filter(d =>
+			{
+				let bounds = getRightContentBounds(d.data.id);
+				return bounds.x != bounds.y;
+			})
 			.attr('x', d =>
 			{
-				return getRightContentBounds(d.data.id).x
+				return getRightContentBounds(d.data.id).x - stylingvars.nodePadding;
 			})
-			.attr('y', d => getRightContentBounds(d.data.id).y)
-			.attr('width', d => getRightContentBounds(d.data.id).width)
-			.attr('height', d => getRightContentBounds(d.data.id).height);
+			.attr('y', d => getRightContentBounds(d.data.id).y - stylingvars.nodePadding)
+			.attr('width', d => getRightContentBounds(d.data.id).width + 2 * stylingvars.nodePadding)
+			.attr('height', d => getRightContentBounds(d.data.id).height + 2 *  stylingvars.nodePadding);
 	}
 
 	var ruleCenterY = -1 * (linkHeight / 2) + stylingvars.nodePadding + stylingvars.propositionBorderThickness;
