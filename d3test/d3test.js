@@ -34,7 +34,8 @@ let stylingvars = {
 
 // ------------------------------ Tree Data ------------------------------
 
-function TreeDataMaker()
+
+TreeDataMaker = (function()
 {
 	let id = 0;
 
@@ -68,12 +69,8 @@ function TreeDataMaker()
 	return {
 		makeProofTreeNode: makeProofTreeNode
 	};
-}
+})();
 
-function TreeExamples()
-{
-
-}
 
 // ---------- Tree Traversal
 
@@ -132,43 +129,41 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 var TreeExamples = (function()
 {
-	var datamk = TreeDataMaker();
-
-	let data = datamk.makeProofTreeNode("$x \\rightarrow y$",
+	let data = TreeDataMaker.makeProofTreeNode("$x \\rightarrow y$",
 		[
-			datamk.makeProofTreeNode("$\\forall x, P \; x$"),
-			datamk.makeProofTreeNode("1 + 2 + 3 = :)",
+			TreeDataMaker.makeProofTreeNode("$\\forall x, P \; x$"),
+			TreeDataMaker.makeProofTreeNode("1 + 2 + 3 = :)",
 			[
-				datamk.makeProofTreeNode("$x \\supset y$"),
-				datamk.makeProofTreeNode("$\\wedge$")
+				TreeDataMaker.makeProofTreeNode("$x \\supset y$"),
+				TreeDataMaker.makeProofTreeNode("$\\wedge$")
 			]),
-			datamk.makeProofTreeNode("$\\forall x$")
+			TreeDataMaker.makeProofTreeNode("$\\forall x$")
 		],
 	"A right",
 	"A left");
 
-	let treeExample1 = datamk.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+	let treeExample1 = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 		[
-			datamk.makeProofTreeNode("$q \\wedge s$",
+			TreeDataMaker.makeProofTreeNode("$q \\wedge s$",
 			[
-				datamk.makeProofTreeNode("$q$",
+				TreeDataMaker.makeProofTreeNode("$q$",
 				[
-					datamk.makeProofTreeNode("$p$",
+					TreeDataMaker.makeProofTreeNode("$p$",
 					[
-						datamk.makeProofTreeNode("$p \\wedge r$", [], "$u$")
+						TreeDataMaker.makeProofTreeNode("$p \\wedge r$", [], "$u$")
 					],
 					"$\\wedge_{E_1}$"),
-					datamk.makeProofTreeNode("$p \\rightarrow q$", null)
+					TreeDataMaker.makeProofTreeNode("$p \\rightarrow q$", null)
 				],
 				"$\\rightarrow_E$"),
-				datamk.makeProofTreeNode("$s$",
+				TreeDataMaker.makeProofTreeNode("$s$",
 				[
-					datamk.makeProofTreeNode("$r$",
+					TreeDataMaker.makeProofTreeNode("$r$",
 					[
-						datamk.makeProofTreeNode("$p \\wedge u$", [], "$u$")
+						TreeDataMaker.makeProofTreeNode("$p \\wedge u$", [], "$u$")
 					],
 					"$\\wedge_{E_2}$"),
-					datamk.makeProofTreeNode("$r \\rightarrow s$", null)
+					TreeDataMaker.makeProofTreeNode("$r \\rightarrow s$", null)
 				],
 				"$\\wedge_E$")
 			],
