@@ -116,7 +116,7 @@ const TreeExamples = (function()
 				[
 					TreeDataMaker.makeProofTreeNode("$r$",
 					[
-						TreeDataMaker.makeProofTreeNode("$p \\wedge u$", [], "$u$")
+						TreeDataMaker.makeProofTreeNode("$p \\wedge r$", [], "$u$")
 					],
 					"$\\wedge_{E_2}$"),
 					TreeDataMaker.makeProofTreeNode("$r \\rightarrow s$", null)
