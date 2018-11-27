@@ -135,58 +135,6 @@ const TreeExamples = (function()
 let selectedTree = TreeExamples.natded_ex1;
 
 
-// ---------- Tree Traversal
-
-function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
-{
-	if (rootNode.children)
-	{
-		if (rootNode.children.length > 0)
-		{
-			rootNode.children.forEach(child =>
-			{
-				if (childCallback)
-				{
-					childCallback(child, rootNode, ...childCallbackArgs);
-				}
-				visitNodes_postOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
-			});
-		}
-	}
-
-	if (nodeCallback)
-	{
-		nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
-	}
-
-	iterationHeight++;
-}
-
-function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
-{
-	if (nodeCallback)
-	{
-		nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
-	}
-
-	if (rootNode.children)
-	{
-		if (rootNode.children.length > 0)
-		{
-			rootNode.children.forEach(child =>
-			{
-				if (childCallback)
-				{
-					childCallback(child, rootNode, ...childCallbackArgs);
-				}
-				visitNodes_preOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
-			});
-		}
-	}
-
-	iterationHeight++;
-}
-
 
 // ------------------------------ D3 ------------------------------
 
@@ -215,7 +163,6 @@ let mytree = d3.tree().size([treeWidth, treeHeight]);
 
 mytree(myroot);
 
-var linkHeights = myroot.links().map(l => l.target.y - l.source.y)
 let linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 
 // ---------- Set up DOM content
@@ -223,276 +170,308 @@ let linkHeight = myroot.links()[0].target.y - myroot.links()[0].source.y;
 let svgheight = treeHeight + (proofHeight * (2 * stylingvars.nodePadding) + (2 * stylingvars.propositionBorderThickness));
 let svgwidth = treeWidth;
 
-let svgtree = d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
-				.append('svg').style('background', 'grey')
-				.classed(webvars.treeClassName, true)
-				.attr('width', svgwidth)
-				.attr('height', svgheight)
-				.append(webvars.nodesContainerTag)
-				.classed(webvars.nodesContainerClass, true)
-				.attr('transform', `translate(0, ${stylingvars.texShift})`);
-
-
-// ---------- create svg objects to represent data and position them
-
-d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
-	.selectAll(`${selectors.nodeElementSelector}`)
-	.data(myroot.descendants())
-	.enter()
-	.append(webvars.nodeContainerTag)
-	.classed(webvars.nodeContainerClass, true)
-	.style('overflow', 'visible')
-	.attr(webvars.nodeIdAttr, d => d.data.id)
-	.attr('transform', d => `translate(${d.x}, ${svgheight - d.y})`)
-	.attr('text-anchor', 'middle')
-	.append(webvars.backgroundTag)
-	.classed(webvars.nodeContainerClass, true)
-	.attr(webvars.nodeIdAttr, d => d.data.id)
-	.on('click', node_onclick);
-
-
-// Add text
-d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${selectors.nodeElementSelector}`)
-	.append(webvars.nodeTextTag)
-	.classed(webvars.nodeTextClass, true)
-	.attr(webvars.nodeIdAttr, d => d.data.id)
-	.attr('dy', '0.35em')
-	.attr('alignment-baseline', 'mathematical')
-	.text(d => d.data.proposition)
-	.on('click', node_onclick);
-
-// Add left and right content
-AddLeftRightContent();
-
-function AddLeftRightContent()
+let TreeBuilder = (function()
 {
-	// left content
-	d3.selectAll(`${selectors.nodeElementSelector}`)
-		.append(webvars.ruleTextContainerTag)
-		.classed(webvars.sideConditionClass, true)
-		.classed(webvars.ruleTextClass, true)
-		.style('overflow', 'visible')
-		.attr(webvars.nodeIdAttr, d => d.data.id)
-		.attr('text-anchor', 'end')
-		.append(webvars.backgroundTag)
-		.classed(webvars.ruleTextClass, true)
-		.classed(webvars.ruleTextLeftClass, true)
-		.attr(webvars.nodeIdAttr, d => d.data.id);
+	let svgtree = AddSVGTreeAndNodesContainer();
 
-	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
-		.append(webvars.nodeTextTag)
-		.classed(webvars.ruleTextClass, true)
-		.classed(webvars.nodeTextClass, true)
-		.attr(webvars.nodeIdAttr, d => d.data.id)
-		.attr('dy', '0.35em')
-		.attr('alignment-baseline', 'alphabetical')
-		.text(d => d.data.sideCondition);
+	AddNodeGroupsAndBackground();
 
-	// right content
-	d3.selectAll(`${selectors.nodeElementSelector}`)
-		.append(webvars.ruleTextContainerTag)
-		.classed(webvars.ruleNameClass, true)
-		.classed(webvars.ruleTextClass, true)
-		.style('overflow', 'visible')
-		.attr(webvars.nodeIdAttr, d => d.data.id)
-		.attr('text-anchor', 'start')
-		.append(webvars.backgroundTag)
-		.classed(webvars.ruleTextClass, true)
-		.classed(webvars.ruleTextRightClass, true)
-		.attr(webvars.nodeIdAttr, d => d.data.id);
+	AddPropositionText();
 
-	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
-		.append(webvars.nodeTextTag)
-		.classed(webvars.ruleTextClass, true)
-		.classed(webvars.nodeTextClass, true)
-		.attr(webvars.nodeIdAttr, d => d.data.id)
-		.attr('dy', '0.35em')
-		.attr('alignment-baseline', 'alphabetical')
-		.text(d => d.data.ruleName);
-}
+	AddLeftRightContent();
 
-
-// ------------------------------ Functions to Update and Add to Tree Layout
-
-function AddProofTreeLines()
-{
-	d3.selectAll(`${selectors.nodeElementSelector}`)
-	.append('line')
-	.attr('x1', d =>
+	//#region Tree Set-up Functions
+	function AddSVGTreeAndNodesContainer()
 	{
-		return getRuleDisplayLRBound(d).left;
-	})
-	.attr('x2', d =>
+		return d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
+					.append('svg').style('background', 'grey')
+					.classed(webvars.treeClassName, true)
+					.attr('width', svgwidth)
+					.attr('height', svgheight)
+					.append(webvars.nodesContainerTag)
+					.classed(webvars.nodesContainerClass, true)
+					.attr('transform', `translate(0, ${stylingvars.texShift})`);
+	}
+
+	function AddNodeGroupsAndBackground()
 	{
-		return getRuleDisplayLRBound(d).right;
-	})
-	.attr('y1', d => ruleCenterY)
-	.attr('y2', d => ruleCenterY)
-	.attr('stroke', 'black');
-}
+		d3.select(`svg ${webvars.nodesContainerTag}.${webvars.nodesContainerClass}`)
+			.selectAll(`${selectors.nodeElementSelector}`)
+			.data(myroot.descendants())
+			.enter()
+			.append(webvars.nodeContainerTag)
+			.classed(webvars.nodeContainerClass, true)
+			.style('overflow', 'visible')
+			.attr(webvars.nodeIdAttr, d => d.data.id)
+			.attr('transform', d => `translate(${d.x}, ${svgheight - d.y})`)
+			.attr('text-anchor', 'middle')
+			.append(webvars.backgroundTag)
+			.classed(webvars.nodeContainerClass, true)
+			.attr(webvars.nodeIdAttr, d => d.data.id)
+			.on('click', node_onclick);
+	}
 
-function PositionPropositionBoundingRect()
-{
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
-		.attr('x', d =>
-		{
-			return getPropositionBounds(d.data.id).x - stylingvars.nodePadding
-		})
-		.attr('y', d =>
-		{
-			var bounds = getPropositionBounds(d.data.id);
-			return bounds.y - ((stylingvars.propositionBackgroundHeight - bounds.height) / 2);
-		})
-		.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
-		.attr('height', d => stylingvars.propositionBackgroundHeight);
-}
-
-
-function PositionRuleTextBoundingRect()
-{
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
-		.attr('x', d =>
-		{
-			return getLeftContentBounds(d.data.id).x
-		})
-		.attr('y', d => getLeftContentBounds(d.data.id).y)
-		.attr('width', d => getLeftContentBounds(d.data.id).width)
-		.attr('height', d => getLeftContentBounds(d.data.id).height);
-
-	d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
-		.attr('x', d =>
-		{
-			return getRightContentBounds(d.data.id).x
-		})
-		.attr('y', d => getRightContentBounds(d.data.id).y)
-		.attr('width', d => getRightContentBounds(d.data.id).width)
-		.attr('height', d => getRightContentBounds(d.data.id).height);
-}
-
-var ruleCenterY = -1 * (linkHeight / 2) + stylingvars.nodePadding + stylingvars.propositionBorderThickness;
-
-function PositionLeftRightContent()
-{
-	// left content
-	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
-		.attr('transform', d =>
-		{
-			let x = getRuleDisplayLRBound(d).left;
-
-			return `translate(${x - stylingvars.nodePadding}, ${ruleCenterY - 8})`
-		});
-
-	// right content
-	d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
-		.attr('transform', d =>
-		{
-			let x = getRuleDisplayLRBound(d).right;
-
-			return `translate(${x + stylingvars.nodePadding}, ${ruleCenterY - 8})`
-		});
-}
-
-// ------------------------------ Computing Bounds ------------------------------
-
-function getRuleDisplayLRBound(hierarchyObj)
-{
-	let id = hierarchyObj.data.id;
-
-	let currentPropBB = getPropositionBounds(id)
-
-	let result = {
-		left: currentPropBB.x,
-		right: currentPropBB.x + currentPropBB.width
-	};
-
-	if (hierarchyObj.children)
+	function AddPropositionText()
 	{
-		if (hierarchyObj.children.length > 0)
+		d3.selectAll(`${webvars.nodesContainerTag}.${webvars.nodesContainerClass} > ${selectors.nodeElementSelector}`)
+			.append(webvars.nodeTextTag)
+			.classed(webvars.nodeTextClass, true)
+			.attr(webvars.nodeIdAttr, d => d.data.id)
+			.attr('dy', '0.35em')
+			.attr('alignment-baseline', 'mathematical')
+			.text(d => d.data.proposition)
+			.on('click', node_onclick);
+	}
+
+	function AddLeftRightContent()
+	{
+		// left content
+		d3.selectAll(`${selectors.nodeElementSelector}`)
+			.append(webvars.ruleTextContainerTag)
+			.classed(webvars.sideConditionClass, true)
+			.classed(webvars.ruleTextClass, true)
+			.style('overflow', 'visible')
+			.attr(webvars.nodeIdAttr, d => d.data.id)
+			.attr('text-anchor', 'end')
+			.append(webvars.backgroundTag)
+			.classed(webvars.ruleTextClass, true)
+			.classed(webvars.ruleTextLeftClass, true)
+			.attr(webvars.nodeIdAttr, d => d.data.id);
+
+		d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
+			.append(webvars.nodeTextTag)
+			.classed(webvars.ruleTextClass, true)
+			.classed(webvars.nodeTextClass, true)
+			.attr(webvars.nodeIdAttr, d => d.data.id)
+			.attr('dy', '0.35em')
+			.attr('alignment-baseline', 'alphabetical')
+			.text(d => d.data.sideCondition);
+
+		// right content
+		d3.selectAll(`${selectors.nodeElementSelector}`)
+			.append(webvars.ruleTextContainerTag)
+			.classed(webvars.ruleNameClass, true)
+			.classed(webvars.ruleTextClass, true)
+			.style('overflow', 'visible')
+			.attr(webvars.nodeIdAttr, d => d.data.id)
+			.attr('text-anchor', 'start')
+			.append(webvars.backgroundTag)
+			.classed(webvars.ruleTextClass, true)
+			.classed(webvars.ruleTextRightClass, true)
+			.attr(webvars.nodeIdAttr, d => d.data.id);
+
+		d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
+			.append(webvars.nodeTextTag)
+			.classed(webvars.ruleTextClass, true)
+			.classed(webvars.nodeTextClass, true)
+			.attr(webvars.nodeIdAttr, d => d.data.id)
+			.attr('dy', '0.35em')
+			.attr('alignment-baseline', 'alphabetical')
+			.text(d => d.data.ruleName);
+	}
+	//#endregion
+
+	function PostRenderProposition()
+	{
+		PositionPropositionBoundingRect();
+		AddProofTreeLines();
+		PositionLeftRightContent();
+	}
+
+	function PostRenderRuleText()
+	{
+		PositionRuleTextBoundingRect();
+	}
+
+	//#region Post-TeX Render Tree Manipulation Functions
+	function AddProofTreeLines()
+	{
+		d3.selectAll(`${selectors.nodeElementSelector}`)
+		.append('line')
+		.attr('x1', d =>
 		{
-			let firstChild = hierarchyObj.children[0];
-			let firstChildPropBB = getPropositionBounds(firstChild.data.id);
+			return getRuleDisplayLRBound(d).left;
+		})
+		.attr('x2', d =>
+		{
+			return getRuleDisplayLRBound(d).right;
+		})
+		.attr('y1', d => ruleCenterY)
+		.attr('y2', d => ruleCenterY)
+		.attr('stroke', 'black');
+	}
 
-			let xDiffLeft = hierarchyObj.x - firstChild.x;
-
-			if (xDiffLeft > 0 ||
-				((xDiffLeft == 0) && (firstChildPropBB.x < currentPropBB.x)))
+	function PositionPropositionBoundingRect()
+	{
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
+			.attr('x', d =>
 			{
-				result.left -= xDiffLeft + (firstChildPropBB.width / 2) - (currentPropBB.width / 2);
-			}
-
-			let lastChild = hierarchyObj.children[hierarchyObj.children.length - 1];
-			let lastChildPropBB = getPropositionBounds(lastChild.data.id);
-
-			let xDiffRight = lastChild.x - hierarchyObj.x;
-
-			if (xDiffRight >= 0 && (lastChild.x + lastChildPropBB.width >= hierarchyObj.x + currentPropBB.width))
+				return getPropositionBounds(d.data.id).x - stylingvars.nodePadding
+			})
+			.attr('y', d =>
 			{
-				result.right += xDiffLeft + (lastChildPropBB.width / 2) - (currentPropBB.width / 2);
+				var bounds = getPropositionBounds(d.data.id);
+				return bounds.y - ((stylingvars.propositionBackgroundHeight - bounds.height) / 2);
+			})
+			.attr('width', d => getPropositionBounds(d.data.id).width + 2 * stylingvars.nodePadding)
+			.attr('height', d => stylingvars.propositionBackgroundHeight);
+	}
+
+
+	function PositionRuleTextBoundingRect()
+	{
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.sideConditionClass}`)
+			.attr('x', d =>
+			{
+				return getLeftContentBounds(d.data.id).x
+			})
+			.attr('y', d => getLeftContentBounds(d.data.id).y)
+			.attr('width', d => getLeftContentBounds(d.data.id).width)
+			.attr('height', d => getLeftContentBounds(d.data.id).height);
+
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.ruleNameClass}`)
+			.attr('x', d =>
+			{
+				return getRightContentBounds(d.data.id).x
+			})
+			.attr('y', d => getRightContentBounds(d.data.id).y)
+			.attr('width', d => getRightContentBounds(d.data.id).width)
+			.attr('height', d => getRightContentBounds(d.data.id).height);
+	}
+
+	var ruleCenterY = -1 * (linkHeight / 2) + stylingvars.nodePadding + stylingvars.propositionBorderThickness;
+
+	function PositionLeftRightContent()
+	{
+		// left content
+		d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
+			.attr('transform', d =>
+			{
+				let x = getRuleDisplayLRBound(d).left;
+
+				return `translate(${x - stylingvars.nodePadding}, ${ruleCenterY - 8})`
+			});
+
+		// right content
+		d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
+			.attr('transform', d =>
+			{
+				let x = getRuleDisplayLRBound(d).right;
+
+				return `translate(${x + stylingvars.nodePadding}, ${ruleCenterY - 8})`
+			});
+	}
+
+	//#endregion
+
+	//#region Bounds Computation
+	function getRuleDisplayLRBound(hierarchyObj)
+	{
+		let id = hierarchyObj.data.id;
+
+		let currentPropBB = getPropositionBounds(id)
+
+		let result = {
+			left: currentPropBB.x,
+			right: currentPropBB.x + currentPropBB.width
+		};
+
+		if (hierarchyObj.children)
+		{
+			if (hierarchyObj.children.length > 0)
+			{
+				let firstChild = hierarchyObj.children[0];
+				let firstChildPropBB = getPropositionBounds(firstChild.data.id);
+
+				let xDiffLeft = hierarchyObj.x - firstChild.x;
+
+				if (xDiffLeft > 0 ||
+					((xDiffLeft == 0) && (firstChildPropBB.x < currentPropBB.x)))
+				{
+					result.left -= xDiffLeft + (firstChildPropBB.width / 2) - (currentPropBB.width / 2);
+				}
+
+				let lastChild = hierarchyObj.children[hierarchyObj.children.length - 1];
+				let lastChildPropBB = getPropositionBounds(lastChild.data.id);
+
+				let xDiffRight = lastChild.x - hierarchyObj.x;
+
+				if (xDiffRight >= 0 && (lastChild.x + lastChildPropBB.width >= hierarchyObj.x + currentPropBB.width))
+				{
+					result.right += xDiffLeft + (lastChildPropBB.width / 2) - (currentPropBB.width / 2);
+				}
 			}
 		}
+		else if (hierarchyObj.data.isPremise)
+		{
+			result.right = result.left;
+		}
+
+		// add padding
+		if (result.right != result.left)
+		{
+			result.left -= stylingvars.nodePadding;
+			result.right += stylingvars.nodePadding;
+		}
+
+		return result;
 	}
-	else if (hierarchyObj.data.isPremise)
+
+	function getVisualItemBounds(nodeId, itemContainerSelector)
 	{
-		result.right = result.left;
+		let texNode = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
+
+		if (texNode)
+		{
+			let boundingBox = texNode.getBBox();
+
+			return {
+				x: boundingBox.x,
+				y: boundingBox.y,
+				width: boundingBox.width,
+				height: boundingBox.height
+			};
+		}
+		else
+		{
+			// position rect based on text
+			let textNodeBox = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}]
+										 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
+								.node()
+								.getBBox();
+
+			return {
+				x: textNodeBox.x,
+				y: textNodeBox.y,
+				width: textNodeBox.width,
+				height: textNodeBox.height
+			};
+		}
 	}
 
-	// add padding
-	if (result.right != result.left)
+
+	function getPropositionBounds(nodeId)
 	{
-		result.left -= stylingvars.nodePadding;
-		result.right += stylingvars.nodePadding;
+		return getVisualItemBounds(nodeId, selectors.nodeElementSelector);
 	}
 
-	return result;
-}
-
-function getVisualItemBounds(nodeId, itemContainerSelector)
-{
-	let texNode = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}] > ${webvars.texContainerTag}.${webvars.texContainerClass}`).node();
-
-	if (texNode)
+	function getLeftContentBounds(nodeId)
 	{
-		let boundingBox = texNode.getBBox();
-
-		return {
-			x: boundingBox.x,
-			y: boundingBox.y,
-			width: boundingBox.width,
-			height: boundingBox.height
-		};
+		return getVisualItemBounds(nodeId, selectors.textLeftElementSelector);
 	}
-	else
+
+	function getRightContentBounds(nodeId)
 	{
-		// position rect based on text
-		let textNodeBox = d3.select(`${itemContainerSelector}[${webvars.nodeIdAttr}=${nodeId}]
-									 > ${webvars.nodeTextTag}[${webvars.nodeIdAttr}=${nodeId}]`)
-							.node()
-							.getBBox();
-
-		return {
-			x: textNodeBox.x,
-			y: textNodeBox.y,
-			width: textNodeBox.width,
-			height: textNodeBox.height
-		};
+		return getVisualItemBounds(nodeId, selectors.textRightElementSelector);
 	}
-}
+	//#endregion
 
-
-function getPropositionBounds(nodeId)
-{
-	return getVisualItemBounds(nodeId, selectors.nodeElementSelector);
-}
-
-function getLeftContentBounds(nodeId)
-{
-	return getVisualItemBounds(nodeId, selectors.textLeftElementSelector);
-}
-
-function getRightContentBounds(nodeId)
-{
-	return getVisualItemBounds(nodeId, selectors.textRightElementSelector);
-}
+	return {
+		svgtree: svgtree,
+		postRenderProposition: PostRenderProposition,
+		postRenderRuleText: PostRenderRuleText
+	};
+}());
 
 
 // ---------- Interaction
@@ -597,6 +576,62 @@ function makeTreeIterator(root, traversalFn, nodeCallback)
 	return rangeIterator;
 }
 
+
+// ---------- Tree Traversal
+
+function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
+{
+	if (rootNode.children)
+	{
+		if (rootNode.children.length > 0)
+		{
+			rootNode.children.forEach(child =>
+			{
+				if (childCallback)
+				{
+					childCallback(child, rootNode, ...childCallbackArgs);
+				}
+				visitNodes_postOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
+			});
+		}
+	}
+
+	if (nodeCallback)
+	{
+		nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
+	}
+
+	iterationHeight++;
+}
+
+function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
+{
+	if (nodeCallback)
+	{
+		nodeCallback(rootNode, ...nodeCallbackArgs, iterationHeight);
+	}
+
+	if (rootNode.children)
+	{
+		if (rootNode.children.length > 0)
+		{
+			rootNode.children.forEach(child =>
+			{
+				if (childCallback)
+				{
+					childCallback(child, rootNode, ...childCallbackArgs);
+				}
+				visitNodes_preOrder(child, nodeCallback, nodeCallbackArgs, iterationHeight + 1, childCallback, childCallbackArgs);
+			});
+		}
+	}
+
+	iterationHeight++;
+}
+
+
+// ------------------------------ Event handlers ------------------------------
+
 function node_onclick(selectedHNode)
 {
 	focusNode(selectedHNode);
@@ -611,22 +646,11 @@ function selectedHNodeOutput(selectedHNode)
 }
 
 
-function PostRenderProposition()
-{
-	AddProofTreeLines();
-	PositionLeftRightContent();
-	PositionPropositionBoundingRect();
-}
 
-function PostRenderRuleText()
-{
-	PositionRuleTextBoundingRect();
-}
-
-// used as startup hook for MathJax ending
+// ------------------------------ MathJax ------------------------------
 function MathJaxSVGManipulation()
 {
-	svgtree.selectAll(`${selectors.nodeElementSelector}`).each(function(){
+	TreeBuilder.svgtree.selectAll(`${selectors.nodeElementSelector}`).each(function(){
 		let self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
@@ -648,9 +672,9 @@ function MathJaxSVGManipulation()
 		}
 	});
 
-	PostRenderProposition();
+	TreeBuilder.postRenderProposition();
 
-	svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
+	TreeBuilder.svgtree.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleTextClass}`).each(function(){
 		let self = d3.select(this),
 			g = self.select(`${webvars.nodeTextTag} > span > svg`);
 
@@ -668,7 +692,7 @@ function MathJaxSVGManipulation()
 		}
 	});
 
-	PostRenderRuleText();
+	TreeBuilder.postRenderRuleText();
 }
 
 // scrolling
