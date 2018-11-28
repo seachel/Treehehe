@@ -309,7 +309,7 @@ function TreeBuilder(selectedTree)
 
 	// ---------- Set up DOM content
 
-	let svgheight = treeHeight + (proofHeight * (2 * stylingvars.nodePadding) + (2 * stylingvars.propositionBorderThickness));
+	let svgheight = treeHeight + ((proofHeight + 1) * 2 * stylingvars.nodePadding);
 	let svgwidth = treeWidth;
 
 
@@ -329,6 +329,7 @@ function TreeBuilder(selectedTree)
 					.classed(webvars.treeClassName, true)
 					.attr('width', svgwidth)
 					.attr('height', svgheight)
+					.style('overflow', 'visible')
 					.append(webvars.nodesContainerTag)
 					.classed(webvars.nodesContainerClass, true)
 					.attr('transform', `translate(0, ${stylingvars.texShift})`);
