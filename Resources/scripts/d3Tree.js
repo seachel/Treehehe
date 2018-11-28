@@ -828,7 +828,7 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 function node_onclick(selectedHNode)
 {
-	InteractionManager.focusNode(selectedHNode);
+	currentInteractionManager.focusNode(selectedHNode);
 }
 
 function exampleSelect_onchange(selectNode)
