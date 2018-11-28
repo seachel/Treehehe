@@ -495,10 +495,8 @@ function TreeBuilder(selectedTree)
 		d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
 			.attr('transform', d =>
 			{
-				let width = d3.select(`${selectors.textLeftElementSelector}[${webvars.nodeIdAttr}=${d.data.id}]`)
-								.node()
-								.getBBox()
-								.width;
+				let selector = `${selectors.textLeftElementSelector}[${webvars.nodeIdAttr}=${d.data.id}]`;
+				let width = getVisualItemBounds(d.data.id, selector).width;
 
 				let x = getRuleDisplayLRBound(d).left - width;
 
