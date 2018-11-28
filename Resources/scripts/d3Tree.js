@@ -113,6 +113,26 @@ const TreeExamples = (function()
 	"A right",
 	"A left");
 
+	let natded_ex1Root = TreeDataMaker.makeProofTreeNode("$(p \\wedge q) \\rightarrow r$",
+		[
+			TreeDataMaker.makeProofTreeNode("$r$",
+			[
+				TreeDataMaker.makeProofTreeNode("$p$",
+				[
+					TreeDataMaker.makeProofTreeNode("$p \\wedge q$", [], "$u$")
+				],
+				"$\\wedge_{E_1}$"),
+				TreeDataMaker.makeProofTreeNode("$p \\rightarrow r$",
+				[
+					TreeDataMaker.makeProofTreeNode("$(p \\rightarrow r) \\wedge (q \\rightarrow r)$")
+				],
+				"$\\wedge_{E_1}$")
+			],
+			"$\\rightarrow_E$")
+		],
+		"$\\rightarrow_{I^u}$"
+	);
+
 	let natded_ex2Root = TreeDataMaker.makeProofTreeNode("$p \\wedge (q \\wedge r)$",
 		[
 			TreeDataMaker.makeProofTreeNode("$p$",
@@ -188,7 +208,7 @@ const TreeExamples = (function()
 	}
 
 	return {
-		examples: [TreeDataMaker.makeTree(dataRoot), TreeDataMaker.makeTree(natded_ex2Root), TreeDataMaker.makeTree(natded_ex3Root)],
+		examples: [TreeDataMaker.makeTree(dataRoot), TreeDataMaker.makeTree(natded_ex1Root), TreeDataMaker.makeTree(natded_ex2Root), TreeDataMaker.makeTree(natded_ex3Root)],
 		setSelectedExample: setSelectedExample,
 		getSelectedExample: getSelectedExample
 	};
