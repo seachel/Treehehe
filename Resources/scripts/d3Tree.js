@@ -163,9 +163,9 @@ const TreeExamples = (function()
 // whole thing in a module, with function `setTree` that makes a new tree builder and reruns MathJax? anything else?
 let currentTreeBuilder = TreeBuilder(TreeExamples.getSelectedExample());
 
-function UpdateTreeSelection(selection)
+function UpdateTreeSelection(selectedTree)
 {
-	currentTreeBuilder = TreeBuilder(selection);
+	currentTreeBuilder = TreeBuilder(selectedTree);
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 	// MathJax.Callback.Queue("MathJaxSVGManipulation");
 	setTimeout(MathJaxSVGManipulation, 500);
@@ -719,7 +719,9 @@ function node_onclick(selectedHNode)
 
 function exampleSelect_onchange(selectNode)
 {
+	var treeId = selectNode.children[selectNode.selectedIndex].label;
 
+	UpdateTreeSelection(TreeExamples.examples.find(e => e.id == treeId));
 }
 
 
@@ -781,10 +783,10 @@ TreeExamples.examples.forEach(e =>
 	{
 		d3.select('.example-list')
 			.append('option')
-			.attr('label', e.proposition)
-			.on('select', UpdateTreeSelection)
-			.on('focus', UpdateTreeSelection)
-			.text(e.proposition);
+			.attr('label', e.id)
+			// .on('select', UpdateTreeSelection)
+			// .on('focus', UpdateTreeSelection)
+			.text(e.root.proposition);
 	})
 
 
