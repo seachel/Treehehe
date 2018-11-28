@@ -206,16 +206,16 @@ const TreeExamples = (function()
 						TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; [] \\; t_2$",
 						[],
 						"$\\mathrm{backchain}_{P_2}$",
-						"t_2 = 0")
+						"$t_2 = 0$")
 					],
 					"$\\mathrm{backchain}_{P_1}$",
-					"t_1 = 1 + t_2")
+					"$t_1 = 1 + t_2$")
 				],
 				"$\\mathrm{backchain}_{P_1}$",
-				"t_0 = 1 + t_1")
+				"$t_0 = 1 + t_1$")
 			],
 			"$\\mathrm{backchain}_{P_1}$",
-			"t = 1 + t_0"),
+			"$t = 1 + t_0$"),
 			TreeDataMaker.makeNode("$\\Sigma ; \\emptyset \\models t : \\mathrm{nat}$")
 		],
 		"$\\exists_R$"
