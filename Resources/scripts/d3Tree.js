@@ -166,6 +166,8 @@ let currentTreeBuilder = TreeBuilder(TreeExamples.getSelectedExample());
 function UpdateTreeSelection(selectedTree)
 {
 	currentTreeBuilder = TreeBuilder(selectedTree);
+	currentInteractionManager = InteractionManager(); // better way to do this?
+
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 	// MathJax.Callback.Queue("MathJaxSVGManipulation");
 	setTimeout(MathJaxSVGManipulation, 500);
@@ -539,7 +541,9 @@ function TreeBuilder(selectedTree)
 
 // ---------- Interaction
 
-let Interaction = (function()
+let currentInteractionManager = InteractionManager();
+
+function InteractionManager()
 {// pass selector for selection panel? or separate this out?
 	var myIterator = makeTreeIterator(currentTreeBuilder.getSelectedHRoot(), visitNodes_preOrder, focusNode);
 
@@ -654,7 +658,7 @@ let Interaction = (function()
 		iterator: myIterator,
 		focusNode: focusNode
 	}
-}());
+};
 
 
 // ---------- Tree Traversal
@@ -714,7 +718,7 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 function node_onclick(selectedHNode)
 {
-	Interaction.focusNode(selectedHNode);
+	InteractionManager.focusNode(selectedHNode);
 }
 
 function exampleSelect_onchange(selectNode)
