@@ -206,16 +206,16 @@ const TreeExamples = (function()
 						TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; [] \\; t_2$",
 						[],
 						"$\\mathrm{backchain}_{P_2}$",
-						"$t_2 = 0$")
+						"t_2 = 0")
 					],
 					"$\\mathrm{backchain}_{P_1}$",
-					"$t_1 = 1 + t_2$")
+					"t_1 = 1 + t_2")
 				],
 				"$\\mathrm{backchain}_{P_1}$",
-				"$t_0 = 1 + t_1$")
+				"t_0 = 1 + t_1")
 			],
 			"$\\mathrm{backchain}_{P_1}$",
-			"$t = 1 + t_0$"),
+			"t = 1 + t_0"),
 			TreeDataMaker.makeNode("$\\Sigma ; \\emptyset \\models t : \\mathrm{nat}$")
 		],
 		"$\\exists_R$"
@@ -358,7 +358,7 @@ function TreeBuilder(selectedTree)
 			.classed(webvars.ruleTextClass, true)
 			.style('overflow', 'visible')
 			.attr(webvars.nodeIdAttr, d => d.data.id)
-			.attr('text-anchor', 'end')
+			.attr('text-anchor', 'start')
 			.append(webvars.backgroundTag)
 			.classed(webvars.ruleTextClass, true)
 			.classed(webvars.ruleTextLeftClass, true)
@@ -370,7 +370,7 @@ function TreeBuilder(selectedTree)
 			.classed(webvars.nodeTextClass, true)
 			.attr(webvars.nodeIdAttr, d => d.data.id)
 			.attr('dy', '0.35em')
-			.attr('alignment-baseline', 'alphabetical')
+			.attr('alignment-baseline', 'mathematical')
 			.text(d => d.data.sideCondition);
 
 		// right content
@@ -392,7 +392,7 @@ function TreeBuilder(selectedTree)
 			.classed(webvars.nodeTextClass, true)
 			.attr(webvars.nodeIdAttr, d => d.data.id)
 			.attr('dy', '0.35em')
-			.attr('alignment-baseline', 'alphabetical')
+			.attr('alignment-baseline', 'mathematical')
 			.text(d => d.data.ruleName);
 	}
 	//#endregion
@@ -401,12 +401,13 @@ function TreeBuilder(selectedTree)
 	{
 		PositionPropositionBoundingRect();
 		AddProofTreeLines();
-		PositionLeftRightContent();
 	}
 
 	function PostRenderRuleText()
 	{
 		PositionRuleTextBoundingRect();
+		PositionRightContent();
+		PositionLeftContent();
 	}
 
 	//#region Post-TeX Render Tree Manipulation Functions
@@ -477,24 +478,33 @@ function TreeBuilder(selectedTree)
 
 	var ruleCenterY = -1 * (linkHeight / 2) + stylingvars.nodePadding + stylingvars.propositionBorderThickness;
 
-	function PositionLeftRightContent()
+	function PositionRightContent()
 	{
-		// left content
-		d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
-			.attr('transform', d =>
-			{
-				let x = getRuleDisplayLRBound(d).left;
-
-				return `translate(${x - stylingvars.nodePadding}, ${ruleCenterY - 8})`
-			});
-
-		// right content
 		d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.ruleNameClass}`)
 			.attr('transform', d =>
 			{
 				let x = getRuleDisplayLRBound(d).right;
 
-				return `translate(${x + stylingvars.nodePadding}, ${ruleCenterY - 8})`
+				return `translate(${x + stylingvars.nodePadding},
+								${ruleCenterY - stylingvars.nodePadding - stylingvars.propositionBorderThickness})`
+			});
+	}
+
+	function PositionLeftContent()
+	{
+		d3.selectAll(`${webvars.ruleTextContainerTag}.${webvars.sideConditionClass}`)
+			.attr('transform', d =>
+			{
+				let width = d3.select(`${selectors.textLeftElementSelector}[${webvars.nodeIdAttr}=${d.data.id}]`)
+								.node()
+								.getBBox()
+								.width;
+
+				let x = getRuleDisplayLRBound(d).left - width;
+
+
+				return `translate(${x - stylingvars.nodePadding},
+								${ruleCenterY - stylingvars.nodePadding - stylingvars.propositionBorderThickness})`
 			});
 	}
 
