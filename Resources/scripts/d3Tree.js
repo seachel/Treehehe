@@ -195,15 +195,15 @@ const TreeExamples = (function()
 		],
 		"$\\rightarrow_{I^u}$");
 
-	let logprog_ex1Root = TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\exists M, \\mathrm{length} \\; (1 :: 2 :: 3 :: []) \\; M$",
+	let logprog_ex1Root = TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\exists M, \\mathrm{length} \\; (1 :: 2 :: 3 :: [ \\, ]) \\; M$",
 		[
-			TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (1 :: 2 :: []) \\; t$",
+			TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (1 :: 2 :: [ \\, ]) \\; t$",
 			[
-				TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (2 :: 3 :: []) \\; t_0$",
+				TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (2 :: 3 :: [ \\, ]) \\; t_0$",
 				[
-					TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (3 :: []) \\; t_1$",
+					TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (3 :: [ \\, ]) \\; t_1$",
 					[
-						TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; [] \\; t_2$",
+						TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; [ \\, ] \\; t_2$",
 						[],
 						"$\\mathrm{backchain}_{P_2}$",
 						"$t_2 = 0$")
