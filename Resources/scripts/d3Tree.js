@@ -195,7 +195,31 @@ const TreeExamples = (function()
 		],
 		"$\\rightarrow_{I^u}$");
 
-	// let logprog_ex1Root =
+	let logprog_ex1Root = TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\exists M, \\mathrm{length} \\; (1 :: 2 :: 3 :: []) \\; M$",
+		[
+			TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (1 :: 2 :: []) \\; t$",
+			[
+				TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (2 :: 3 :: []) \\; t_0$",
+				[
+					TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; (3 :: []) \\; t_1$",
+					[
+						TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\mathrm{length} \\; [] \\; t_2$",
+						[],
+						"$\\mathrm{backchain}_{P_2}$",
+						"$t_2 = 0$")
+					],
+					"$\\mathrm{backchain}_{P_1}$",
+					"$t_1 = 1 + t_2$")
+				],
+				"$\\mathrm{backchain}_{P_1}$",
+				"$t_0 = 1 + t_1$")
+			],
+			"$\\mathrm{backchain}_{P_1}$",
+			"$t = 1 + t_0$"),
+			TreeDataMaker.makeNode("$\\Sigma ; \\emptyset \\models t : \\mathrm{nat}$")
+		],
+		"$\\exists_R$"
+	);
 
 	let selectedExample = TreeDataMaker.makeTree(dataRoot);
 
@@ -210,7 +234,14 @@ const TreeExamples = (function()
 	}
 
 	return {
-		examples: [TreeDataMaker.makeTree(dataRoot), TreeDataMaker.makeTree(natded_ex1Root), TreeDataMaker.makeTree(natded_ex2Root), TreeDataMaker.makeTree(natded_ex3Root)],
+		examples:
+			[
+				TreeDataMaker.makeTree(dataRoot),
+				TreeDataMaker.makeTree(natded_ex1Root),
+				TreeDataMaker.makeTree(natded_ex2Root),
+				TreeDataMaker.makeTree(natded_ex3Root),
+				TreeDataMaker.makeTree(logprog_ex1Root)
+			],
 		setSelectedExample: setSelectedExample,
 		getSelectedExample: getSelectedExample
 	};
