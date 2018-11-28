@@ -221,7 +221,7 @@ const TreeExamples = (function()
 		"$\\exists_R$"
 	);
 
-	let selectedExample = TreeDataMaker.makeTree(dataRoot);
+	let selectedExample = TreeDataMaker.makeTree(natded_ex1Root);
 
 	function setSelectedExample(selection)
 	{
@@ -236,7 +236,6 @@ const TreeExamples = (function()
 	return {
 		examples:
 			[
-				TreeDataMaker.makeTree(dataRoot),
 				TreeDataMaker.makeTree(natded_ex1Root),
 				TreeDataMaker.makeTree(natded_ex2Root),
 				TreeDataMaker.makeTree(natded_ex3Root),
