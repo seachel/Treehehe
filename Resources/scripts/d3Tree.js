@@ -60,7 +60,7 @@ TreeDataMaker = (function()
 		return `tree${id}`;
 	}
 
-	function makeProofTreeNode(proposition, children = [], ruleName = "", sideCondition = "")
+	function makeProofTreeNode(proposition, children = null, ruleName = "", sideCondition = "")
 	{
 		let nodeId = makeNodeId();
 
@@ -113,7 +113,40 @@ const TreeExamples = (function()
 	"A right",
 	"A left");
 
-	let natded_ex1Root = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
+	let natded_ex2Root = TreeDataMaker.makeProofTreeNode("$p \\wedge (q \\wedge r)$",
+		[
+			TreeDataMaker.makeProofTreeNode("$p$",
+			[
+				TreeDataMaker.makeProofTreeNode("$p \\wedge q$",
+				[
+					TreeDataMaker.makeProofTreeNode("$(p \\wedge q) \\wedge r$")
+				],
+				"$\\wedge_{E_1}$")
+			],
+			"$\\wedge_{E_1}$"),
+			TreeDataMaker.makeProofTreeNode("$q \\wedge r$",
+			[
+				TreeDataMaker.makeProofTreeNode("$q$",
+				[
+					TreeDataMaker.makeProofTreeNode("$p \\wedge q$",
+					[
+						TreeDataMaker.makeProofTreeNode("$(p \\wedge q) \\wedge r$")
+					],
+					"$\\wedge_{E_1}$")
+				],
+				"$\\wedge_{E_2}$"),
+				TreeDataMaker.makeProofTreeNode("$r$",
+				[
+					TreeDataMaker.makeProofTreeNode("$(p \\wedge q) \\wedge r$")
+				],
+				"$\\wedge_{E_2}$")
+			],
+			"$\\wedge_I$")
+		],
+		"$\\wedge_I$"
+	);
+
+	let natded_ex3Root = TreeDataMaker.makeProofTreeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 		[
 			TreeDataMaker.makeProofTreeNode("$q \\wedge s$",
 			[
@@ -155,7 +188,7 @@ const TreeExamples = (function()
 	}
 
 	return {
-		examples: [TreeDataMaker.makeTree(dataRoot), TreeDataMaker.makeTree(natded_ex1Root)],
+		examples: [TreeDataMaker.makeTree(dataRoot), TreeDataMaker.makeTree(natded_ex2Root), TreeDataMaker.makeTree(natded_ex3Root)],
 		setSelectedExample: setSelectedExample,
 		getSelectedExample: getSelectedExample
 	};
