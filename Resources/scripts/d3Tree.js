@@ -81,11 +81,12 @@ TreeDataMaker = (function()
 		return result;
 	}
 
-	function makeTree(root)
+	function makeTree(root, noteLines = [])
 	{
 		return {
 			root: root,
-			id: makeTreeId()
+			id: makeTreeId(),
+			noteLines: noteLines
 		};
 	}
 
