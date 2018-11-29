@@ -251,7 +251,9 @@ const TreeExamples = (function()
 
 	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root,
 		[
-
+			"test 1",
+			"test 2",
+			"test 3"
 		]);
 
 
