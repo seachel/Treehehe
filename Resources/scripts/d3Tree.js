@@ -24,7 +24,9 @@ const webvars = {
 	visitedRectClass: "visited-rect",
 	navButtonTag: "div",
 	forwardButtonClass: "btn-forward",
-	backButtonClass: "btn-backward"
+	backButtonClass: "btn-backward",
+	treeNotesClass: "tree-selection",
+	treeNoteTag: "div"
 }
 
 const selectors = {
@@ -331,6 +333,18 @@ function TreeBuilder(selectedTree)
 
 
 	let svgtree = AddSVGTreeAndNodesContainer();
+
+	AddTreeSelectionNotes()
+
+	function AddTreeSelectionNotes()
+	{
+		var selectionNotes = d3.select(`.${webvars.treeNotesClass}`);
+
+		selectedTree.noteLines.forEach(line =>
+			{
+				selectionNotes.append(`${webvars.treeNode}`).text(line);
+			});
+	}
 
 	AddNodeGroupsAndBackground();
 
