@@ -134,6 +134,9 @@ const TreeExamples = (function()
 		"$\\rightarrow_{I^u}$"
 	);
 
+	let natded_ex1 = TreeDataMaker.makeTree(natded_ex1Root)
+
+
 	let natded_ex2Root = TreeDataMaker.makeNode("$p \\wedge (q \\wedge r)$",
 		[
 			TreeDataMaker.makeNode("$p$",
@@ -167,6 +170,9 @@ const TreeExamples = (function()
 		"$\\wedge_I$"
 	);
 
+	let natded_ex2 = TreeDataMaker.makeTree(natded_ex2Root);
+
+
 	let natded_ex3Root = TreeDataMaker.makeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
 		[
 			TreeDataMaker.makeNode("$q \\wedge s$",
@@ -196,6 +202,8 @@ const TreeExamples = (function()
 		],
 		"$\\rightarrow_{I^u}$");
 
+	let natded_ex3 = TreeDataMaker.makeTree(natded_ex3Root);
+
 	let natded_ex4Root = TreeDataMaker.makeNode("$q \\wedge p$",
 		[
 			TreeDataMaker.makeNode("$q$",
@@ -210,6 +218,8 @@ const TreeExamples = (function()
 			"$\\wedge_{E_1}$")
 		],
 		"$\\wedge_I$");
+
+	let natded_ex4 = TreeDataMaker.makeTree(natded_ex4Root);
 
 	let logprog_ex1Root = TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\exists M, \\mathrm{length} \\; (1 :: 2 :: 3 :: [ \\, ]) \\; M$",
 		[
@@ -237,6 +247,12 @@ const TreeExamples = (function()
 		"$\\exists_R$"
 	);
 
+	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root,
+		[
+
+		]);
+
+
 	let selectedExample = TreeDataMaker.makeTree(natded_ex1Root);
 
 	function setSelectedExample(selection)
@@ -252,11 +268,11 @@ const TreeExamples = (function()
 	return {
 		examples:
 			[
-				TreeDataMaker.makeTree(natded_ex1Root),
-				TreeDataMaker.makeTree(natded_ex2Root),
-				TreeDataMaker.makeTree(natded_ex3Root),
-				TreeDataMaker.makeTree(natded_ex4Root),
-				TreeDataMaker.makeTree(logprog_ex1Root)
+				natded_ex1,
+				natded_ex2,
+				natded_ex3,
+				natded_ex4,
+				logprog_ex1
 			],
 		setSelectedExample: setSelectedExample,
 		getSelectedExample: getSelectedExample
