@@ -344,7 +344,7 @@ function TreeBuilder(selectedTree)
 
 		selectedTree.noteLines.forEach(line =>
 			{
-				selectionNotes.append(`${webvars.treeNode}`).text(line);
+				selectionNotes.append(`${webvars.treeNoteTag}`).text(line);
 			});
 	}
 
