@@ -83,12 +83,13 @@ TreeDataMaker = (function()
 		return result;
 	}
 
-	function makeTree(root, noteLines = [])
+	function makeTree(root, width = 900, noteLines = [])
 	{
 		return {
 			root: root,
 			id: makeTreeId(),
-			noteLines: noteLines
+			noteLines: noteLines,
+			width: width
 		};
 	}
 
@@ -136,7 +137,7 @@ const TreeExamples = (function()
 		"$\\rightarrow_{I^u}$"
 	);
 
-	let natded_ex1 = TreeDataMaker.makeTree(natded_ex1Root)
+	let natded_ex1 = TreeDataMaker.makeTree(natded_ex1Root, 600)
 
 
 	let natded_ex2Root = TreeDataMaker.makeNode("$p \\wedge (q \\wedge r)$",
@@ -172,7 +173,7 @@ const TreeExamples = (function()
 		"$\\wedge_I$"
 	);
 
-	let natded_ex2 = TreeDataMaker.makeTree(natded_ex2Root);
+	let natded_ex2 = TreeDataMaker.makeTree(natded_ex2Root, 600);
 
 
 	let natded_ex3Root = TreeDataMaker.makeNode("$(p \\wedge r) \\rightarrow (q \\wedge s)$",
@@ -204,7 +205,7 @@ const TreeExamples = (function()
 		],
 		"$\\rightarrow_{I^u}$");
 
-	let natded_ex3 = TreeDataMaker.makeTree(natded_ex3Root);
+	let natded_ex3 = TreeDataMaker.makeTree(natded_ex3Root, 600);
 
 	let natded_ex4Root = TreeDataMaker.makeNode("$q \\wedge p$",
 		[
@@ -221,7 +222,7 @@ const TreeExamples = (function()
 		],
 		"$\\wedge_I$");
 
-	let natded_ex4 = TreeDataMaker.makeTree(natded_ex4Root);
+	let natded_ex4 = TreeDataMaker.makeTree(natded_ex4Root, 600);
 
 	let logprog_ex1Root = TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\exists M, \\mathrm{length} \\; (1 :: 2 :: 3 :: [ \\, ]) \\; M$",
 		[
@@ -249,7 +250,7 @@ const TreeExamples = (function()
 		"$\\exists_R$"
 	);
 
-	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root,
+	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root, 600,
 		[
 			"Let $P_1 = \\mathrm{length} \\; [ \\, ] \\; 0$",
 			"Let $P_2 = \\forall H \\forall T \\forall N , \\mathrm{length} \\; (H :: T) \\; (1 + N) :- \\mathrm{length} \\; T \\; N$",
@@ -313,7 +314,7 @@ function TreeBuilder(selectedTree)
 
 	let treeHeight = proofHeight * stylingvars.heightPerProofRow;
 
-	let treeWidth = 650; // TODO: need to compute based on example
+	let treeWidth = selectedTree.width;
 
 
 	// ---------- Create tree
