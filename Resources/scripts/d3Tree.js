@@ -313,7 +313,7 @@ function TreeBuilder(selectedTree)
 
 	let treeHeight = proofHeight * stylingvars.heightPerProofRow;
 
-	let treeWidth = 900; // TODO: need to compute based on example
+	let treeWidth = 650; // TODO: need to compute based on example
 
 
 	// ---------- Create tree
@@ -358,7 +358,7 @@ function TreeBuilder(selectedTree)
 	function AddSVGTreeAndNodesContainer()
 	{
 		return d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass}`)
-					.append('svg').style('background', 'grey')
+					.append('svg')
 					.classed(webvars.treeClassName, true)
 					.attr('width', svgwidth)
 					.attr('height', svgheight)
