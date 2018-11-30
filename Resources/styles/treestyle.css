@@ -1,3 +1,7 @@
+/* Dev styles */
+
+.tree-svg { background: grey; }
+
 .MathJax
 {
 	font-size: 30px !important;
@@ -41,7 +45,6 @@ rect.focus-rect
 	align-items: center;
 	width: inherit;
 	height: inherit;
-	background: green;
 	overflow: auto;
 }
 
