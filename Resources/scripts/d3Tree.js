@@ -137,7 +137,7 @@ const TreeExamples = (function()
 		"$\\rightarrow_{I^u}$"
 	);
 
-	let natded_ex1 = TreeDataMaker.makeTree(natded_ex1Root, 600)
+	let natded_ex1 = TreeDataMaker.makeTree(natded_ex1Root, 500)
 
 
 	let natded_ex2Root = TreeDataMaker.makeNode("$p \\wedge (q \\wedge r)$",
@@ -222,7 +222,7 @@ const TreeExamples = (function()
 		],
 		"$\\wedge_I$");
 
-	let natded_ex4 = TreeDataMaker.makeTree(natded_ex4Root, 600);
+	let natded_ex4 = TreeDataMaker.makeTree(natded_ex4Root, 350);
 
 	let logprog_ex1Root = TreeDataMaker.makeNode("$\\Sigma ; \\mathcal{P} \\vdash \\exists M, \\mathrm{length} \\; (1 :: 2 :: 3 :: [ \\, ]) \\; M$",
 		[
@@ -250,7 +250,7 @@ const TreeExamples = (function()
 		"$\\exists_R$"
 	);
 
-	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root, 600,
+	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root, 850,
 		[
 			"Let $P_1 = \\mathrm{length} \\; [ \\, ] \\; 0$",
 			"Let $P_2 = \\forall H \\forall T \\forall N , \\mathrm{length} \\; (H :: T) \\; (1 + N) :- \\mathrm{length} \\; T \\; N$",
@@ -258,7 +258,7 @@ const TreeExamples = (function()
 		]);
 
 
-	let selectedExample = TreeDataMaker.makeTree(natded_ex1Root);
+	let selectedExample = natded_ex1;
 
 	function setSelectedExample(selection)
 	{
