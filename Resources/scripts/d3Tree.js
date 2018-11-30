@@ -251,9 +251,9 @@ const TreeExamples = (function()
 
 	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root,
 		[
-			"test 1",
-			"test 2",
-			"test 3"
+			"Let $P_1 = \\mathrm{length} \\; [ \\, ] \\; 0$",
+			"Let $P_2 = \\forall H \\forall T \\forall N , \\mathrm{length} \\; (H :: T) \\; (1 + N) :- \\mathrm{length} \\; T \\; N$",
+			"Let $\\mathcal{P} = \\{ P_1 , P_2 \\}$"
 		]);
 
 
