@@ -89,12 +89,15 @@ body
 	flex-direction: row;
 }
 
+.nav-arrow
+{
+	height: 50px;
+	width: 100px;
+}
+
 .btn-backward, .btn-forward
 {
-	background: lightgrey;
 	margin: 0 10px;
-	padding: 10px;
-	outline: 2px solid black;
 	width: 100px;
 	display: flex;
 	justify-content: center;
