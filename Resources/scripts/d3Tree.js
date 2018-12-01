@@ -137,7 +137,7 @@ const TreeExamples = (function()
 		"$\\rightarrow_{I^u}$"
 	);
 
-	let natded_ex1 = TreeDataMaker.makeTree(natded_ex1Root, 500)
+	let natded_ex1 = TreeDataMaker.makeTree(natded_ex1Root, 700)
 
 
 	let natded_ex2Root = TreeDataMaker.makeNode("$p \\wedge (q \\wedge r)$",
