@@ -21,6 +21,7 @@ const webvars = {
 	texContainerTag: "g",
 	texContainerClass: "tex-container",
 	focusRectClass: "focus-rect",
+	relatedRectClass: "related-rect",
 	visitedRectClass: "visited-rect",
 	navButtonTag: "div",
 	forwardButtonClass: "btn-forward",
@@ -710,9 +711,21 @@ function InteractionManager()
 	{
 		var selectedId = selectedHNode.data.id;
 
+		clearSelectionClasses();
+
 		classFocusedNode(selectedId);
 
-		classUnfocusedNodes(selectedId);
+		classFocusNodeChildren(selectedHNode);
+
+		// classUnfocusedNodes(selectedId);
+	}
+
+
+	function clearSelectionClasses()
+	{
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
+			.classed(`${webvars.focusRectClass}`, false)
+			.classed(`${webvars.relatedRectClass}`, false);
 	}
 
 	function classFocusedNode(selectedId)
@@ -721,19 +734,20 @@ function InteractionManager()
 			.classed(`${webvars.focusRectClass}`, true);
 	}
 
+	function classFocusNodeChildren(selectedHNode)
+	{
+		var childrenIds = selectedHNode.children.map(child => child.data.id);
+
+		childrenIds.forEach(childId =>
+			d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${childId}]`)
+				.classed(`${webvars.relatedRectClass}`, true));
+	}
+
 	function classUnfocusedNodes(selectedId)
 	{
 		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
 			.filter(d => d.data.id != selectedId)
 			.classed(`${webvars.focusRectClass}`, false);
-	}
-
-	function classPreviouslyFocusedNode()
-	{
-		d3.selectAll(`${webvars.backgroundTag}.${webvars.focusRectClass}`)
-			.classed(`${webvars.visitedRectClass}`, true)
-			.classed(`${webvars.focusRectClass}`, false);
-
 	}
 
 	function updateSelectionPanel(selectedHNode)

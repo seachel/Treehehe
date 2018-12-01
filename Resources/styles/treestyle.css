@@ -19,7 +19,7 @@ rect.node:hover
 	fill: lightgrey;
 }
 
-rect.related
+rect.related-rect
 {
 	stroke: brown;
 }
