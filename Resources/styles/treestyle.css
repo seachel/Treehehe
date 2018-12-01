@@ -19,6 +19,11 @@ rect.node:hover
 	fill: lightgrey;
 }
 
+rect.related
+{
+	stroke: brown;
+}
+
 rect.rule-text
 {
 	stroke: blue;

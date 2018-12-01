@@ -706,17 +706,31 @@ function InteractionManager()
 	function updateSelectionStyle(selectedHNode)
 	{
 		var selectedId = selectedHNode.data.id;
-	// need previously visited, but after, to lose visited status? or have a different kind of visited status?
+
+		classFocusedNode(selectedId);
+
+		classUnfocusedNodes(selectedId);
+	}
+
+	function classFocusedNode(selectedId)
+	{
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${selectedId}]`)
+			.classed(`${webvars.focusRectClass}`, true);
+	}
+
+	function classUnfocusedNodes(selectedId)
+	{
+		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
+			.filter(d => d.data.id != selectedId)
+			.classed(`${webvars.focusRectClass}`, false);
+	}
+
+	function classPreviouslyFocusedNode()
+	{
 		d3.selectAll(`${webvars.backgroundTag}.${webvars.focusRectClass}`)
 			.classed(`${webvars.visitedRectClass}`, true)
 			.classed(`${webvars.focusRectClass}`, false);
 
-		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${selectedId}]`)
-			.classed(`${webvars.focusRectClass}`, true);
-
-		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
-			.filter(d => d.data.id != selectedId)
-			.classed(`${webvars.focusRectClass}`, false);
 	}
 
 	function updateSelectionPanel(selectedHNode)
