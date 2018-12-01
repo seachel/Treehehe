@@ -735,11 +735,37 @@ function InteractionManager()
 
 	function updateSelectionPanel(selectedHNode)
 	{
-		// make sure anything previously in the panel is cleared
-		d3.select(`.tree-selection`)
-			.text(selectedHNodeOutput(selectedHNode));
+		buildSelectionText(selectedHNode);
 
 		MathJax.Hub.Typeset();
+	}
+
+	function buildSelectionText(selectedHNode)
+	{
+		d3.select(`.selected-proposition`)
+			.text(`SelectedProposition: ${selectedHNode.data.proposition}`);
+
+		if (selectedHNode.data.ruleName && (selectedHNode.data.ruleName != ''))
+		{
+			d3.select(`.selected-rule`)
+				.text(`Derived by ${selectedHNode.data.ruleName}`);
+		}
+		else
+		{
+			d3.select(`.selected-rule`)
+				.text('');
+		}
+
+		if (selectedHNode.data.children && (selectedHNode.data.children.length > 0))
+		{
+			d3.select(`.selected-children`)
+				.text(`Applied to ${selectedHNode.data.children.map(child => child.proposition).toString('and')}`);
+		}
+		else
+		{
+			d3.select(`.selected-children`)
+				.text('');
+		}
 	}
 
 	function selectedHNodeOutput(selectedHNode)
