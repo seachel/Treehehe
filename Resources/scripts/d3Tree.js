@@ -736,11 +736,14 @@ function InteractionManager()
 
 	function classFocusNodeChildren(selectedHNode)
 	{
-		var childrenIds = selectedHNode.children.map(child => child.data.id);
+		if (selectedHNode.children && (selectedHNode.children.length > 0))
+		{
+			var childrenIds = selectedHNode.children.map(child => child.data.id);
 
-		childrenIds.forEach(childId =>
-			d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${childId}]`)
-				.classed(`${webvars.relatedRectClass}`, true));
+			childrenIds.forEach(childId =>
+				d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${childId}]`)
+					.classed(`${webvars.relatedRectClass}`, true));
+		}
 	}
 
 	function classUnfocusedNodes(selectedId)
