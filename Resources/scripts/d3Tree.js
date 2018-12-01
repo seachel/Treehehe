@@ -26,7 +26,10 @@ const webvars = {
 	forwardButtonClass: "btn-forward",
 	backButtonClass: "btn-backward",
 	treeNotesClass: "tree-selection",
-	treeNoteTag: "div"
+	treeNoteTag: "div",
+	selectionPropositionClass: "selected-proposition",
+	selectionRuleClass: "selected-rule",
+	selectionChilrenClass: "selected-children"
 }
 
 const selectors = {
@@ -742,28 +745,28 @@ function InteractionManager()
 
 	function buildSelectionText(selectedHNode)
 	{
-		d3.select(`.selected-proposition`)
-			.text(`SelectedProposition: ${selectedHNode.data.proposition}`);
+		d3.select(`.${webvars.selectionPropositionClass}`)
+			.text(`Selected proposition: ${selectedHNode.data.proposition}`);
 
 		if (selectedHNode.data.ruleName && (selectedHNode.data.ruleName != ''))
 		{
-			d3.select(`.selected-rule`)
+			d3.select(`.${webvars.selectionRuleClass}`)
 				.text(`Derived by ${selectedHNode.data.ruleName}`);
 		}
 		else
 		{
-			d3.select(`.selected-rule`)
+			d3.select(`.${webvars.selectionRuleClass}`)
 				.text('');
 		}
 
 		if (selectedHNode.data.children && (selectedHNode.data.children.length > 0))
 		{
-			d3.select(`.selected-children`)
-				.text(`Applied to ${selectedHNode.data.children.map(child => child.proposition).toString('and')}`);
+			d3.select(`.${webvars.selectionChilrenClass}`)
+				.text(`Applied to ${selectedHNode.data.children.map(child => child.proposition).toString()}`);
 		}
 		else
 		{
-			d3.select(`.selected-children`)
+			d3.select(`.${webvars.selectionChilrenClass}`)
 				.text('');
 		}
 	}
