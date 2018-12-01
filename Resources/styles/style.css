@@ -47,7 +47,7 @@ body
 	grid-area: 2 / 1 / span 1;
 }
 
-.rule-panel
+.selection-info-panel
 {
 	grid-area: 3 / 1 / span 1 / span 3;
 }
@@ -57,7 +57,7 @@ body
 	grid-area: 2 / 2;
 }
 
-.selection-info-panel
+.rule-panel
 {
 	grid-area: 2 / 3;
 }
