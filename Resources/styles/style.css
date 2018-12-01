@@ -92,7 +92,7 @@ body
 .btn-backward, .btn-forward
 {
 	background: lightgrey;
-	margin: 10px;
+	margin: 0 10px;
 	padding: 10px;
 	outline: 2px solid black;
 	width: 100px;
