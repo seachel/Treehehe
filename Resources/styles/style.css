@@ -45,11 +45,15 @@ body
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 }
 
 .control-panel
 {
 	grid-area: 2 / 1 / span 1 / span 2;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .selection-info-panel
@@ -94,4 +98,9 @@ body
 	width: 100px;
 	display: flex;
 	justify-content: center;
+}
+
+.example-selection
+{
+	height: fit-content;
 }
