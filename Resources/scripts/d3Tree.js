@@ -771,14 +771,6 @@ function InteractionManager()
 		}
 	}
 
-	function selectedHNodeOutput(selectedHNode)
-	{
-		return `id: ${selectedHNode.data.id},
-		proposition: ${selectedHNode.data.proposition},
-		rule name: ${selectedHNode.data.ruleName},
-		side conditions: ${selectedHNode.data.sideCondition}`
-	}
-
 	// Bad: how to make sure the callbacks have the correct type?
 	function makeTreeIterator(root, traversalFn, nodeCallback)
 	{
