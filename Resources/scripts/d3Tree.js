@@ -929,14 +929,8 @@ scrollNode.scrollTo((currentTreeBuilder.treeWidth - scrollContainerWidth) / 2, c
 
 TreeExamples.examples.forEach(e =>
 	{
-		d3.select('.example-list')
+		d3.select('.example-selection')
 			.append('option')
 			.attr('label', e.id)
-			// .on('select', UpdateTreeSelection)
-			// .on('focus', UpdateTreeSelection)
 			.text(e.root.proposition);
-	})
-
-
-// d3.select('.example-list')
-// 	.on(change, UpdateTreeSelection);
+	});
