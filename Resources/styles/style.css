@@ -33,38 +33,38 @@ body
 .page-container
 {
 	display: grid;
-	grid-template-rows: 10% 1fr 20%;
-	grid-template-columns: 2fr 10fr minmax(1fr, 3fr);
+	grid-template-rows: 10% 10% 1fr 20%;
+	grid-template-columns: 5fr 1fr;
 	width: 100%;
 	height: 100%;
 }
 
 .header-panel
 {
-	grid-area: 1 / 1 / span 1 / span 3;
+	grid-area: 1 / 1 / span 1 / span 2;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-.example-selection-panel
+.control-panel
 {
-	grid-area: 2 / 1 / span 1;
+	grid-area: 2 / 1 / span 1 / span 2;
 }
 
 .selection-info-panel
 {
-	grid-area: 3 / 1 / span 1 / span 3;
+	grid-area: 4 / 1 / span 1 / span 2;
 }
 
 .tree-display-panel
 {
-	grid-area: 2 / 2;
+	grid-area: 3 / 1;
 }
 
 .rule-panel
 {
-	grid-area: 2 / 3;
+	grid-area: 3 / 2;
 }
 
 .tree-selection-container
