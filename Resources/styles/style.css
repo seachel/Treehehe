@@ -13,6 +13,11 @@ body
 	margin: 0;
 }
 
+.region
+{
+	padding: 10px;
+}
+
 .title
 {
 	font-size: 1.8em;
