@@ -29,13 +29,12 @@ rect.rule-text
 	stroke: blue;
 	stroke-width: 0px;
 	fill: none;
-
 }
 
 rect.visited-rect
 {
 	stroke: black;
-	fill: grey;
+	fill: hsl(0, 0%, 20%);
 }
 
 rect.focus-rect
@@ -54,6 +53,5 @@ rect.focus-rect
 
 .tree-container
 {
-	/* scroll-snap-align: center; */
 	margin: 0 auto;
 }

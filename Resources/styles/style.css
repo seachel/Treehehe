@@ -109,15 +109,36 @@ body
 	flex-direction: row;
 }
 
-.nav-arrow
+.btn-forward
 {
-	height: 30px;
-	width: 75px;
+	background-image: url("../img/forward_grey.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.btn-forward:hover
+{
+	background-image: url("../img/forward_hover.png");
+}
+
+.btn-backward
+{
+	background-image: url("../img/backward_grey.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.btn-backward:hover
+{
+	background-image: url("../img/backward_hover.png");
 }
 
 .btn-backward, .btn-forward
 {
 	width: 100px;
+	height: 40px;
 	display: flex;
 	justify-content: center;
 }
