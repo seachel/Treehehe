@@ -108,19 +108,6 @@ TreeDataMaker = (function()
 
 const TreeExamples = (function()
 {
-	let dataRoot = TreeDataMaker.makeNode("$x \\rightarrow y$",
-		[
-			TreeDataMaker.makeNode("$\\forall x, P \; x$"),
-			TreeDataMaker.makeNode("1 + 2 + 3 = :)",
-			[
-				TreeDataMaker.makeNode("$x \\supset y$"),
-				TreeDataMaker.makeNode("$\\wedge$")
-			]),
-			TreeDataMaker.makeNode("$\\forall x$")
-		],
-	"A right",
-	"A left");
-
 	let natded_ex1Root = TreeDataMaker.makeNode("$(p \\wedge q) \\rightarrow r$",
 		[
 			TreeDataMaker.makeNode("$r$",
@@ -287,7 +274,9 @@ const TreeExamples = (function()
 		getSelectedExample: getSelectedExample
 	};
 })();
+
 // whole thing in a module, with function `setTree` that makes a new tree builder and reruns MathJax? anything else?
+
 let currentTreeBuilder = TreeBuilder(TreeExamples.getSelectedExample());
 
 function UpdateTreeSelection(selectedTree)
@@ -296,7 +285,6 @@ function UpdateTreeSelection(selectedTree)
 	currentInteractionManager = InteractionManager(); // better way to do this?
 
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-	// MathJax.Callback.Queue("MathJaxSVGManipulation");
 	setTimeout(MathJaxSVGManipulation, 500);
 }
 
@@ -325,7 +313,7 @@ function TreeBuilder(selectedTree)
 	let mytree = d3.tree().size([treeWidth, treeHeight]);
 
 
-	// ---------- Initialize tree? Position elements
+	// ---------- Position elements
 
 	mytree(myroot);
 
@@ -693,7 +681,7 @@ function TreeBuilder(selectedTree)
 let currentInteractionManager = InteractionManager();
 
 function InteractionManager()
-{// pass selector for selection panel? or separate this out?
+{
 	var myIterator = makeTreeIterator(currentTreeBuilder.getSelectedHRoot(), visitNodes_preOrder, focusNode);
 
 	d3.select(`${webvars.navButtonTag}.${webvars.forwardButtonClass}`)
@@ -953,12 +941,10 @@ function MathJaxSVGManipulation()
 				.classed(webvars.texContainerClass, true)
 				.attr('width', '100%')
 				.style('overflow', 'visible')
-				// .attr('dominant-baseline', 'middle')
 				.on('click', node_onclick)
 				.append(function(){
 					return g.node();
 				})
-				// .attr('dominant-baseline', 'middle')
 				.attr('width', '50%')
 				.attr('x', '-25%');
 		}
