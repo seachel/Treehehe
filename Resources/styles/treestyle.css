@@ -33,7 +33,7 @@ rect.rule-text
 
 rect.visited-rect
 {
-	stroke: black;
+	stroke: hsl(0, 0%, 0%);
 	fill: hsl(0, 0%, 30%);
 }
 
