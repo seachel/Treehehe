@@ -776,7 +776,7 @@ function InteractionManager()
 		if (selectedHNode.data.children && (selectedHNode.data.children.length > 0))
 		{
 			d3.select(`.${webvars.selectionChilrenClass}`)
-				.text(`Applied to ${selectedHNode.data.children.map(child => child.proposition).toString()}`);
+				.text(`applied to ${selectedHNode.data.children.map(child => child.proposition).toString()}`);
 		}
 		else
 		{
