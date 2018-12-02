@@ -717,7 +717,7 @@ function InteractionManager()
 
 		classFocusNodeChildren(selectedHNode);
 
-		// classUnfocusedNodes(selectedId);
+		// style nodes earlier in the traversal with previously visited class
 	}
 
 
@@ -744,13 +744,6 @@ function InteractionManager()
 				d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${childId}]`)
 					.classed(`${webvars.relatedRectClass}`, true));
 		}
-	}
-
-	function classUnfocusedNodes(selectedId)
-	{
-		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
-			.filter(d => d.data.id != selectedId)
-			.classed(`${webvars.focusRectClass}`, false);
 	}
 
 	function updateSelectionPanel(selectedHNode)
