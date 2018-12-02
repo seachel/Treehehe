@@ -6,11 +6,31 @@
 .selection-info-panel { background: rgb(104, 104, 219); }
 .tree-display-panel { background: rgb(68, 160, 88); } */
 
+/* Fonts */
+
+/* Use:
+font-family: 'Lobster Two', cursive;
+font-family: 'Slabo 27px', serif;
+*/
+
+/* LaTeX teletype font */
+
+@font-face {
+	font-family: "Computer Modern Teletype";
+	src: url('../fonts/cmuntb-webfont.woff');
+	}
+
+@font-face {
+	font-family: "Computer Modern Italic";
+	src: url('../fonts/cmunti.woff');
+	}
+
 /* Page styles */
 
 body
 {
 	margin: 0;
+
 }
 
 .region
@@ -20,14 +40,16 @@ body
 
 .title
 {
-	font-size: 1.8em;
-	font-weight: bold;
+	font-size: 2.5em;
+	/* font-weight: bold; */
+	font-family: 'Lobster Two', cursive;
 }
 
 .subheader
 {
 	font-size: 1.3em;
-	font-weight: bold;
+	/* font-weight: bold; */
+	font-family: 'Slabo 27px', serif;
 }
 
 .page-container
@@ -106,6 +128,7 @@ body
 {
 	height: fit-content;
 	padding: 5px;
+	font-family: "Computer Modern Italic";
 }
 
 .note
