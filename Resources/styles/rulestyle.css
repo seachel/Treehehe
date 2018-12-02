@@ -47,17 +47,17 @@
 }
 
 
-.tree_zero-child_A_left
+.tree_zero-child > .side-condition
 {
 	grid-area: 2 / 1 / span 2;
 }
 
-.tree_zero-child_A
+.tree_zero-child > .conclusion
 {
 	grid-area: 3 / 2 / span 2;
 }
 
-.tree_zero-child_A_right
+.tree_zero-child > .rule-name
 {
 	grid-area: 2 / 3 / span 2;
 }
@@ -73,23 +73,23 @@
 }
 
 
-.tree_one-child_A_left
+.tree_one-child > .side-condition
 {
 	grid-area: 2 / 1 / span 2;
 }
 
-.tree_one-child_A
+.tree_one-child > .conclusion
 {
 	grid-area: 3 / 2 / span 2;
 }
 
-.tree_one-child_A_right
+.tree_one-child > .rule-name
 {
 	grid-area: 2 / 3 / span 2;
 }
 
 
-.tree_one-child_B
+.tree_one-child > .premise1
 {
 	grid-area: 1 / 2 / span 2;
 }
@@ -145,162 +145,35 @@
 }
 
 
-.tree_three-child_A_left
+.tree_three-child > .side-condition
 {
 	grid-area: 2 / 1 / span 2;
 }
 
-.tree_three-child_A_right
+.tree_three-child > .rule-name
 {
 	grid-area: 2 / 7 / span 2;
 }
 
-.tree_three-child_A
+.tree_three-child > .conclusion
 {
 	grid-area: 3 / 2 / span 2 / span 5;
 }
 
 
-.tree_three-child_B
+.tree_three-child > .premise1
 {
 	grid-area: 1 / 2 / span 2;
 }
 
 
-.tree_three-child_C
+.tree_three-child > .premise2
 {
 	grid-area: 1 / 4 / span 2;
 }
 
 
-.tree_three-child_D
+.tree_three-child > .premise3
 {
 	grid-area: 1 / 6 / span 2;
-}
-
-
-/* Example trees */
-
-.tree2
-{
-	display: grid;
-	grid-template-rows: repeat(9, 1fr);
-	grid-template-columns: repeat(10, minmax(50px, min-content));
-}
-
-.tree2_A_left
-{
-	grid-area: 6 / 3 / span 2;
-}
-
-.tree2_A
-{
-	grid-area: 7 / 4 / span 2 / span 6;
-}
-
-.tree2_A_right
-{
-	grid-area: 6 / 10 / span 2;
-}
-
-
-.tree2_B_left
-{
-	grid-area: 3 / 1 / span 2;
-}
-
-.tree2_B
-{
-	grid-area: 4 / 2 / span 2 / span 5;
-}
-
-.tree2_B_right
-{
-	grid-area: 3 / 7 / span 2;
-}
-
-
-.tree2_C_left
-{
-	grid-area: 3 / 8 / span 2;
-}
-
-.tree2_C
-{
-	grid-area: 4 / 9 / span 2;
-}
-
-.tree2_C_right
-{
-	grid-area: 3 / 10 / span 2;
-}
-
-
-.tree2_D
-{
-	grid-area: 1 / 2 / span 2;
-}
-
-.tree2_E
-{
-	grid-area: 1 / 4 / span 2;
-}
-
-.tree2_F
-{
-	grid-area: 1 / 6 / span 2;
-}
-
-/* .tree2_D
-{
-	grid-area: 2 / 2;
-}
-
-.tree2_E
-{
-	grid-area: 2 / 4;
-}
-
-.tree2_F
-{
-	grid-area: 2 / 6;
-} */
-
-
-
-.treenest
-{
-	display: grid;
-	grid-template: repeat(2, 1fr) / repeat(2, 1fr);
-}
-
-.treenest_A
-{
-	grid-area: 2 / 1 / span 1 / span 2;
-}
-
-.treenest_A_1
-{
-	display: grid;
-	grid-template: repeat(2, 1fr) / repeat(2, 1fr);
-}
-
-.treenest_B
-{
-	grid-area: 2 / 1 / span 1 / span 2;
-}
-
-.treenest_C
-{
-	grid-area: 1 / 2;
-}
-
-.treenest_D
-{
-	grid-area: 1 / 1;
-}
-
-.treenest_E
-{
-	grid-area: 1 / 2;
 }
