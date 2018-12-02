@@ -18,7 +18,9 @@ const RuleSets = (function()
 	[
 		Rule("$A \\wedge B$", ["$A$", "$B$"], "$\\wedge_I$"),
 		Rule("$A$", ["$A \\wedge B$"], "$\\wedge_{E_1}$"),
-		Rule("$B$", ["$A \\wedge B$"], "$\\wedge_{E_2}$")
+		Rule("$B$", ["$A \\wedge B$"], "$\\wedge_{E_2}$"),
+		Rule("$P \\rightarrow Q$", [{ contents: ["$P$", "$\\vdots$", "$Q$"], justification: "$u$" }], "$\\rightarrow_{I^u}$"),
+		Rule("$Q$", ["$P$", "$P \\rightarrow Q$"], "$\\rightarrow_E$")
 	];
 
 	return {
@@ -61,10 +63,30 @@ function writeRuleHTML(rule)
 
 	for (let i = 0; i < rule.premises.length; i++)
 	{
-		ruleContainer.append('div')
-				.classed('leaf', true)
-				.classed(`premise${i + 1}`, true)
-				.text(rule.premises[i]);
+		var premise = rule.premises[i];
+
+		if (premise.contents)
+		{
+			var premiseContainer = ruleContainer.append('div')
+												.classed('premise-container', true)
+												.classed(`premise${i + 1}`, true)
+												.classed('leaf', true);
+
+			for (let j = 0; j < premise.contents.length; j++)
+			{
+				premiseContainer.append('div')
+					// .classed('leaf', true)
+					// .classed(`premise${i + 1}`, true)
+					.text(premise.contents[j]);
+			}
+		}
+		else
+		{
+			ruleContainer.append('div')
+					.classed('leaf', true)
+					.classed(`premise${i + 1}`, true)
+					.text(premise);
+		}
 	}
 
 	ruleContainer.append('div')

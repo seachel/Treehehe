@@ -15,6 +15,14 @@
 	white-space: nowrap;
 }
 
+.premise-container
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-top: 1px solid black;
+}
+
 .rule
 {
 	margin: 20px;
@@ -43,7 +51,7 @@
 .tree_zero-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(3, minmax(50px, min-content));
+	grid-template: repeat(4, min-content) / repeat(3, minmax(50px, min-content));
 }
 
 
@@ -69,7 +77,7 @@
 .tree_one-child
 {
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(3, minmax(50px, min-content));
+	grid-template: repeat(4, min-content) / repeat(3, minmax(50px, min-content));
 }
 
 
@@ -101,7 +109,7 @@
 .tree_two-child
 {
 	display: grid;
-	grid-template-rows: repeat(4, 1fr);
+	grid-template-rows: repeat(4, min-content);
 	grid-template-columns: repeat(5, minmax(50px, min-content));
 }
 
@@ -140,7 +148,7 @@
 .tree_three-child
 {
 	display: grid;
-	grid-template-rows: repeat(4, 1fr);
+	grid-template-rows: repeat(4, min-content);
 	grid-template-columns: repeat(7, minmax(50px, min-content));
 }
 
