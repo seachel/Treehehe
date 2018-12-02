@@ -21,7 +21,7 @@ rect.node:hover
 
 rect.related-rect
 {
-	stroke: rgb(105, 105, 105);
+	stroke: hsl(0, 0%, 41%);
 }
 
 rect.rule-text
