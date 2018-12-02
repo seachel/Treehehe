@@ -917,6 +917,11 @@ function exampleSelect_onchange(selectNode)
 	UpdateTreeSelection(TreeExamples.examples.find(e => e.id == treeId));
 }
 
+function modeToggle_onchange()
+{
+	//TODO: reset classing, new iterator, new tree construction?
+}
+
 
 // ------------------------------ MathJax ------------------------------
 function MathJaxSVGManipulation()
