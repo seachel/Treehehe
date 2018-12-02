@@ -16,7 +16,9 @@ const RuleSets = (function()
 {
 	let naturalDeduction =
 	[
-		Rule("$A \\wedge B$", ["$A$", "$B$"], "$\\wedge_I$")
+		Rule("$A \\wedge B$", ["$A$", "$B$"], "$\\wedge_I$"),
+		Rule("$A$", ["$A \\wedge B$"], "$\\wedge_{E_1}$"),
+		Rule("$B$", ["$A \\wedge B$"], "$\\wedge_{E_2}$")
 	];
 
 	return {
@@ -54,7 +56,7 @@ function writeRuleHTML(rule)
 
 	var ruleContainer = d3.select(`.${vars.rulesContainerClass}`)
 							.append('div')
-							.classed('tree_two-child', true)
+							.classed(classStr, true)
 							.classed('tree', true);
 
 	for (let i = 0; i < rule.premises.length; i++)
@@ -79,35 +81,4 @@ function writeRuleHTML(rule)
 				.classed('rule-text', true)
 				.classed('rule-name', true)
 				.text(rule.ruleName);
-}
-
-function writeTwoPremiseRuleHTML(conclusion, premise1, premise2, ruleName = "", sideCondition = "")
-{
-	var ruleContainer = d3.select(`${vars.rulesContainerClass}`)
-							.append('div')
-							.classed('tree_two-child', true)
-							.classed('tree', true);
-
-	ruleContainer.append('div')
-				.classed('leaf', true)
-				.text(premise1);
-
-
-	ruleContainer.append('div')
-				.classed('leaf', true)
-				.text(premise2);
-
-	ruleContainer.append('div')
-				.classed('node', true)
-				.text(conclusion);
-
-	ruleContainer.append('div')
-				.classed('rule-text', true)
-				.classed('rule-left', true)
-				.text(sideCondition);
-
-	ruleContainer.append('div')
-				.classed('rule-text', true)
-				.classed('rule-right', true)
-				.text(ruleName);
 }
