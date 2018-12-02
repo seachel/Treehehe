@@ -91,13 +91,12 @@ body
 
 .nav-arrow
 {
-	height: 50px;
-	width: 100px;
+	height: 30px;
+	width: 75px;
 }
 
 .btn-backward, .btn-forward
 {
-	margin: 0 10px;
 	width: 100px;
 	display: flex;
 	justify-content: center;
