@@ -57,7 +57,7 @@ function writeRuleHTML(rule)
 	var ruleContainer = d3.select(`.${vars.rulesContainerClass}`)
 							.append('div')
 							.classed(classStr, true)
-							.classed('tree', true);
+							.classed('rule', true);
 
 	for (let i = 0; i < rule.premises.length; i++)
 	{
