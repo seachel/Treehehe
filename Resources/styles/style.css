@@ -1,10 +1,10 @@
 /* Dev styles */
 
-.header-panel { background: rgb(243, 104, 104); }
+/* .header-panel { background: rgb(243, 104, 104); }
 .example-selection-panel { background: rgb(245, 243, 144); }
 .rule-panel { background: rgb(255, 183, 233); }
 .selection-info-panel { background: rgb(104, 104, 219); }
-.tree-display-panel { background: rgb(68, 160, 88); }
+.tree-display-panel { background: rgb(68, 160, 88); } */
 
 /* Page styles */
 
@@ -16,7 +16,6 @@ body
 .region
 {
 	padding: 10px;
-	outline: 1px solid black;
 }
 
 .title
@@ -47,6 +46,7 @@ body
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	background: rgb(196, 196, 253);
 }
 
 .control-panel
@@ -55,21 +55,26 @@ body
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
 }
 
 .selection-info-panel
 {
 	grid-area: 4 / 1 / span 1 / span 2;
+	outline: 1px solid black;
 }
 
 .tree-display-panel
 {
 	grid-area: 3 / 1;
+	background: rgb(196, 196, 253);
 }
 
 .rule-panel
 {
 	grid-area: 3 / 2;
+	border-left: 1px solid black;
 }
 
 .tree-selection-container

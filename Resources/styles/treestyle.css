@@ -1,6 +1,6 @@
 /* Dev styles */
 
-.tree-svg { background: lightgrey; }
+/* .tree-svg { background: lightgrey; } */
 
 .MathJax
 {
@@ -9,8 +9,8 @@
 
 rect.node
 {
-	stroke: rgb(105, 105, 105);
-	stroke-width: 3px;
+	stroke: black;
+	stroke-width: 2px;
 	fill: white;
 }
 
@@ -21,7 +21,7 @@ rect.node:hover
 
 rect.related-rect
 {
-	stroke: black;
+	stroke: rgb(105, 105, 105);
 }
 
 rect.rule-text
@@ -41,7 +41,6 @@ rect.visited-rect
 rect.focus-rect
 {
 	stroke: red;
-	fill: pink;
 }
 
 .scroll-container

@@ -41,7 +41,7 @@ const selectors = {
 
 let stylingvars = {
 	nodePadding: 5,
-	propositionBorderThickness: 3,
+	propositionBorderThickness: 2,
 	propositionBackgroundHeight: 25,
 	heightPerProofRow: 35,
 	texShift: -30 // need to be set for every example?
