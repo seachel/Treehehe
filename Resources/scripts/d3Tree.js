@@ -342,18 +342,6 @@ function TreeBuilder(selectedTree)
 
 	AddTreeSelectionNotes()
 
-	function AddTreeSelectionNotes()
-	{
-		var selectionNotes = d3.select(`.${webvars.treeNotesClass}`);
-
-		selectedTree.noteLines.forEach(line =>
-			{
-				selectionNotes.append(`${webvars.treeNoteTag}`)
-							.classed('note', true)
-							.text(line);
-			});
-	}
-
 	AddNodeGroupsAndBackground();
 
 	AddPropositionText();
@@ -372,6 +360,18 @@ function TreeBuilder(selectedTree)
 					.append(webvars.nodesContainerTag)
 					.classed(webvars.nodesContainerClass, true)
 					.attr('transform', `translate(0, ${stylingvars.texShift})`);
+	}
+
+	function AddTreeSelectionNotes()
+	{
+		var selectionNotes = d3.select(`.${webvars.treeNotesClass}`);
+
+		selectedTree.noteLines.forEach(line =>
+			{
+				selectionNotes.append(`${webvars.treeNoteTag}`)
+							.classed('note', true)
+							.text(line);
+			});
 	}
 
 	function AddNodeGroupsAndBackground()
@@ -718,7 +718,7 @@ function InteractionManager()
 
 		classFocusNodeChildren(selectedHNode);
 
-		// style nodes earlier in the traversal with previously visited class
+		classVisitedNodes(selectedId);
 	}
 
 
@@ -726,7 +726,8 @@ function InteractionManager()
 	{
 		d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}`)
 			.classed(`${webvars.focusRectClass}`, false)
-			.classed(`${webvars.relatedRectClass}`, false);
+			.classed(`${webvars.relatedRectClass}`, false)
+			.classed(`${webvars.visitedRectClass}`, false);
 	}
 
 	function classFocusedNode(selectedId)
@@ -744,6 +745,20 @@ function InteractionManager()
 			childrenIds.forEach(childId =>
 				d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${childId}]`)
 					.classed(`${webvars.relatedRectClass}`, true));
+		}
+	}
+
+	function classVisitedNodes(selectedId)
+	{
+		let selectedIndex = myIterator.nodeArray.map(node => node.data.id).findIndex(element => element == selectedId);
+
+		if (selectedIndex > 0)
+		{
+			myIterator.nodeArray.slice(0, selectedIndex).forEach(node =>
+				{
+					d3.selectAll(`${webvars.backgroundTag}.${webvars.nodeContainerClass}[${webvars.nodeIdAttr}=${node.data.id}]`)
+					.classed(`${webvars.visitedRectClass}`, true);
+				});
 		}
 	}
 

@@ -34,8 +34,8 @@ rect.rule-text
 
 rect.visited-rect
 {
-	stroke: darkgrey;
-	fill: lightgrey;
+	stroke: black;
+	fill: grey;
 }
 
 rect.focus-rect
