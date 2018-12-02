@@ -34,12 +34,17 @@ rect.rule-text
 rect.visited-rect
 {
 	stroke: black;
-	fill: hsl(0, 0%, 20%);
+	fill: hsl(0, 0%, 30%);
 }
 
 rect.focus-rect
 {
 	stroke: red;
+}
+
+rect.focus-rect:hover
+{
+	fill: pink;
 }
 
 .scroll-container
