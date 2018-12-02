@@ -77,12 +77,6 @@ body
 	outline: 1pb solid black;
 }
 
-.tree-selection
-{
-	background: white;
-	padding: 10px;
-}
-
 .navigation
 {
 	display: flex;
@@ -105,4 +99,9 @@ body
 .example-selection
 {
 	height: fit-content;
+}
+
+.note
+{
+	margin: 10px 0;
 }

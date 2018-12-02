@@ -26,7 +26,7 @@ const webvars = {
 	navButtonTag: "div",
 	forwardButtonClass: "btn-forward",
 	backButtonClass: "btn-backward",
-	treeNotesClass: "tree-selection",
+	treeNotesClass: "tree-notes",
 	treeNoteTag: "div",
 	selectionPropositionClass: "selected-proposition",
 	selectionRuleClass: "selected-rule",
