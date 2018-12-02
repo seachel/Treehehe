@@ -302,7 +302,6 @@ function UpdateTreeSelection(selectedTree)
 
 function TreeBuilder(selectedTree)
 {
-	// clear previous svg?
 	d3.select(`${webvars.treeContainerTag}.${webvars.treeContainerClass} > svg`).remove();
 
 	// ------------------------------ D3 ------------------------------
@@ -349,7 +348,9 @@ function TreeBuilder(selectedTree)
 
 		selectedTree.noteLines.forEach(line =>
 			{
-				selectionNotes.append(`${webvars.treeNoteTag}`).text(line);
+				selectionNotes.append(`${webvars.treeNoteTag}`)
+							.classed('note', true)
+							.text(line);
 			});
 	}
 
