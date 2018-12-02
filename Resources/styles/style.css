@@ -16,6 +16,7 @@ body
 .region
 {
 	padding: 10px;
+	outline: 1px solid black;
 }
 
 .title
@@ -99,6 +100,7 @@ body
 .example-selection
 {
 	height: fit-content;
+	padding: 5px;
 }
 
 .note
