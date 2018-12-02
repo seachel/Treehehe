@@ -57,25 +57,27 @@ function writeRuleHTML(rule)
 							.classed('tree_two-child', true)
 							.classed('tree', true);
 
-	rule.premises.forEach(premise =>
+	for (let i = 0; i < rule.premises.length; i++)
 	{
 		ruleContainer.append('div')
 				.classed('leaf', true)
-				.text(premise);
-	})
+				.classed(`premise${i + 1}`, true)
+				.text(rule.premises[i]);
+	}
 
 	ruleContainer.append('div')
-				.classed('node', true)
+				.classed('root', true)
+				.classed('conclusion', true)
 				.text(rule.conclusion);
 
 	ruleContainer.append('div')
 				.classed('rule-text', true)
-				.classed('rule-left', true)
+				.classed('side-condition', true)
 				.text(rule.sideCondition);
 
 	ruleContainer.append('div')
 				.classed('rule-text', true)
-				.classed('rule-right', true)
+				.classed('rule-name', true)
 				.text(rule.ruleName);
 }
 

@@ -1,38 +1,6 @@
-/* Temp styles for development */
-
-.tree-display-panel { background: lightsteelblue; }
-.rule-text { background: aquamarine; }
-.node { background: white; }
-.leaf { background: lightgrey }
-.A { background: lightcoral; }
-.B { background: lemonchiffon; }
-.C { background: rgb(136, 138, 248); }
-.D { background: rosybrown; }
-.E { background: rgb(204, 150, 255) }
-.F { background: rgb(85, 163, 228) }
-
-
-/* Page styles */
-
-.tree-display-panel
-{
-	/* max-width: 50%; */
-	overflow: auto;
-}
-
-.tree-wrapper
-{
-	/* overflow: auto; */
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-}
-
 /* General tree styles */
 
-.node
+.root
 {
 	display: flex;
 	justify-content: center;
@@ -59,7 +27,7 @@
 	white-space: nowrap;
 }
 
-.rule-left
+.side-condition
 {
 	justify-content: flex-end;
 }
@@ -67,7 +35,7 @@
 
 
 /******************************
- Specific tree styles 
+ Specific tree styles
 ******************************/
 
 /* Tree: zero children */
@@ -138,29 +106,29 @@
 }
 
 
-.tree_two-child_A_left
+.tree_two-child > .side-condition
 {
 	grid-area: 2 / 1 / span 2;
 }
 
-.tree_two-child_A_right
+.tree_two-child > .rule-name
 {
 	grid-area: 2 / 5 / span 2;
 }
 
-.tree_two-child_A
+.tree_two-child > .conclusion
 {
 	grid-area: 3 / 2 / span 2 / span 3;
 }
 
 
-.tree_two-child_B
+.tree_two-child > .premise1
 {
 	grid-area: 1 / 2 / span 2;
 }
 
 
-.tree_two-child_C
+.tree_two-child > .premise2
 {
 	grid-area: 1 / 4 / span 2;
 }
