@@ -16,11 +16,11 @@ const RuleSets = (function()
 {
 	let naturalDeduction =
 	[
-		Rule("$A \\wedge B$", ["$A$", "$B$"], "$\\wedge_I$"),
-		Rule("$A$", ["$A \\wedge B$"], "$\\wedge_{E_1}$"),
-		Rule("$B$", ["$A \\wedge B$"], "$\\wedge_{E_2}$"),
-		Rule("$P \\rightarrow Q$", [{ contents: ["$P$", "$\\vdots$", "$Q$"], justification: "$u$" }], "$\\rightarrow_{I^u}$"),
-		Rule("$Q$", ["$P$", "$P \\rightarrow Q$"], "$\\rightarrow_E$")
+		Rule("$P_1 \\wedge P_2$", ["$P_1$", "$P_2$"], "$\\wedge_I$"),
+		Rule("$P_1$", ["$P_1 \\wedge P_2$"], "$\\wedge_{E_1}$"),
+		Rule("$P_2$", ["$P_1 \\wedge P_2$"], "$\\wedge_{E_2}$"),
+		Rule("$P_1 \\rightarrow P_2$", [{ contents: ["$P_1$", "$\\vdots$", "$P_2$"], justification: "$u$" }], "$\\rightarrow_{I^u}$"),
+		Rule("$P_2$", ["$P_1$", "$P_1 \\rightarrow P_2$"], "$\\rightarrow_E$")
 	];
 
 	return {

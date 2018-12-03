@@ -39,12 +39,12 @@ rect.visited-rect
 
 rect.focus-rect
 {
-	stroke: red;
+	stroke: hsl(120, 93%, 22%);
 }
 
 rect.focus-rect:hover
 {
-	fill: pink;
+	fill: hsl(120, 80%, 90%);;
 }
 
 .scroll-container

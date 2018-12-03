@@ -1,5 +1,8 @@
 // ------------------------------ Program and layout variables ------------------------------
 
+var walkthroughMode = true;
+
+
 const webvars = {
 	treeContainerTag: "div",
 	treeContainerClass: "tree-container",
@@ -243,9 +246,7 @@ const TreeExamples = (function()
 
 	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root, 850,
 		[
-			"Let $P_1 = \\mathrm{length} \\; [ \\, ] \\; 0$",
-			"Let $P_2 = \\forall H \\forall T \\forall N , \\mathrm{length} \\; (H :: T) \\; (1 + N) :- \\mathrm{length} \\; T \\; N$",
-			"Let $\\mathcal{P} = \\{ P_1 , P_2 \\}$"
+			"Let $P_1 = \\mathrm{length} \\; [ \\, ] \\; 0$, let $P_2 = \\forall H \\forall T \\forall N , \\mathrm{length} \\; (H :: T) \\; (1 + N) :- \\mathrm{length} \\; T \\; N$ and let $\\mathcal{P} = \\{ P_1 , P_2 \\}$"
 		]);
 
 
@@ -706,7 +707,10 @@ function InteractionManager()
 
 		classFocusNodeChildren(selectedHNode);
 
-		classVisitedNodes(selectedId);
+		if (walkthroughMode)
+		{
+			classVisitedNodes(selectedId);
+		}
 	}
 
 
@@ -924,6 +928,13 @@ function exampleSelect_onchange(selectNode)
 function modeToggle_onchange()
 {
 	//TODO: reset classing, new iterator, new tree construction?
+	// in explore mode:
+	//	- hide arrows
+	//	- free node selection
+	// in walk-through mode:
+	//	- show arrows
+	//	- dark visited nodes
+	//	- don't allow open node selection?
 }
 
 
