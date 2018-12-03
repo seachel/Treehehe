@@ -90,13 +90,14 @@ TreeDataMaker = (function()
 		return result;
 	}
 
-	function makeTree(root, width = 900, noteLines = [])
+	function makeTree(root, width = 900, logic = 'natural-deduction', noteLines = [])
 	{
 		return {
 			root: root,
 			id: makeTreeId(),
 			noteLines: noteLines,
-			width: width
+			width: width,
+			logic: logic
 		};
 	}
 
@@ -244,7 +245,7 @@ const TreeExamples = (function()
 		"$\\exists_R$"
 	);
 
-	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root, 850,
+	let logprog_ex1 = TreeDataMaker.makeTree(logprog_ex1Root, 850, "logic-programming",
 		[
 			"Let $P_1 = \\mathrm{length} \\; [ \\, ] \\; 0$, let $P_2 = \\forall H \\forall T \\forall N , \\mathrm{length} \\; (H :: T) \\; (1 + N) :- \\mathrm{length} \\; T \\; N$ and let $\\mathcal{P} = \\{ P_1 , P_2 \\}$"
 		]);
@@ -921,6 +922,17 @@ function node_onclick(selectedHNode)
 function exampleSelect_onchange(selectNode)
 {
 	var treeId = selectNode.children[selectNode.selectedIndex].label;
+
+	var logic = TreeExamples.examples.find(e => e.id == treeId).logic;
+
+	if (logic && (logic == "logic-programming"))
+	{
+		d3.select(`.rules-container`).classed('hide', true);
+	}
+	else
+	{
+		d3.select(`.rules-container`).classed('hide', false);
+	}
 
 	UpdateTreeSelection(TreeExamples.examples.find(e => e.id == treeId));
 }
