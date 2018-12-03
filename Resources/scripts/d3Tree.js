@@ -354,6 +354,13 @@ function TreeBuilder(selectedTree)
 
 	function AddTreeSelectionNotes()
 	{
+		// clear old tree notes
+		d3.selectAll(`.${webvars.treeNotesClass} > .note`).remove();
+
+		// clear old selection notes
+		d3.selectAll(`.selection-info-panel > .note`).text("");
+
+		// add new selection notes
 		var selectionNotes = d3.select(`.${webvars.treeNotesClass}`);
 
 		selectedTree.noteLines.forEach(line =>
