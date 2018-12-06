@@ -94,19 +94,50 @@ cbattell@uottawa.ca}
 % discuss application domain and problem area
 % discussion of learning math and using visualizations... math education literature
 % where to put user tasks?
+% discussion of math education papers
+% motivation
+
+- tool is for learning a logic and how to use it
+
+- terms to cover in the intro: proof
+
 
 \section{Logic Background / Tutorial}
+
+- formulas
+
+- inference rules
+
+- proof tree
 
 % some examples
 % brief and minimal description of necessary terms, like a glossary?
 % should this be in an appendix?
 
+\section{User Tasks}
+
+\begin{itemize}
+\item select example
+\item explore proof tree
+\item walk-through proof (specify traversal)
+\item select rule to see where it's used
+\end{itemize}
+
 \section{Technology}
+
+- main application: HTML, CSS, JS
+
+- math layout: MathJax
+
+- proof tree visualization management and page manipulation: d3
 
 % justifications for decisions
 % challenges for each decision
 % high-level description of program structure and techniques (e.g. function closures, traversal as callback to iterator)
 
+- Program structure
+
+- walkthrough managed by a two-way iterator that accepts a traversal function as a callback
 
 \section{InfoVis Elements}
 
@@ -121,9 +152,12 @@ cbattell@uottawa.ca}
 % how to use this for other logics
 % implications of choice of logic (see fewer benefits for simpler logic, but easier to explain and learn)
 % Limitation: natural deduction proofs are made more naturally using other visualization methods, e.g. Fitch style, where you don't know the shape of the proof yet
+% forward vs backward reasoning
 
 
 \section{Conclusion}
+
+% summarize the tool, its purpose, and topics presented in this paper
 
 \bibliography{visualanalytics_reportbib}
 \bibliographystyle{plain}
