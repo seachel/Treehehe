@@ -100,6 +100,8 @@ cbattell@uottawa.ca}
 % discussion of math education papers
 % motivation
 
+$p \wedge q \vdash q \wedge p$ \\
+
 TODO: expand on abstract \\
 
 TODO: intro on math and logic stuff... proof... etc \\
@@ -117,7 +119,11 @@ The intended use of this tool is for exploring proofs of statements, leading to 
 
 - proof: argument obeying logic rules, connecting assumptions and a goal
 
+- some brief discussion of literature on learning math with visualizations?
+
 TODO: summary of paper structure \\
+
+Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it. A brief tutorial will be presented (remove sentence?). Next, the tool and expected user tasks will be described. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it. InfoVis results used to motivate the design of the tool will be explored in the next section. Finally, we discuss benefits and limitations of the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of this tool and know how InfoVis techniques implemented here help users to learn about specific proofs and their founding logics (todo... make better).
 
 TODO: objective/goal/hopes for reader? \\
 
@@ -143,6 +149,8 @@ To use rules, we fill in the meta-variables consistently.... sequence of using r
 
 TODO: examples, not super formal \\
 
+TODO: more emphasis on goal-directed reading of proof
+
 TODO:
 \begin{itemize}
 \item glossary of terms
@@ -153,38 +161,36 @@ TODO:
 
 \section{Tool Description and User Tasks}
 
-This tool is implemented as a web page. A screenshot of the page can be seen in Figure~\ref{fig:screenshot}. The major elements of the page include a panel at the top for the title (and menu in the future), a panel for control elements like example selection and mode settings below this. An example is selected from a drop-down list
-
 \begin{figure}
-\label{fig:screenshot}
 
 \begin{center}
-\frame{\includegraphics[width=3.3in]{resources/screenshot_andcomm.png}}
+\frame{\includegraphics[width=3.3in]{resources/screenshot_andcomm2.png}}
 \end{center}
 
 \caption{Screenshot of \projectname{}}
+\label{fig:screenshot}
+
 \end{figure}
 
-The main display area contains the proof tree of the selected example.
+\projectname{} is implemented as a web page. A screenshot of the page can be seen in Figure~\ref{fig:screenshot}. The major elements at the top of the page include a panel for the title and any future menu and below this a controls panel for example selection and moving through a proof walk-through.
 
-\begin{itemize}
-\item select example
-\item explore proof tree
-\item walk-through proof (specify traversal)
-\item select rule to see where it's used
-\end{itemize}
+First the user selects an example from the drop-down list in the controls panel. This updates the main display area of the page, the tree display panel, with a proof tree corresponding to the selected example.
 
-TODO: describe the structure of the tool/page, show sketches or screenshots* \\
+The selected example proof tree represents a proof within a specific logic, so once an example is selected the rules panel to the right of the tree display panel is populated with the rules of that logic.
 
-TODO: discuss viewing rule set for the logic supporting the example? \\
+Once a tree is displayed, the user has the option of open exploration of the proof, called \textit{explore mode}, or a directed walk-through, called \textit{walk-through mode}. In explore mode, a node containing a judgment can be selected for focus. Once this is done, nodes in the tree are coloured to make the selection most salient, while also highlighting the children of the current node and making nodes occurring earlier in the proof traversal less visible. At the same time, information related to the focused node is displayed in the selection panel.
 
-In the first version of this tool, the user can select an example to see its proof tree. Once the example is selected from the drop-down, there are two modes for interacting with the tree: explore or walk-through. \\
+Recall that our reading of the proof has a goal-directed view, with reasoning in the backward direction from goal to assumptions (see TODO ref previous section). With this in mind, the focused node selection information includes the judgment contained in the selected node, the rule used to derive this judgment, and the instantiated premise(s) of that rule. For example, in Figure~\ref{fig:screenshot}, the selected judgment is the formula $q$, which is derived by applying the rule $\wedge_{E_2}$ to the premise $p \wedge q$. So the rule $\wedge_{E_2}$ is used with $P_1$ and $P_2$ instantiated as $p$ and $q$, respectively.
 
-NOTE: where is the structure of the tree described (e.g. nodes as judgments) \\
+In walk-through mode, the information displayed for the focused node and colouring of nodes in the tree is the same as in explore mode, but the method for focusing nodes is different. In a walk-through, the arrows in the controls panel of the page are used to navigate forward and backward through the steps of the proof, again with a goal-directed reading.
 
-NOTE: where is forward vs backward reasoning discussed? \\
+TODO: discuss current vs future versions of the project? \\
 
-In the explore mode, the user is free to select any node in the tree. Once a node is selected, it is coloured to make it more salient than other nodes in the tree. Supplementary information on the node is displayed in the selection panel on the page. This information includes the judgment of formula contained in the node, the rule used to derive it, and instantiations of the premises of the rules in the concrete proof tree displayed.
+TODO: link to project in paper? \\
+
+NOTE: where is the structure of the tree described? (e.g. nodes as judgments) \\
+
+NOTE: where is forward vs backward reasoning discussed? logic background? \\
 
 \section{Technology}
 
@@ -217,10 +223,15 @@ TODO: use of d3 for visualization management and page manipulation
 TODO: review both proposal and presentation and make list of elements from class and their references
 
 - TRW algorithm for layout
+
 - Focus+context: shows relationship of focus node to children and parent
+
 - interaction
+
   * overview/explore: full tree view and navigation
+
   * select: display information on focused node
+
 - colour: highlight focused node and related nodes and categorizing nodes (e.g. children, visited); attention on spatially disconnected elements simultaneously
 
 \section{Evaluation}
@@ -242,12 +253,14 @@ Future updates:
     \item structure view
     \item writing to latex
     \item interface to build and modify trees
+    \item when selecting a node, relevant rule is highlighted
 \end{itemize}
 
+TODO: udpate colours
 
 \section{Conclusion}
 
-% summarize the tool, its purpose, and topics presented in this paper
+% summarize the tool, its purpose, and topics presented in this paper... review of everything? expanded abstract like intro, but with less motivation, more tech detail?
 
 % \makeglossaries
 
