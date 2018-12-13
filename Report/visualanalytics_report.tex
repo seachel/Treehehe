@@ -23,7 +23,7 @@
 
 \begin{document}
 
-\title{Treehehe: An interactive visualization of natural deduction proof trees
+\title{Treehehe: An interactive visualization of proof trees
 }
 
 \author{\IEEEauthorblockN{Chelsea Battell}
@@ -50,7 +50,7 @@ cbattell@uottawa.ca}
 %     \item Introduction. \\
 %         In one sentence, what’s the topic? Phrase it in a way that your reader will understand. If you’re writing a PhD thesis, your readers are the examiners – assume they are familiar with the general field of research, so you need to tell them specifically what topic your thesis addresses. Same advice works for scientific papers – the readers are the peer reviewers, and eventually others in your field interested in your research, so again they know the background work, but want to know specifically what topic your paper covers. \\
 
-\newcommand{\sentenceone}{Natural deduction proofs are commonly illustrated as proof trees to make the structure of the argument salient.}
+\newcommand{\sentenceone}{Proofs are commonly illustrated as trees to make the structure of the argument salient.}
 %     \item State the problem you tackle. \\
 %         What’s the key research question? Again, in one sentence. (Note: For a more general essay, I’d adjust this slightly to state the central question that you want to address) Remember, your first sentence introduced the overall topic, so now you can build on that, and focus on one key question within that topic. If you can’t summarize your thesis/paper/essay in one key question, then you don’t yet understand what you’re trying to write about. Keep working at this step until you have a single, concise (and understandable) question. \\
 
@@ -63,7 +63,7 @@ cbattell@uottawa.ca}
 %     \item Explain, in one sentence, how you tackled the research question. \\
 %         What’s your big new idea? (Again for a more general essay, you might want to adapt this slightly: what’s the new perspective you have adopted? or: What’s your overall view on the question you introduced in step 2?) \\
 
-\newcommand{\sentencefour}{To address this gap, we implement a tool for interacting with visual representations of natural deduction proof trees to provide insight into the structure of the proof and its founding logic.}
+\newcommand{\sentencefour}{To address this gap, we implement a tool for interacting with visual representations of proof trees to provide insight into the structure of the proof and its founding logic.}
 
 %     \item In one sentence, how did you go about doing the research that follows from your big idea. \\
 %         Did you run experiments? Build a piece of software? Carry out case studies? This is likely to be the longest sentence, especially if it’s a PhD thesis – after all you’re probably covering several years worth of research. But don’t overdo it – we’re still looking for a sentence that you could read aloud without having to stop for breath. Remember, the word ‘abstract’ means a summary of the main ideas with most of the detail left out. So feel free to omit detail! (For those of you who got this far and are still insisting on writing an essay rather than signing up for a PhD, this sentence is really an elaboration of sentence 4 – explore the consequences of your new perspective).
@@ -73,7 +73,7 @@ cbattell@uottawa.ca}
 %     \item As a single sentence, what’s the key impact of your research? \\
 %         Here we’re not looking for the outcome of an experiment. We’re looking for a summary of the implications. What’s it all mean? Why should other people care? What can they do with your research. (Essay folks: all the same questions apply: what conclusions did you draw, and why would anyone care about them?)
 
-\newcommand{\sentencesix}{This work provides a tool for gaining understanding of the structure of natural deduction proofs, insight into the processes used in constructing such proofs, and also serves as a starting point for visualizations of proof trees in more complicated logics.}
+\newcommand{\sentencesix}{This work provides a tool for gaining understanding of the structure of proofs, insight into the processes used in constructing such proofs, and also serves as a starting point for visualizations of proof trees in more complicated logics.}
 
 % \end{enumerate}
 
@@ -85,7 +85,7 @@ cbattell@uottawa.ca}
 
 
 \begin{IEEEkeywords}
-    information visualization, visual analytics, proof visualization, proof tree, natural deduction, mathematics education
+    information visualization, visual analytics, proof visualization, proof tree, proof theory, mathematics education
 \end{IEEEkeywords}
 
 
@@ -101,20 +101,37 @@ cbattell@uottawa.ca}
 
 - terms to cover in the intro: proof
 
+- Application Domain/objective: gain insight on proofs and proof systems by exploring proof trees
+
+- proof: argument obeying logic rules, connecting assumptions and a goal
 
 \section{Logic Background / Tutorial}
 
-- formulas
+This tool is for visualizing structured data, but the data belongs to a very specialized area. Before we can discuss the tool in detail, it is necessary to first review the application area. Below we will review the basics of logic to understand the use of proof trees and present a brief tutorial.
 
-- inference rules
+A \textit{formula} is an expression we build that represents a true or false statement.
 
-- proof tree
+TODO: talk about connectives as adhesives, given some other formulas to build them
+
+An \textit{inference rule} is a structure that tells us how to build a formula or take it apart. These rules give meanings to the connectives used in them.
+
+TODO: talk about building vs taking apart, the structure/notation of rules, give examples
+
+- judgment
+
+To use rules, we fill in the meta-variables consistently.... sequence of using rules. If we can build a tree structure using the rules this way such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.
+
+TODO:
+\begin{itemize}
+\item glossary of terms
+\item review discussion of quick tutorial from presentation
+\end{itemize}
 
 % some examples
 % brief and minimal description of necessary terms, like a glossary?
 % should this be in an appendix?
 
-\section{User Tasks}
+\section{Tool Description and User Tasks}
 
 \begin{itemize}
 \item select example
@@ -123,11 +140,25 @@ cbattell@uottawa.ca}
 \item select rule to see where it's used
 \end{itemize}
 
+TODO: describe the structure of the tool/page, show sketches or screenshots \\
+
+In the first version of this tool, the user can select an example to see its proof tree. Once the example is selected from the drop-down, there are two modes for interacting with the tree: explore or walk-through. \\
+
+NOTE: where is the structure of the tree described (e.g. nodes as judgments) \\
+
+NOTE: where is forward vs backward reasoning discussed? \\
+
+In the explore mode, the user is free to select any node in the tree. Once a node is selected, it is coloured to make it more salient than other nodes in the tree. Supplementary information on the node is displayed in the selection panel on the page. This information includes the judgment of formula contained in the node, the rule used to derive it, and instantiations of the premises of the rules in the concrete proof tree displayed.
+
 \section{Technology}
 
-- main application: HTML, CSS, JS
+This project is implemented as a web page, so the main languages used are the standard web development languages: HTML, CSS, and JavaScript. By implementing the tool as a web page, it is more easily accessible for a wide audience. The lack of type safety in JavaScript may make it a poor choice for many projects, but it also makes it easier to quickly prototype a project (boo bad?).
 
-- math layout: MathJax
+The standard audience for this work will likely typically have seen math content and proof trees in particular as they are implemented in \LaTeX{} languages. Here we try to respect the traditions from which the work is built and motivated. The math content seen in this tool is writting in \LaTeX{}, and so we need a tool to lay out the math content as desired. For this we use MathJax (ref?).
+
+Proof trees are laid out approximately following the Tilford-Reingold-Walker algorithm, described in more detail later (internal ref to proper section?). Rather than implementing this algorithm directly, we use D3 trees, which accept a tree data object that contains at least fields for name and children (TODO: check that this is correct), and computes the positions of the nodes according to the Tilford-Reingold-Walker algorithm.
+
+TODO: describe initial attempts to use CSS Grid layout? \\
 
 - proof tree visualization management and page manipulation: d3
 
@@ -143,6 +174,8 @@ cbattell@uottawa.ca}
 
 % interaction
 
+TODO: review both proposal and presentation and make list of elements from class and their references
+
 \section{Evaluation}
 
 % from cognitive dimensions paper; low priority for this report, work on this once everything else is done
@@ -153,6 +186,16 @@ cbattell@uottawa.ca}
 % implications of choice of logic (see fewer benefits for simpler logic, but easier to explain and learn)
 % Limitation: natural deduction proofs are made more naturally using other visualization methods, e.g. Fitch style, where you don't know the shape of the proof yet
 % forward vs backward reasoning
+
+Future updates:
+
+\begin{itemize}
+    \item select rule from the collection of rules for the selected logic, and inferences using that rule will be highlighted
+    \item minimize subtrees
+    \item structure view
+    \item writing to latex
+    \item interface to build and modify trees
+\end{itemize}
 
 
 \section{Conclusion}
