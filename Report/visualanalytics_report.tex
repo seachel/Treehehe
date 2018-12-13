@@ -17,6 +17,9 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 
+% \usepackage{glossaries}
+
+
 % \usepackage[page]{appendix}
 
 \newcommand{\projectname}{Treehehe}
@@ -97,6 +100,15 @@ cbattell@uottawa.ca}
 % discussion of math education papers
 % motivation
 
+TODO: expand on abstract \\
+
+TODO: intro on math and logic stuff... proof... etc \\
+
+TODO: articulate goals of project better? \\
+
+In this information visualization tool, data elements are trees. More specifically, they are visual representations of proof trees. A proof tree is an object that shows the structure of a logical argument.
+
+The intended use of this tool is for exploring proofs of statements, leading to insight on the specific proof being explored, as well as the logic used to construct it.
 - tool is for learning a logic and how to use it
 
 - terms to cover in the intro: proof
@@ -105,7 +117,15 @@ cbattell@uottawa.ca}
 
 - proof: argument obeying logic rules, connecting assumptions and a goal
 
+TODO: summary of paper structure \\
+
+TODO: objective/goal/hopes for reader? \\
+
+
+
 \section{Logic Background / Tutorial}
+
+TODO: what is a logic? a proof in this context? \\
 
 This tool is for visualizing structured data, but the data belongs to a very specialized area. Before we can discuss the tool in detail, it is necessary to first review the application area. Below we will review the basics of logic to understand the use of proof trees and present a brief tutorial.
 
@@ -121,17 +141,31 @@ TODO: talk about building vs taking apart, the structure/notation of rules, give
 
 To use rules, we fill in the meta-variables consistently.... sequence of using rules. If we can build a tree structure using the rules this way such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.
 
+TODO: examples, not super formal \\
+
 TODO:
 \begin{itemize}
 \item glossary of terms
 \item review discussion of quick tutorial from presentation
 \end{itemize}
 
-% some examples
-% brief and minimal description of necessary terms, like a glossary?
-% should this be in an appendix?
+
 
 \section{Tool Description and User Tasks}
+
+This tool is implemented as a web page. A screenshot of the page can be seen in Figure~\ref{fig:screenshot}. The major elements of the page include a panel at the top for the title (and menu in the future), a panel for control elements like example selection and mode settings below this. An example is selected from a drop-down list
+
+\begin{figure}
+\label{fig:screenshot}
+
+\begin{center}
+\frame{\includegraphics[width=3.3in]{resources/screenshot_andcomm.png}}
+\end{center}
+
+\caption{Screenshot of \projectname{}}
+\end{figure}
+
+The main display area contains the proof tree of the selected example.
 
 \begin{itemize}
 \item select example
@@ -140,7 +174,9 @@ TODO:
 \item select rule to see where it's used
 \end{itemize}
 
-TODO: describe the structure of the tool/page, show sketches or screenshots \\
+TODO: describe the structure of the tool/page, show sketches or screenshots* \\
+
+TODO: discuss viewing rule set for the logic supporting the example? \\
 
 In the first version of this tool, the user can select an example to see its proof tree. Once the example is selected from the drop-down, there are two modes for interacting with the tree: explore or walk-through. \\
 
@@ -158,9 +194,13 @@ The standard audience for this work will likely typically have seen math content
 
 Proof trees are laid out approximately following the Tilford-Reingold-Walker algorithm, described in more detail later (internal ref to proper section?). Rather than implementing this algorithm directly, we use D3 trees, which accept a tree data object that contains at least fields for name and children (TODO: check that this is correct), and computes the positions of the nodes according to the Tilford-Reingold-Walker algorithm.
 
+TODO: describe modifications to d3 tree (bottom rooted, no links, add inference lines and side content) \\
+
+TODO: describe challenges using d3 (unconventional tree components, varied node widths, sequencing layout using \LaTeX{}) \\
+
 TODO: describe initial attempts to use CSS Grid layout? \\
 
-- proof tree visualization management and page manipulation: d3
+TODO: use of d3 for visualization management and page manipulation
 
 % justifications for decisions
 % challenges for each decision
@@ -175,6 +215,13 @@ TODO: describe initial attempts to use CSS Grid layout? \\
 % interaction
 
 TODO: review both proposal and presentation and make list of elements from class and their references
+
+- TRW algorithm for layout
+- Focus+context: shows relationship of focus node to children and parent
+- interaction
+  * overview/explore: full tree view and navigation
+  * select: display information on focused node
+- colour: highlight focused node and related nodes and categorizing nodes (e.g. children, visited); attention on spatially disconnected elements simultaneously
 
 \section{Evaluation}
 
@@ -201,6 +248,8 @@ Future updates:
 \section{Conclusion}
 
 % summarize the tool, its purpose, and topics presented in this paper
+
+% \makeglossaries
 
 \bibliography{visualanalytics_reportbib}
 \bibliographystyle{plain}
