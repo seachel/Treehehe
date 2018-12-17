@@ -100,7 +100,6 @@ cbattell@uottawa.ca}
 % discussion of math education papers
 % motivation
 
-TODO: more design sketches \\
 
 TODO: expand on abstract \\
 
@@ -123,30 +122,38 @@ The intended use of this tool is for exploring proofs of statements, leading to 
 
 TODO: summary of paper structure \\
 
-Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it. A brief tutorial will be presented (remove sentence?). Next, the tool and expected user tasks will be described. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it. InfoVis results used to motivate the design of the tool will be explored in the next section. Finally, we discuss benefits and limitations of the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of this tool and know how InfoVis techniques implemented here help users to learn about specific proofs and their founding logics (todo... make better).
+Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it. Next, the tool and expected user tasks will be described. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it. InfoVis results used to motivate the design of the tool will be explored in the next section. Finally, we discuss benefits and limitations of the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of this tool and know how InfoVis techniques implemented here help users to learn about specific proofs and their founding logics (todo... make better).
 
 TODO: objective/goal/hopes for reader? \\
 
 TODO: to motivate project, we already need some background? \\
 
+TODO: reference FP if natded example is mentioned here \\
 
-\section{Logic Background / Tutorial}
+\section{Logic Background}
 
-TODO: what is a logic? a proof in this context? \\
+TODO: review discussion of quick tutorial from presentation \\
 
-This tool is for visualizing structured data from a specialized application area. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees within these systems.
+Recall that the goal of the tool described in this report is to provide an interactive visualization of proof trees, which are structured logical arguments that are drawn following conventions. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees from these systems. We will aim to discuss these preliminary concepts generally, while carrying through the specific example of natural deduction as our logic. Our presentation of natural deduction will be in the same style as in the lecture notes of Frank Pfenning~\cite{natded-pfenning}.
 
-A \textit{formula} is an expression that represents a true or false statement. Each logic will have some grammar that tells us how we can build these formulas. For example, the grammar for propositional logic formulas is:
-
-TODO: grammar... or remove grammar discussion? \\
+A \textit{formula} is an expression that represents a true or false statement. We can write a grammar for the formulas of a given logic. For example, for natural deduction formulas are from the following grammar:
+$$
+p, q ::= \mathit{True} \; | \; \mathit{False} \; | \; p \wedge q \; | \; p \vee q \; | \; p \supset q
+$$
 
 The symbols $\wedge$, $\vee$, and $\supset$ are called \textit{connectives}. Think of a connective as notation for an adjesive that connects formulas. The connectives in the grammar are all binary connectives because they all build a new formula from two smaller ones. The grammar tells us how to build formulas, but not what they mean. For example, if we have some formulas $P$ and $Q$, then we can build a new formula $P \wedge Q$, but we don't know what this expression means yet. The semantics of formulas come from a set of inference rules for the logic.
 
-TODO: judgments here? or is this future discussion \\
-
 An \textit{inference rule} is a structure that tells us how to build a formula or take it apart. These rules give meaning to the connectives used in them. The notation for an inference rule is as shown in Figure~\ref{fig:infrule} and as described presently. It has the premises of the rule written beside each other, with some space between assumptions, above a horizontal line which is above the conclusion of the rule. The name of the rule is written to the right of the horizontal line and any side conditions that must hold are written to the left of the line. There may be some slight variation in laying out inference rules in other writings, but here we will follow the conventions described above.
 
-TODO: using rules to write a proof, the rules for natural deduction?
+The premises and conclusion of a rule are \textit{judgments}. Like a formula, a judgment is a statement that is true or false. When a judgment is derived by a rule, we consider it true, assuming the premises of the rule are derivable. In our natural deduction example, for some formula $p$, we will write $p \; \mathrm{true}$ or $p \; \mathrm{false}$, as appropriate, where $p$ occurs in a premise or the conclusion of a rule. % This allows statements like $p false$ to be derivable in logics where .... false derivable...
+
+TODO: sequent discussion: is a judgment that is considered true or false; special notation or container of premises and conclusion \\
+
+TODO: what proof trees are evidence of: sequent in natded example \\
+
+TODO: the rules for natural deduction... not the full set? \\
+
+TODO: or use style in Logic in CS course? easier than adding in the true/false stuff everywhere \\
 
 \begin{figure}
 
@@ -165,20 +172,11 @@ TODO: using rules to write a proof, the rules for natural deduction?
 
 TODO: talk about building vs taking apart, the structure/notation of rules, give examples
 
-- judgment
-
 To use rules, we fill in the meta-variables consistently.... sequence of using rules. If we can build a tree structure using the rules this way such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.
 
 TODO: examples, not super formal \\
 
 TODO: more emphasis on goal-directed reading of proof, discussion of forward vs backward reasoning
-
-TODO:
-\begin{itemize}
-\item glossary of terms
-\item review discussion of quick tutorial from presentation
-\end{itemize}
-
 
 
 \section{Tool Description and User Tasks}
@@ -289,6 +287,15 @@ TODO: future work note: using MathJax allows future extensions to the project in
 % summarize the tool, its purpose, and topics presented in this paper... review of everything? expanded abstract like intro, but with less motivation, more tech detail?
 
 % \makeglossaries
+
+\section{Temporary TODO}
+
+\begin{itemize}
+\item more design sketches
+\item expand to a tutorial, link to this from the page? (add as GitHub issue)
+\item glossary of terms?
+\item what is a logic? what is a proof in this context?
+\end{itemize}
 
 \bibliography{visualanalytics_reportbib}
 \bibliographystyle{plain}
