@@ -149,7 +149,7 @@ To use rules, we fill in the meta-variables consistently.... sequence of using r
 
 TODO: examples, not super formal \\
 
-TODO: more emphasis on goal-directed reading of proof
+TODO: more emphasis on goal-directed reading of proof, discussion of forward vs backward reasoning
 
 TODO:
 \begin{itemize}
@@ -167,7 +167,7 @@ TODO:
 \frame{\includegraphics[width=3.3in]{resources/screenshot_andcomm2.png}}
 \end{center}
 
-\caption{Screenshot of \projectname{}}
+\caption{Screenshot of \projectname{} with green node containing $q$ focused}
 \label{fig:screenshot}
 
 \end{figure}
@@ -188,25 +188,28 @@ TODO: discuss current vs future versions of the project? \\
 
 TODO: link to project in paper? \\
 
-NOTE: where is the structure of the tree described? (e.g. nodes as judgments) \\
-
-NOTE: where is forward vs backward reasoning discussed? logic background? \\
 
 \section{Technology}
 
-This project is implemented as a web page, so the main languages used are the standard web development languages: HTML, CSS, and JavaScript. By implementing the tool as a web page, it is more easily accessible for a wide audience. The lack of type safety in JavaScript may make it a poor choice for many projects, but it also makes it easier to quickly prototype a project (boo bad?).
+This project is implemented as a web page, so the main languages used are the standard web development languages: HTML, CSS, and JavaScript. By implementing the tool as a web page, it is more easily accessible for a wide audience. The lack of type safety in JavaScript may make it a poor choice for many projects, but it also makes it easier to quickly prototype a project (boo bad? leave these opinions out?).
 
-The standard audience for this work will likely typically have seen math content and proof trees in particular as they are implemented in \LaTeX{} languages. Here we try to respect the traditions from which the work is built and motivated. The math content seen in this tool is writting in \LaTeX{}, and so we need a tool to lay out the math content as desired. For this we use MathJax (ref?).
+Proof trees are laid out approximately following the Tilford-Reingold-Walker algorithm, described in more detail later (internal ref to proper section?). Rather than implementing this algorithm directly, we use D3 trees. D3 trees accept a tree data object that contains at least fields for name and children (TODO: check that this is correct), and computes the positions of the nodes according to the Tilford-Reingold-Walker algorithm.
 
-Proof trees are laid out approximately following the Tilford-Reingold-Walker algorithm, described in more detail later (internal ref to proper section?). Rather than implementing this algorithm directly, we use D3 trees, which accept a tree data object that contains at least fields for name and children (TODO: check that this is correct), and computes the positions of the nodes according to the Tilford-Reingold-Walker algorithm.
+A proof tree is drawn quite differently from other trees, and this caused some challenges in implementation. Before discussing the differences, we will look at how proof trees are similar to standard tree objects. Proof trees have nodes, and there is a relationship that can be defined between the nodes. There is a unique root, and a unique path from the root to any leaf. We can see that a proof tree is in fact a tree, but in this specific application we attach some extra data to each node.
 
-TODO: describe modifications to d3 tree (bottom rooted, no links, add inference lines and side content) \\
+Every node has a field for a judgment. Recall this is some logic expression that is either true or false. Each logic will have different grammars or rules for how to construct these expressions. Non-leaf nodes all have a field for the rule that was used to derive the contained judgment. Leaf nodes that represent hypothetical assumptions (for example, in the rule $\supset_I$) use the rule name field for the assumption label. Leaf nodes representing premises have no field for rule name or label. Note that our abstraction of the object favours the backward reasoning discussed earlier, because at each node, this rule name field tells us "how did we get here?" rather than "how do we keep going?", and allows us to work from a node to its children.
+
+Our drawing of the tree differs from the standard tree drawing in a few ways. We don't draw links or edges between connected nodes. Instead, we separate a node from its children with a horizontal line with the rule name to the right of the line and any side-conditions to the left, following the convention for drawing inference rules (see TODO: ref).
+
+The standard audience for this work will likely typically have seen math content and proof trees in particular as they are implemented in \LaTeX{} languages. Here we try to respect the traditions from which the work is built and motivated. The math content seen in this tool is writting in \LaTeX{}, and so we need a tool to lay out the math content as desired. For this we use MathJax (ref?). (bad paragraph)
 
 TODO: describe challenges using d3 (unconventional tree components, varied node widths, sequencing layout using \LaTeX{}) \\
 
 TODO: describe initial attempts to use CSS Grid layout? \\
 
-TODO: use of d3 for visualization management and page manipulation
+TODO: use of d3 for visualization management and page manipulation \\
+
+TODO: reorder so that tree abstraction stuff and drawing details are earlier? \\
 
 % justifications for decisions
 % challenges for each decision
