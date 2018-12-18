@@ -97,37 +97,33 @@ cbattell@uottawa.ca}
 
 % discuss application domain and problem area
 % discussion of learning math and using visualizations... math education literature
-% where to put user tasks?
 % discussion of math education papers
 % motivation
 
+Proofs are naturally visual artifacts and an essential part of comprehension and advancement in logic. A proof is a logical argument providing evidence of the truth of some statement. It connects hypotheses and a goal through the application of rules that preserve truth. Typically these arguments have a tree structure; some inferences take multiple premises to derive a new statement, and the reasoning is not cyclical.
 
-TODO: expand on abstract \\
+Proof trees are a common visual representation used to illustrate both the structure and details of a logical argument. There are many advantages to be found using proof trees: they are useful for learning about a logic through experimentation with writing proofs, they reveal structure in the proof that a linear proof presentation may obscure, they allow cognitive offloading when working through a challenging argument, and they can serve as a form of documentation. This work presents a tool to allow a user to explore proof trees and to gain insight in to the specific proof and the logic it is built from.
 
-TODO: intro on math and logic stuff... proof... etc (inference rules, etc are described in next section) \\
+There are critical limitations in the use of proof trees in certain mediums. Even a straightforward, ``small'' proof tree can easily escape the bounds of a sheet of paper. Creating a digital version eliminates bounds on the size of the tree.
 
-TODO: articulate goals of project better? \\
+A proof tree is a static and declarative object, which requires some level of expertise to be parsed by the reader. In~\cite{repvisvis-duval}, Duval criticizes proof trees and mathematics visualizations, arguing that they don’t aid in operational or discursive comprehension. In this case he is speaking of static graphics and figures used when learning mathematics. To overcome this limitation of static proof trees, the user will be able to interact with the proof in two distinct ways.
 
-In this information visualization tool, data elements are trees. More specifically, they are visual representations of proof trees. A proof tree is an object that shows the structure of a logical argument.
+The first will be in the form of a proof walk-through that will support operational comprehension by using colour to focus attention on the current inference in a proof and distinguish between previously seen inferences and future inferences. Past inferences will be coloured to be less visible. Another panel on the page will have information on how the focused node is derived to provide discourse. (adjust this argument and bring out content on colour and panel because it applies to both modes)
 
-The intended use of this tool is for exploring proofs of statements, leading to insight on the specific proof being explored, as well as the logic used to construct it.
-- tool is for learning a logic and how to use it
-
-- terms to cover in the intro: proof
-
-- Application Domain/objective: gain insight on proofs and proof systems by exploring proof trees
-
-- proof: argument obeying logic rules, connecting assumptions and a goal
-
-- some brief discussion of literature on learning math with visualizations?
+The second form of interaction will allow more free-form exploration of the proof tree. The user can click on any node to focus on it. (At this point, the rule used to infer this formula will be visible. Side conditions may be shown, as well as the substitutions for the rule schema variables.)
 
 Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it. Next, the tool and expected user tasks will be described. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it. InfoVis results used to motivate the design of the tool will be explored in the next section. Finally, we discuss benefits and limitations of the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of this tool and know how InfoVis techniques implemented here help users to learn about specific proofs and their founding logics (todo... make better).
 
+TODO: expand on abstract? \\
+
+TODO: articulate goals of project better? see talk \\
+
+TODO: more math education literature? \\
+
+In this information visualization tool, data elements are trees. More specifically, they are visual representations of proof trees. A proof tree is an object that shows the structure of a logical argument.
+
 TODO: objective/goal/hopes for reader? \\
 
-TODO: to motivate project, we already need some background? \\
-
-TODO: reference FP if natded example is mentioned here \\
 
 \section{Logic Background}
 \label{sec:background}
@@ -279,6 +275,8 @@ TODO: review both proposal and presentation and make list of elements from class
 % Limitation: natural deduction proofs are made more naturally using other visualization methods, e.g. Fitch style, where you don't know the shape of the proof yet
 % forward vs backward reasoning
 
+It is our hope that the tool will be useful as an educational resource and for documentation.
+
 Future updates:
 
 \begin{itemize}
@@ -288,6 +286,7 @@ Future updates:
     \item writing to latex
     \item interface to build and modify trees
     \item when selecting a node, relevant rule is highlighted
+    \item GUI builder, then user is also "writing" the proof
 \end{itemize}
 
 Terms for glossary or other special note:
@@ -300,14 +299,21 @@ Terms for glossary or other special note:
     \item sequent
     \item inference rule
     \item proof tree
-    \item assumption
-    \item premise
+    \item assumption (leaf in tree)
+    \item premise (can be intermediate in rules; top of an inference)
+    \item hypothesis (hypothetical judgment)
     \item goal
 \end{itemize}
+
+TODO: hypothesis and assumption distinction somewhat arbitrary but needs to be clear here \\
 
 TODO: udpate colours \\
 
 TODO: future work note: using MathJax allows future extensions to the project in the form of a GUI builder where users can write LaTeX directly in a text box for a new node \\
+
+There are critical limitations in the use of proof trees in certain mediums. Even a straightforward, ``small'' proof tree can easily escape the bounds of a sheet of paper. Creating a digital version eliminates bounds on the size of the tree, but it is still desirable to have all pertinent parts visible on a screen at the same time. A proof tree in the visualization created in this project will be an interactive, digital version where subtrees can be hidden. This will be done by selecting an icon on the node that will cause the subtree rooted at that node to be minimized. It will be ideal for the transitions when minimizing or expanding subtrees be as smooth as possible to avoid disrupting the mental model of the data.
+
+Weber and Mejia-Ramos~\cite{majorsbeliefs-weber+mejiaramos} and Alcock and Wilkinson~\cite{eproofs-alcock+wilkinson} have argued that too much detail visible in a proof obscures high-level structural information which is important for proof comprehension. To address this concern, there will be two views for this proof visualization: detail view and structure view. Detail view will show a proof tree, possibly with subtrees hidden as discussed above, with full formulas, rule names, and rule side conditions. Structure view will show the shape of the tree and which rules are used.
 
 \section{Conclusion}
 \label{sec:conclusion}
