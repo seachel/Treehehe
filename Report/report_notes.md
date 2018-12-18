@@ -28,17 +28,21 @@ Dec 18 goals:
 
 - copy content from proposal
 
+- copy content from presentation
+
+- separate discussion and future work notes
+
 - tutorial and examples (moved from Dec 13)
 
-- discussion: first draft (future work, in particular) (moved from Dec 17)
+- discussion: first draft (moved from Dec 17)
 
-- review and make notes on presentation that are not already included
+- future work: first draft (moved from Dec 17)
+
+- ~~review and make notes on presentation that are not already included~~
 
 - ~~introduction: first draft~~
 
 - infovis elements: first draft
-
-- conclusion: first draft
 
 
 Dec 19 goals:
@@ -46,6 +50,8 @@ Dec 19 goals:
 - figures / graphics
 
 - begin review for final draft
+
+- conclusion: first draft
 
 
 Dec 20 goals:
@@ -58,30 +64,26 @@ Dec 20 goals:
 
 ===
 
-- todo: merge in presentation notes?
-- todo: omit proposal notes that are no longer relevant
-
 
 Presentation notes:
 ---
 
 Application domain:
 
-- argument _obeying_ logic rules
-- objective: gain insight on proofs and proof systems by exploring proof trees
-- formula, inference rule, proof tree, as in paper
+DONE
 
 
 User tasks:
 
-- figures for sequent and proof
-- viewing supplementary info on selected node
-- reviewing rule sets
+DONE
 
 
 InfoVis elements:
 
 - TR for layout
+  * bottom rooted
+  * no links
+  * discuss other implementation things, or leave in technology section?
 - F+C: relationship between focus and its children and parent (check in source paper)
 - colour:
   * highlight focused node and related nodes
@@ -90,21 +92,17 @@ InfoVis elements:
 
 Design sketches:
 
-- instead do screen shots?
+DONE
 
 
 Technology:
 
-- bottom rooted tree (mention in technology section, or better in InfoVis elements when discussing TR?)
-
+DONE
 
 
 Discussion:
 
-- consequences of logic choice (but this doesn't have to be made ahead of time... the tool can handle anything that can be written, although it doesn't check correctness)
-- reasoning direction (forward more natural, but backward more conducive to automated reasoning and more standard reading for logic programs)
-- impact of different traversals on cognition
-- future work: hiding subtrees, structure view, (GUI builder)
+DONE
 
 
 
@@ -152,9 +150,7 @@ Design outline (approach):
 
 - description of inference rules (for intro or logic background or conclusion)
 - sequent
-- natural deduction examples come from Huth and Ryan
-- in TR algorithm, can depend on root of tree being in the same location
-- discussion of traversal choice
+- in TR algorithm, can depend on root of tree being in the same location (in InfoVis Elements section)
 
 (possibly copy some paragraphs?)
 
