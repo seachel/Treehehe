@@ -257,7 +257,9 @@ TODO: high-level description of program structure and techniques (e.g. function 
 
 Data in this visualization project are trees, so an important first consideration is determining a visual formalism for drawing trees that is consistent with conventions for this task. Herman et al.~\cite{graphvis-herman+melancon+marshall} discuss a number of techniques for visualizing trees. Several spacesaving representations are presented, such as H-tree layout, radial view, and balloon view. In \projectname{}, much of the utility of a proof tree comes from being able to read a flow of inferences, seeing the leaves as axioms or assumptions and the root as the conclusion of the proof. Each node contains a propositional formula, so to be readable all nodes need to have the same orientation.
 
-The space-saving layouts could be useful if it is clear which node is the root and some other form of iconography could be used for constructing formulas. For the current project, we will use the Reingold and Tilford layout for trees, which could be described as visually rooted, since we have a convention that tells us which node we see as the root. We will invert the standard tree constructed with this algorithm so that the root is at centre bottom. The bottom center location of the root is a consistent position where we can find the goal of the proof, which is also the formula on the right side of a sequent, as described in section~\ref{sec:background}. Another benefit of the Reingold and Tilford algorithm for this application is the vertical alignment of nodes at the same level (distance from the root) in a proof. We want to allow for inferences with more than two premises, so we need the version of the Reingold and Tilford algorithm extended by Walker to general trees~\cite{generaltreeslayout-walker}.
+The space-saving layouts could be useful if it is clear which node is the root and some other form of iconography could be used for constructing formulas. For the current project, we will use the Reingold and Tilford layout for trees, which could be described as visually rooted, since we have a convention that tells us which node we see as the root. We want to allow for inferences with more than two premises, so we need the version of the Reingold and Tilford algorithm extended by Walker to general trees~\cite{generaltreeslayout-walker}.
+
+We will invert the standard tree constructed with this algorithm so that the root is at centre bottom. The bottom center location of the root is a consistent position where we can find the goal of the proof, which is also the formula on the right side of a sequent, as described in section~\ref{sec:background}. Another benefit of the Reingold and Tilford algorithm for this application is the vertical alignment of nodes at the same level (distance from the root) in a proof. This allows a final difference between proof trees and general trees without making the relations between nodes unclear: we don't draw and links or edges between nodes. Instead, a horizontal line is drawn between a node and its children.
 
 TODO: can expand on TRW algorithm if there is more space by talking about aesthetic requirements \\
 
@@ -265,7 +267,7 @@ TODO: more description of structure of proof trees used by math and logic commun
 
 TODO: focus+context here: children <- focus -> parent \\
 
-In~\cite{infovis-ware} we learn many best practices from Ware for using colour in a visualization. In \projectname{}, colour will be used to highlight a selected node in a proof tree to bring the focus of the user to the current inference of interest. Colour is preattentively processed, so the user is able to have attention on spatially disconnected elements without having to ...(TODO: attention vs ... see last presentation). We use this property of attention to allow the user to attend to and distinguish between groups of nodes, such as previously visited nodes, future nodes, and the current focus.
+In~\cite{infovis-ware} we learn many best practices from Ware for using colour in a visualization. In \projectname{}, colour will be used to highlight a selected node in a proof tree to bring the focus of the user to the current inference of interest. We also use colour to categorize nodes. Colour is preattentively processed, so the user is able to have attention on spatially disconnected elements without having to ...(TODO: attention vs ... see last presentation). We use this property of attention to allow the user to attend to and distinguish between groups of nodes, such as previously visited nodes, future nodes, and the current focus.
 
 Figueiras presents a taxonomy of interaction consisting of eleven categories of techniques~\cite{interaction-figueiras}. The categories of interaction that will be used in this project are \textit{select} and \textit{overview/explore}.
 
@@ -305,8 +307,6 @@ TODO: careful with tense when copying from proposal \\
 % Limitation: natural deduction proofs are made more naturally using other visualization methods, e.g. Fitch style, where you don't know the shape of the proof yet
 % forward vs backward reasoning
 
-It is our hope that the tool will be useful as an educational resource and for documentation.
-
 Discussion items:
 
 \begin{itemize}
@@ -315,6 +315,8 @@ Discussion items:
     \item impact of different traversals on cognition
 \end{itemize}
 
+\section{Future Work}
+\label{sec:future}
 
 Future updates:
 
@@ -328,10 +330,6 @@ Future updates:
 \end{itemize}
 
 (Since proof trees can easily escape the bounds of a display, navigation is another topic explored by Herman et al.~\cite{graphvis-herman+melancon+marshall} that is relevant to this project. Zooming is not necessary because there is no refinement of information to be seen. The user will want to be able to scroll around the graph while exploring. The technique of incremental exploration and navigation will be used to display only a desired subtree of the proof.) (remove? move to future work?)
-
-TODO: hypothesis and assumption distinction somewhat arbitrary but needs to be clear here \\
-
-TODO: udpate colours \\
 
 TODO: future work note: using MathJax allows future extensions to the project in the form of a GUI builder where users can write LaTeX directly in a text box for a new node \\
 
@@ -348,6 +346,8 @@ Weber and Mejia-Ramos~\cite{majorsbeliefs-weber+mejiaramos} and Alcock and Wilki
 
 TODO: proof as argument \textit{obeying} logic rules \\
 
+It is our hope that the tool will be useful as an educational resource and for documentation.
+
 (Interaction is an essential component of this project because it elevates a proof tree from a static graphic to a visualization that can lead to further understanding and insight along a variety of paths. Duval claims that proof trees are disappointing and visualizations in general do not lead to immediate comprehension in mathematics~\cite{repvisvis-duval}. It appears that what is meant by visualization in this article only includes static graphics representing mathematical objects. He also does not fully explore other advantages to explicit articulation of proof trees, such as cognitive offloading and observation of patterns in large proofs, which are particularly useful in proofs where the goal to be proven has a complicated logical structure. Here we propose that adding interaction to a proof tree will aid in understanding of both the logic used to build it and the proposition being proven, although this is stated without evidence and without a study to verify this hypothesis. There is more to discuss relating Duval’s work to what is being attempted here, and this will be expanded on in the final report.) (TODO: repetitive; bring some of these points to the conclusion? discussion?)
 
 
@@ -359,9 +359,10 @@ TODO: proof as argument \textit{obeying} logic rules \\
 \item glossary of terms?
 \item direct reader to other source to learn about natural deduction?
 \item natural deduction rules
-\item clear use of premise (tree leaves) and assumption (hypothetical, in rules)
+\item clear use of assumption (tree leaves), hypothesis (hypothetical, in rules), and premise (at the top of some rule)
 \item example proof that $\wedge$ is commutative, use this to explain sequent
 \item review proposal feedback
+\item update colours
 \end{itemize}
 
 Terms for glossary or other special note:
