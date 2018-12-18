@@ -132,28 +132,40 @@ TODO: reference FP if natded example is mentioned here \\
 \section{Logic Background}
 \label{sec:background}
 
-TODO: review discussion of quick tutorial from presentation \\
-
 Recall that the goal of the tool described in this report is to provide an interactive visualization of proof trees, which are structured logical arguments that are drawn following conventions. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees from these systems. We will aim to discuss these preliminary concepts generally, while carrying through the specific example of natural deduction as our logic. Our presentation of natural deduction will be in the same style as in the lecture notes of Frank Pfenning~\cite{natded-pfenning}.
 
 A \textit{formula} is an expression that represents a true or false statement. We can write a grammar for the formulas of a given logic. For example, for natural deduction formulas are from the following grammar:
 $$
-p, q ::= \mathit{True} \; | \; \mathit{False} \; | \; p \wedge q \; | \; p \vee q \; | \; p \supset q
+p, q ::= \mathit{True} \; | \; p \wedge q \; | \; p \vee q \; | \; p \supset q
 $$
 
 The symbols $\wedge$, $\vee$, and $\supset$ are called \textit{connectives}. Think of a connective as notation for an adjesive that connects formulas. The connectives in the grammar are all binary connectives because they all build a new formula from two smaller ones. The grammar tells us how to build formulas, but not what they mean. For example, if we have some formulas $P$ and $Q$, then we can build a new formula $P \wedge Q$, but we don't know what this expression means yet. The semantics of formulas come from a set of inference rules for the logic.
 
 An \textit{inference rule} is a structure that tells us how to build a formula or take it apart. These rules give meaning to the connectives used in them. The notation for an inference rule is as shown in Figure~\ref{fig:infrule} and as described presently. It has the premises of the rule written beside each other, with some space between assumptions, above a horizontal line which is above the conclusion of the rule. The name of the rule is written to the right of the horizontal line and any side conditions that must hold are written to the left of the line. There may be some slight variation in laying out inference rules in other writings, but here we will follow the conventions described above.
 
-The premises and conclusion of a rule are \textit{judgments}. Like a formula, a judgment is a statement that is true or false. When a judgment is derived by a rule, we consider it true, assuming the premises of the rule are derivable. In our natural deduction example, for some formula $p$, we will write $p \; \mathrm{true}$ or $p \; \mathrm{false}$, as appropriate, where $p$ occurs in a premise or the conclusion of a rule. % This allows statements like $p false$ to be derivable in logics where .... false derivable...
-
-TODO: sequent discussion: is a judgment that is considered true or false; special notation or container of premises and conclusion \\
+The premises and conclusion of a rule are \textit{judgments}. Like a formula, a judgment is a statement that is true or false. When a judgment is derived by a rule, we consider it true, assuming the premises of the rule are derivable. In our natural deduction example, when we see a formula $p$ in a rule or proof, we will understand it to mean $p$ \textit{is true}. This diverges from the Martin-L{\"o}f approach followed by Pfenning in~\cite{natded-pfenning} where there is a more explicit distinction between the formula $p$ and the judgment $p \; \mathit{true}$. (TODO: justify our approach; more accessible to beginners, and the initiated user could eventually add their own proof with explicit judgments)
 
 TODO: what proof trees are evidence of: sequent in natded example \\
 
-TODO: the rules for natural deduction... not the full set? \\
+NEXT: how do we build a proof, what are the parts, how to read a proof, what is proven (sequent when leaves are premises), extensions of what can be allowed in the nodes (leave this for discussion?) \\
 
-TODO: or use style in Logic in CS course? easier than adding in the true/false stuff everywhere \\
+The rules for natural deduction can be seen in Figure~\ref{fig:natdedrules}. The formulas seen in the rules are called \textit{meta-variables}. For example, in the rule $\wedge_I$, the formulas $P$ and $Q$ are meta-variables for the rule. To use rules in building a proof, we fill in meta-variables consistently and match the top-level symbols used when applying a sequence of rules. For example, the proof in Figure~\ref{fig:andcomm} shows that the connective $\wedge$ is commutative. (TODO: finish explanation of how rules used). If we can build a tree structure using the rules this way (TODO: expand) such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.
+
+A \textit{sequent} is an object containing a set of formulas $P_1, \dots, P_k$ representing a set of premises and a formula $G$ representing a goal. It is notated $P_1, \dots, P_k \vdash G$ and means if you assume all of $P_1, \dots, P_k$, then you can derive $G$.
+
+The root of a proof tree is the goal to be derived and the leaves are premises. We understand a proof tree with leaves $L_1, \dots, L_k$ and root $R$ to be a proof of the sequent $L_1, \dots, L_k \vdash R$.
+
+\begin{figure}
+
+\caption{Inference rules for natural deduction}
+\label{fig:natdedrules}
+\end{figure}
+
+\begin{figure}
+
+\caption{Proof that $\wedge$ is commutative}
+\label{fig:andcomm}
+\end{figure}
 
 \begin{figure}
 
@@ -170,11 +182,8 @@ TODO: or use style in Logic in CS course? easier than adding in the true/false s
 \label{fig:infrule}
 \end{figure}
 
-TODO: talk about building vs taking apart, the structure/notation of rules, give examples
 
-To use rules, we fill in the meta-variables consistently.... sequence of using rules. If we can build a tree structure using the rules this way such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.
-
-TODO: examples, not super formal \\
+TODO: examples, not super formal (rules, proof) \\
 
 TODO: more emphasis on goal-directed reading of proof, discussion of forward vs backward reasoning
 
@@ -195,13 +204,13 @@ TODO: more emphasis on goal-directed reading of proof, discussion of forward vs 
 
 \projectname{} is implemented as a web page. A screenshot of the page can be seen in Figure~\ref{fig:screenshot}. The major elements at the top of the page include a panel for the title and any future menu and below this a controls panel for example selection and moving through a proof walk-through.
 
-First the user selects an example from the drop-down list in the controls panel. This updates the main display area of the page, the tree display panel, with a proof tree corresponding to the selected example.
+First the user selects an example from the drop-down list in the controls panel. We have chosen examples from~\cite{logicincs-huth+ryan}, an introductory logic textbook, to ensure a breadth of examples appropriate for beginner audiences. This updates the main display area of the page, the tree display panel, with a proof tree corresponding to the selected example.
 
 The selected example proof tree represents a proof within a specific logic, so once an example is selected the rules panel to the right of the tree display panel is populated with the rules of that logic.
 
 Once a tree is displayed, the user has the option of open exploration of the proof, called \textit{explore mode}, or a directed walk-through, called \textit{walk-through mode}. In explore mode, a node containing a judgment can be selected for focus. Once this is done, nodes in the tree are coloured to make the selection most salient, while also highlighting the children of the current node and making nodes occurring earlier in the proof traversal less visible. At the same time, information related to the focused node is displayed in the selection panel.
 
-Recall that our reading of the proof has a goal-directed view, with reasoning in the backward direction from goal to assumptions (see TODO ref previous section). With this in mind, the focused node selection information includes the judgment contained in the selected node, the rule used to derive this judgment, and the instantiated premise(s) of that rule. For example, in Figure~\ref{fig:screenshot}, the selected judgment is the formula $q$, which is derived by applying the rule $\wedge_{E_2}$ to the premise $p \wedge q$. So the rule $\wedge_{E_2}$ is used with $P_1$ and $P_2$ instantiated as $p$ and $q$, respectively.
+Recall that our reading of the proof has a goal-directed view, with reasoning in the backward direction from goal to assumptions (see Section~\ref{sec:background}). With this in mind, the focused node selection information includes the judgment contained in the selected node, the rule used to derive this judgment, and the instantiated premise(s) of that rule. For example, in Figure~\ref{fig:screenshot}, the selected judgment is the formula $q$, which is derived by applying the rule $\wedge_{E_2}$ to the premise $p \wedge q$. So the rule $\wedge_{E_2}$ is used with $P_1$ and $P_2$ instantiated as $p$ and $q$, respectively.
 
 In walk-through mode, the information displayed for the focused node and colouring of nodes in the tree is the same as in explore mode, but the method for focusing nodes is different. In a walk-through, the arrows in the controls panel of the page are used to navigate forward and backward through the steps of the proof, again with a goal-directed reading.
 
@@ -281,6 +290,21 @@ Future updates:
     \item when selecting a node, relevant rule is highlighted
 \end{itemize}
 
+Terms for glossary or other special note:
+
+\begin{itemize}
+    \item proof
+    \item logic
+    \item formula
+    \item judgment
+    \item sequent
+    \item inference rule
+    \item proof tree
+    \item assumption
+    \item premise
+    \item goal
+\end{itemize}
+
 TODO: udpate colours \\
 
 TODO: future work note: using MathJax allows future extensions to the project in the form of a GUI builder where users can write LaTeX directly in a text box for a new node \\
@@ -299,6 +323,10 @@ TODO: future work note: using MathJax allows future extensions to the project in
 \item expand to a tutorial, link to this from the page? (add as GitHub issue)
 \item glossary of terms?
 \item what is a logic? what is a proof in this context?
+\item direct reader to other source to learn about natural deduction?
+\item list of terms
+\item natural deduction rules
+\item clear use of premise (tree leaves) and assumption (hypothetical, in rules)
 \end{itemize}
 
 \bibliography{visualanalytics_reportbib}
