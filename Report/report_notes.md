@@ -20,18 +20,21 @@ Dec 17 goals:
 
 - ~~start writing tutorial (moved from Dec 13)~~
 
-- tutorial and examples (moved from Dec 13)
-
 - ~~list of terms for glossary or special note~~
 
-- discussion: first draft (future work, in particular)
 
 
 Dec 18 goals:
 
+- copy content from proposal
+
+- tutorial and examples (moved from Dec 13)
+
+- discussion: first draft (future work, in particular) (moved from Dec 17)
+
 - review and make notes on presentation that are not already included
 
-- introduction: first draft
+- ~~introduction: first draft~~
 
 - infovis elements: first draft
 
@@ -58,11 +61,62 @@ Dec 20 goals:
 - todo: merge in presentation notes?
 - todo: omit proposal notes that are no longer relevant
 
+
+Presentation notes:
+---
+
+Application domain:
+
+- argument _obeying_ logic rules
+- objective: gain insight on proofs and proof systems by exploring proof trees
+- formula, inference rule, proof tree, as in paper
+
+
+User tasks:
+
+- figures for sequent and proof
+- viewing supplementary info on selected node
+- reviewing rule sets
+
+
+InfoVis elements:
+
+- TR for layout
+- F+C: relationship between focus and its children and parent (check in source paper)
+- colour:
+  * highlight focused node and related nodes
+  * categorizing nodes (e.g. children, visited) (attention on visually separated elements)
+
+
+Design sketches:
+
+- instead do screen shots?
+
+
+Technology:
+
+- bottom rooted tree (mention in technology section, or better in InfoVis elements when discussing TR?)
+
+
+
+Discussion:
+
+- consequences of logic choice (but this doesn't have to be made ahead of time... the tool can handle anything that can be written, although it doesn't check correctness)
+- reasoning direction (forward more natural, but backward more conducive to automated reasoning and more standard reading for logic programs)
+- impact of different traversals on cognition
+- future work: hiding subtrees, structure view, (GUI builder)
+
+
+
+
+
 Proposal notes:
 ---
 
 
 Reading review:
+
+(possibly copy some to infovis elements, remainder likely to future work)
 
 - Herman et al. paper: techniques for visualizing trees
   * TR algorithm: visually rooted tree, unlike other space-saving layouts;
@@ -84,21 +138,14 @@ Reading review:
   * discuss how each process leads to insight in this project
 
 
-
 Problem domain:
 
-- proofs important in logic
-- proof trees are constructs that show the structure of an argument
-- proof trees are an artifact: aid in reasoning, method of documentation
-
-~ reuse paragraph?
+DONE
 
 
 Use of visualization:
 
-- size issue: digital version eliminates bounds
-- static, declarative object: interaction helps with operational comprehension (plus selection panel)
-- hide detail to improve proof comprehension (future work now?)
+DONE
 
 
 Design outline (approach):
@@ -109,14 +156,9 @@ Design outline (approach):
 - in TR algorithm, can depend on root of tree being in the same location
 - discussion of traversal choice
 
+(possibly copy some paragraphs?)
+
 
 Design outline (technology):
 
-- mention GitHub pages?
-- discuss data representation (JSON objects containing...)
-- HTML for page content, CSS for styling, JS for behaviour (in intro to this section)
-- responsiveness attempted, using Flexbox for page layout
-- design not tested on small devices
-- tested on most recent version of chrome (state version)
-- embed LaTeX in HTML with MathJax
-- LaTeX only used for content of nodes, not whole tree
+DONE
