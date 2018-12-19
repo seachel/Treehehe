@@ -10,7 +10,7 @@
 
 \usepackage{bussproofs,proof}
 
-\usepackage{array}
+\usepackage{array,tabu}
 
 \usepackage{xcolor,latexsym,mathtools}
 
@@ -150,6 +150,60 @@ A \textit{sequent} is an object containing a set of formulas $P_1, \dots, P_k$ r
 The root of a proof tree is the goal to be derived and the leaves are premises. We understand a proof tree with leaves $L_1, \dots, L_k$ and root $R$ to be a proof of the sequent $L_1, \dots, L_k \vdash R$.
 
 \begin{figure}
+
+\begin{center}
+\begin{tabu} to 0.5\textwidth { X[c,b] X[c,b] }
+
+$$
+\infer[\wedge_I]{P_1 \wedge P_2}{P_1 & P_2}
+$$
+
+&
+
+$$
+\infer[\wedge_{E_i}]{P_i}{P_1 \wedge P_2}
+$$
+
+\\
+
+$$
+\infer[\vee_{I_i}]{P_1 \vee P_2}{P_1}
+$$
+
+&
+
+$$
+\infer[\vee_{E^{u,w}}]{P_3}{P_1 \vee P_2 &
+    \infer*{P_3}{\infer[u]{P_1}{}} &
+    \infer*{P_3}{\infer[w]{P_2}{}}}
+$$
+
+\\
+
+$$
+\infer[\supset_{I^u}]{P_1 \supset P_2}{\infer*{P_2}{\infer[u]{P_1}{}}}
+$$
+
+&
+
+$$
+\infer[\supset_E]{P_2}{P_1 \supset P_2 & P_1}
+$$
+
+\\[-20pt]
+
+$$
+\infer[True_I]{True}{}
+$$
+
+&
+
+$$
+\infer[False_E]{P}{False}
+$$
+
+\end{tabu}
+\end{center}
 
 \caption{Inference rules for natural deduction}
 \label{fig:natdedrules}
@@ -330,7 +384,7 @@ The final InfoVis updates we propose involve the rules panel on the page. When s
 
 In the current version of \projectname{}, there are a number of example the user can choose to explore, but the tool would be far more useful if there was a way to add custom proofs. The best way for this to be done is to extend the interface so that new nodes can be added. Initial plans for this idea would add an icon to each node to add siblings, and another icon to each leaf node to make that node a result of an inference (i.e. add an inference line), then children could be added above that node. The content of a new node would be entered in a text box and written in \LaTeX{}. In this circumstance (better word?), the user is writing the proof, adding to ... (TODO: ref Duval work? Alcock?)
 
-Other updates would add more uses for the tool that are (aside,...iary) to information visualization. Once a proof is built, the user may want to use it in a \LaTeX{} document. It would be a small change to export the \LaTeX{} code for the tree from the JSON object representing the tree.
+Other updates would add more uses for the tool that are extraneous to information visualization. Once a proof is built, the user may want to present it in a \LaTeX{} document. It would be a small change to export the \LaTeX{} code for the tree from the JSON object representing the tree.
 
 
 \section{Conclusion}
@@ -354,7 +408,7 @@ It is our hope that the tool will be useful as an educational resource and for d
 \item expand to a tutorial, link to this from the page? (add as GitHub issue)
 \item glossary of terms?
 \item direct reader to other source to learn about natural deduction?
-\item natural deduction rules
+\item natural deduction rules (FP, without ``true'' or ``false'' in judgment)
 \item clear use of assumption (tree leaves), hypothesis (hypothetical, in rules), and premise (at the top of some rule)
 \item example proof that $\wedge$ is commutative, use this to explain sequent
 \item review proposal feedback
