@@ -240,6 +240,8 @@ A formula in an inference rule represented by a symbol that is not one of the lo
 \label{fig:andcomm}
 \end{figure}
 
+Suppose we wish to prove that from the $n$ assumptions $P_1, \dots , \P_n$, we can derive the conclusion $C$. This goal can be written as $P_1, \dots, P_n \vdash C$, called a sequent. If, by applying rules from our logic and making appropriate substitutions, we are able construct a tree with all of the $P_1$ to $P_n$ as leaves and $C$ as the root, then this proof tree is evidence for the validity of the sequent $P_1,dots, P_n \vdash C$. See Figure~\ref{fig:andcomm} for an example proof of the sequent $p \wedge q \vdash q \wedge p$. (TODO: merge this paragraph)
+
 A \textit{sequent} is an object containing a set of formulas $P_1, \dots, P_k$ representing a set of assumptions and a formula $G$ representing a goal. It is notated $P_1, \dots, P_k \vdash G$ and means if you assume all of $P_1, \dots, P_k$, then you can derive $G$.
 
 The root of a proof tree is the goal to be derived and the leaves are premises. We understand a proof tree with leaves $L_1, \dots, L_k$ and root $R$ to be a proof of the sequent $L_1, \dots, L_k \vdash R$.
@@ -405,19 +407,6 @@ It is our hope that the tool will be useful as an educational resource and for d
 
 \section{Temporary TODO}
 
-\begin{itemize}
-\item more design sketches
-\item expand to a tutorial, link to this from the page? (add as GitHub issue)
-\item glossary of terms?
-\item direct reader to other source to learn about natural deduction?
-\item clear use of assumption (tree leaves), hypothesis (hypothetical, in rules), and premise (at the top of some rule)
-\item review proposal feedback
-\item update colours
-\item remove some uses of the word ``will''? In particular unnecessary occurrences (word like frivolous...superfluous?)
-\item review watching for tense
-\item spell check
-\end{itemize}
-
 Terms for glossary or other special note:
 
 \begin{itemize}
@@ -431,7 +420,7 @@ Terms for glossary or other special note:
     \item assumption (leaf in tree, left side of sequent)
     \item premise (can be intermediate in rules; top of an inference)
     \item hypothesis (hypothetical judgment)
-    \item goal
+    \item goal vs conclusion
     \item logical constant
 \end{itemize}
 
