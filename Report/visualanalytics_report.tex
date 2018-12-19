@@ -126,28 +126,36 @@ TODO: references:
 
 - proof trees in this notation proposed by ?? \\
 
-Recall that the goal of the tool described in this report is to provide an interactive visualization of proof trees, which are structured logical arguments that are drawn following conventions. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees from these systems. We will aim to discuss these preliminary concepts generally, while carrying through the specific example of natural deduction as our logic. Our presentation of natural deduction will be in the same style as in the lecture notes of Frank Pfenning~\cite{natded-pfenning}.
+Recall that the goal of \projectname{}, the tool described in this report, is to provide an interactive visualization of proof trees. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees from these systems. We will aim to discuss these preliminary concepts generally, while carrying through the specific example of natural deduction as our logic. Our presentation of natural deduction will be in the same style as in the lecture notes of Frank Pfenning~\cite{natded-pfenning}.
 
-A \textit{formula} is an expression that represents a true or false statement. We can write a grammar for the formulas of a given logic. For example, for natural deduction formulas are from the following grammar:
+TODO: Proof trees are structured logical arguments drawn following conventions described through this section. (find spot for this)
+
+A \textit{formula} is an expression that represents a true or false statement. We can write a grammar for the formulas of a given logic. For example, for natural deduction formulas are described by the following grammar:
 $$
-p, q ::= \mathit{True} \; | \; p \wedge q \; | \; p \vee q \; | \; p \supset q
+p, q ::= \mathit{True} \; | \; \mathit{False} \; | \; p \wedge q \; | \; p \vee q \; | \; p \supset q
 $$
 
-The symbols $\wedge$, $\vee$, and $\supset$ are called \textit{connectives}. Think of a connective as notation for an adjesive that connects formulas. The connectives in the grammar are all binary connectives because they all build a new formula from two smaller ones. The grammar tells us how to build formulas, but not what they mean. For example, if we have some formulas $P$ and $Q$, then we can build a new formula $P \wedge Q$, but we don't know what this expression means yet. The semantics of formulas come from a set of inference rules for the logic.
+The symbols $\wedge$, $\vee$, and $\supset$ are called \textit{connectives}. Think of a connective as notation for an adjesive that connects formulas. The connectives in the grammar for natural deduction formulas are all binary connectives because they all build a new formula from two smaller ones. The grammar tells us how to build formulas, but not what they mean. The semantics of formulas come from a set of inference rules for the logic.
 
-An \textit{inference rule} is a structure that tells us how to build a formula or take it apart. These rules give meaning to the connectives used in them. The notation for an inference rule is as shown in Figure~\ref{fig:infrule} and as described presently. It has the premises of the rule written beside each other, with some space between assumptions, above a horizontal line which is above the conclusion of the rule. The name of the rule is written to the right of the horizontal line and any side conditions that must hold are written to the left of the line. There may be some slight variation in laying out inference rules in other writings, but here we will follow the conventions described above.
+An \textit{inference rule} is a structure that tells us how to build a formula or take it apart. These rules give meaning to the connectives used in them. The notation for an inference rule is as shown in Figure~\ref{fig:infrule} and is described presently. It has the premises of the rule written beside each other, with some space between assumptions, above a horizontal line which is above the conclusion of the rule. The name of the rule is written to the right of the horizontal line and any side conditions that must hold are written to the left of the line. There may be some slight variation in laying out inference rules in other writings, but here we will follow the conventions described above.
 
-The premises and conclusion of a rule are \textit{judgments}. Like a formula, a judgment is a statement that is true or false. When a judgment is derived by a rule, we consider it true, assuming the premises of the rule are derivable. In our natural deduction example, when we see a formula $p$ in a rule or proof, we will understand it to mean $p$ \textit{is true}. This diverges from the Martin-L{\"o}f approach followed by Pfenning in~\cite{natded-pfenning} where there is a more explicit distinction between the formula $p$ and the judgment $p \; \mathit{true}$. (TODO: justify our approach; more accessible to beginners, and the initiated user could eventually add their own proof with explicit judgments)
+\begin{figure}
 
-TODO: what proof trees are evidence of: sequent in natded example \\
+\begin{prooftree}
+\AxiomC{Premise 1}
+\AxiomC{$\dots$}
+\AxiomC{Premise n}
+\LeftLabel{\small conditions}
+\RightLabel{\small rule name}
+\TrinaryInfC{Conclusion}
+\end{prooftree}
 
-NEXT: how do we build a proof, what are the parts, how to read a proof, what is proven (sequent when leaves are premises), extensions of what can be allowed in the nodes (leave this for discussion?) \\
+\caption{Structure of inference rules}
+\label{fig:infrule}
+\end{figure}
 
-The rules for natural deduction can be seen in Figure~\ref{fig:natdedrules}. The formulas seen in the rules are called \textit{meta-variables}. For example, in the rule $\wedge_I$, the formulas $P$ and $Q$ are meta-variables for the rule. To use rules in building a proof, we fill in meta-variables consistently and match the top-level symbols used when applying a sequence of rules. For example, the proof in Figure~\ref{fig:andcomm} shows that the connective $\wedge$ is commutative. (TODO: finish explanation of how rules used). If we can build a tree structure using the rules this way (TODO: expand) such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.
+The rules of natural deduction can be found in Figure~\ref{fig:natdedrules}. We will reference some of these rules as we discuss examples, but we do not describe the full set here. For a more complete explanation of the rules, we direct the reader to~\cite{natded-pfenning}. It can be deduced that the symbols $\wedge$, $\vee$, and $\supset$ mean ``and'', ``or'', and ``implies'', respectively.
 
-A \textit{sequent} is an object containing a set of formulas $P_1, \dots, P_k$ representing a set of premises and a formula $G$ representing a goal. It is notated $P_1, \dots, P_k \vdash G$ and means if you assume all of $P_1, \dots, P_k$, then you can derive $G$.
-
-The root of a proof tree is the goal to be derived and the leaves are premises. We understand a proof tree with leaves $L_1, \dots, L_k$ and root $R$ to be a proof of the sequent $L_1, \dots, L_k \vdash R$.
 
 \begin{figure}
 
@@ -193,13 +201,13 @@ $$
 \\[-20pt]
 
 $$
-\infer[True_I]{True}{}
+\infer[\mathit{True}_I]{\mathit{True}}{}
 $$
 
 &
 
 $$
-\infer[False_E]{P}{False}
+\infer[\mathit{False}_E]{P}{\mathit{False}}
 $$
 
 \end{tabu}
@@ -208,6 +216,14 @@ $$
 \caption{Inference rules for natural deduction}
 \label{fig:natdedrules}
 \end{figure}
+
+The premises and conclusion of a rule are \textit{judgments}. Like a formula, a judgment is a statement that is true or false. When a judgment is derived by a rule, we consider it true, assuming the premises of the rule are derivable. In our natural deduction example, when we see a formula $p$ in a rule or proof, we will understand it to mean $p$ \textit{is true}. This diverges from the Martin-L{\"o}f approach followed by Pfenning in~\cite{natded-pfenning} where there is a more explicit distinction between the formula $p$ and the judgment $p \; \mathit{true}$. (TODO: justify our approach; more accessible to beginners, and the initiated user could eventually add their own proof with explicit judgments)
+
+TODO: what proof trees are evidence of: sequent in natded example \\
+
+NEXT: how do we build a proof, what are the parts, how to read a proof, what is proven (sequent when leaves are premises), extensions of what can be allowed in the nodes (leave this for discussion?) \\
+
+The rules for natural deduction can be seen in Figure~\ref{fig:natdedrules}. The formulas seen in the rules are called \textit{meta-variables}. For example, in the rule $\wedge_I$, the formulas $P$ and $Q$ are meta-variables for the rule. To use rules in building a proof, we fill in meta-variables consistently and match the top-level symbols used when applying a sequence of rules. For example, the proof in Figure~\ref{fig:andcomm} shows that the connective $\wedge$ is commutative. (TODO: finish explanation of how rules used). If we can build a tree structure using the rules this way (TODO: expand) such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.
 
 \begin{figure}
 
@@ -228,20 +244,10 @@ $$
 \label{fig:andcomm}
 \end{figure}
 
-\begin{figure}
+A \textit{sequent} is an object containing a set of formulas $P_1, \dots, P_k$ representing a set of premises and a formula $G$ representing a goal. It is notated $P_1, \dots, P_k \vdash G$ and means if you assume all of $P_1, \dots, P_k$, then you can derive $G$.
 
-\begin{prooftree}
-\AxiomC{Premise 1}
-\AxiomC{$\dots$}
-\AxiomC{Premise n}
-\LeftLabel{\small conditions}
-\RightLabel{\small rule name}
-\TrinaryInfC{Conclusion}
-\end{prooftree}
+The root of a proof tree is the goal to be derived and the leaves are premises. We understand a proof tree with leaves $L_1, \dots, L_k$ and root $R$ to be a proof of the sequent $L_1, \dots, L_k \vdash R$.
 
-\caption{Structure of inference rules}
-\label{fig:infrule}
-\end{figure}
 
 
 TODO: examples, not super formal (rules, proof) \\
