@@ -24,13 +24,13 @@ Dec 17 goals:
 
 Dec 18 goals:
 
-- copy content from proposal
+- ~~copy content from proposal~~
 
 - ~~copy content from presentation~~
 
 - ~~separate discussion and future work notes~~
 
-- tutorial and examples (moved from Dec 13)
+- ~~tutorial and examples (moved from Dec 13)~~
 
 - ~~future work: first draft (moved from Dec 17)~~
 
@@ -43,6 +43,8 @@ Dec 18 goals:
 
 Dec 19 goals:
 
+- merge design outline from proposal
+
 - discussion: first draft (moved from Dec 17)
 
 - conclusion: first draft
@@ -50,6 +52,8 @@ Dec 19 goals:
 - add in visual thinking results
 
 - begin review for final draft
+
+- check proposal feedback
 
 
 Dec 20 goals:
