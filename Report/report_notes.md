@@ -43,7 +43,7 @@ Dec 18 goals:
 
 Dec 19 goals:
 
-- merge design outline from proposal
+- merge design outline from proposal (if anything is applicable)
 
 - discussion: first draft (moved from Dec 17)
 
@@ -51,12 +51,28 @@ Dec 19 goals:
 
 - add in visual thinking results
 
-- begin review for final draft
-
 - check proposal feedback
+
+- introduction: second draft
+
+- ~~logic background: second draft~~
+
+- tool description: second draft
+
+- technology: second draft
+
+- infovis elements: second draft
+
+- discussion: second draft
+
+- future work: second draft
+
+- conclusion: second draft
 
 
 Dec 20 goals:
+
+- exaluation: draft
 
 - figures / graphics
 
