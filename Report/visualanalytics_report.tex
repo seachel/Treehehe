@@ -126,36 +126,40 @@ TODO: references:
 
 - proof trees in this notation proposed by ?? \\
 
-Recall that the goal of \projectname{}, the tool described in this report, is to provide an interactive visualization of proof trees. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees from these systems. We will aim to discuss these preliminary concepts generally, while carrying through the specific example of natural deduction as our logic. Our presentation of natural deduction will be in the same style as in the lecture notes of Frank Pfenning~\cite{natded-pfenning}.
+Recall that the deliverable of \projectname{}, the tool described in this report, is an interactive visualization of proof trees. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees from these systems. We will aim to discuss these preliminary concepts generally, while carrying through the specific example of natural deduction as our logic. Our presentation of the natural deduction system is motivated by~\cite[1.2 Natural Deduction]{logicincs-huth+ryan} and the lecture notes of Frank Pfenning~\cite{natded-pfenning}.
 
-TODO: Proof trees are structured logical arguments drawn following conventions described through this section. (find spot for this)
-
-A \textit{formula} is an expression that represents a true or false statement. We can write a grammar for the formulas of a given logic. For example, for natural deduction formulas are described by the following grammar:
+A \textit{formula} is an expression that represents a true or false statement. We can write a grammar for the formulas of a given logic. For example, in natural deduction formulas are described by the following grammar:
 $$
 p, q ::= \top \; | \; \bot \; | \; p \wedge q \; | \; p \vee q \; | \; p \supset q
 $$
+Note that below we allow parentheses to be used to denote precedence.
 
-The symbols $\wedge$, $\vee$, and $\supset$ are called \textit{connectives}. Think of a connective as notation for an adjesive that connects formulas. The connectives in the grammar for natural deduction formulas are all binary connectives because they all build a new formula from two smaller ones. The symbols $\top$, $\bot$, and the connectives are the \textit{logical constants} of this language of expressions. The grammar tells us how to build formulas, but not what they mean. The semantics of formulas come from a set of inference rules for the logic.
+The symbols $\wedge$, $\vee$, and $\supset$ are called \textit{connectives}. Think of a connective as notation for an adhesive that connects formulas. The connectives in the grammar for natural deduction formulas are all binary connectives because they all build a new formula from two smaller ones. The symbols $\top$, $\bot$, and the connectives are the \textit{logical constants} of this language of expressions.
 
-An \textit{inference rule} is a structure that tells us how to build a formula or take it apart. These rules give meaning to the logical constants used in them. The notation for an inference rule is as shown in Figure~\ref{fig:infrule} and is described presently. It has the premises of the rule written beside each other, with consistent space in between, above a horizontal line which is above the conclusion of the rule. The name of the rule is written to the right of the horizontal line and any side conditions that must hold are written to the left of the line. There may be some slight variation in laying out inference rules in other writings, but here we will follow the conventions described above.
+The grammar tells us how to build formulas, but not what they mean. For example, $((p \wedge q) \vee r) \supset ((p \vee r) \wedge (q \vee r))$ is an expression we can build from the grammar above, but without any understanding of the semantics of the logical constants this is simply a string of symbols without meaning. We don't know if the expression is true or false. The semantics of formulas can be encoded in a set of inference rules for the logic.
 
-\begin{figure}
+An \textit{inference rule} is a structure that tells us how to derive a formula. The notation for an inference rule is as shown in Figure~\ref{fig:infrule}. It has the premises of the rule written beside each other, with consistent space in between, above a horizontal line which is above the conclusion of the rule. The name of the rule is written to the right of the horizontal line and any side conditions that must hold are written to the left of the line. There may be some slight variation in laying out inference rules in other writings, but here we will follow the conventions described above. The meaning of this inference rule is ``if we either assume or derive $\mathit{Premise}_1$ to $\mathit{Premise}_n$, then we can derive $\mathit{Conclusion}$''.
+
+\begin{figure}[h]
 
 \begin{prooftree}
-\AxiomC{Premise 1}
+\AxiomC{$\mathit{Premise_1}$}
 \AxiomC{$\dots$}
-\AxiomC{Premise n}
+\AxiomC{$\mathit{Premise_n}$}
 \LeftLabel{\small conditions}
 \RightLabel{\small rule name}
-\TrinaryInfC{Conclusion}
+\TrinaryInfC{$\mathit{Conclusion}$}
 \end{prooftree}
 
 \caption{Structure of inference rules}
 \label{fig:infrule}
 \end{figure}
 
-The rules of natural deduction can be found in Figure~\ref{fig:natdedrules}. Rules with names containing ``I'' are called introduction rules because a logical constant is introduced in the conclusion of the rule. Rules with names containing ``E'' are called elimination rules because a logical constant that occurred in one of the premises is eliminated and does not occur in the conclusion. We will reference some of these rules as we look at examples, but we do not describe the full set here. For a more complete explanation of the rules, we direct the reader to~\cite{natded-pfenning}. It can be deduced that the symbols $\top$, $\bot$, $\wedge$, $\vee$, and $\supset$ mean ``true'', ``false'', ``and'', ``or'', and ``implies'', respectively.
+Inference rules can tell us how to build a formula or take it apart. These rules give meaning to the logical constants used in them. For example, see Figure~\ref{fig:natdedrules} for the rules of natural deduction. Rules with names containing ``I'' are called introduction rules because a logical constant is introduced in the conclusion of the rule. Rules with names containing ``E'' are called elimination rules because a logical constant that occurrs in one of the premises is eliminated and is not present in the conclusion.
 
+We will explain the rules $\wedge_I$ and $\wedge_{E_i}$ since they are used in an example proof later in this paper, but we do not describe the full set in Figure~\ref{fig:natdedrules} here. For a more complete explanation of the rules, we direct the reader to the lecture notes by Pfenning~\cite{natded-pfenning}, the textbook Logic in Computer Science~\cite{logicincs-huth+ryan} by Huth and Ryan, or to the Wikipedia entry on natural deduction. By considering the collection of natural deduction rules one can deduce that the symbols $\top$, $\bot$, $\wedge$, $\vee$, and $\supset$ mean ``true'', ``false'', ``and'', ``or'', and ``implies'', respectively.
+
+We understand the rule $\wedge_I$ to mean if we can assume or derive $P_1$ and $P_2$, then we can use this rule to derive the formula $P_1 \wedge P_2$, introducing a formula with the symbol $\wedge$. The rule $\wedge_{E_i}$ tells us that if we can assume or derive the formula $P_1 \wedge P_2$, then we can derive each of $P_1$ and $P_2$ on their own by applying this rule, eliminating a formula with the symbol $\wedge$. This is consistent of our natural understanding of the word ``and'', which the logical constant $\wedge$ represents. Later we will see how to use these rules to prove that $\wedge$ is commutative; that is, expressions $p \wedge q$ and $q \wedge p$ have the same truth-value.
 
 \begin{figure}
 
@@ -217,10 +221,6 @@ $$
 \label{fig:natdedrules}
 \end{figure}
 
-The premises and conclusion of a rule are \textit{judgments}. Like a formula, a judgment is a statement that is true or false. When a judgment is derived by a rule, we consider it true, assuming the premises of the rule are derivable. In our natural deduction example, when we see a formula $p$ in a rule or proof, we will understand it to mean $p$ \textit{is true} (i.e. it has been derived that $p$ is true at this point in the proof). This diverges from the Martin-L{\"o}f approach followed by Pfenning in~\cite{natded-pfenning} where there is a more explicit distinction between the formula $p$ and the judgment $p \; \mathit{true}$. (TODO: justify our approach; more accessible to beginners, and the initiated user could eventually add their own proof with explicit judgments)
-
-A formula in an inference rule represented by a symbol that is not one of the logical constants of the expression language is called a \textit{meta-variable}. For example, in the rule $\wedge_I$, the formulas $P_1$ and $P_2$ are meta-variables for the rule. To use rules in building a proof, we fill in meta-variables consistently and match the top-level symbols used when applying a sequence of rules. For example, the proof in Figure~\ref{fig:andcomm} shows that the connective $\wedge$ is commutative. (TODO: finish explanation of how rules used). If we can build a tree structure using the rules this way (TODO: expand) such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.
-
 \begin{figure}
 
 \begin{prooftree}
@@ -240,18 +240,13 @@ A formula in an inference rule represented by a symbol that is not one of the lo
 \label{fig:andcomm}
 \end{figure}
 
-Suppose we wish to prove that from the $n$ assumptions $P_1, \dots , \P_n$, we can derive the conclusion $C$. This goal can be written as $P_1, \dots, P_n \vdash C$, called a sequent. If, by applying rules from our logic and making appropriate substitutions, we are able construct a tree with all of the $P_1$ to $P_n$ as leaves and $C$ as the root, then this proof tree is evidence for the validity of the sequent $P_1,dots, P_n \vdash C$. See Figure~\ref{fig:andcomm} for an example proof of the sequent $p \wedge q \vdash q \wedge p$. (TODO: merge this paragraph)
+Suppose we wish to prove that from the $n$ assumptions $A_1, \dots , A_n$, we can derive the conclusion $C$. This goal can be written as $A_1, \dots, A_n \vdash C$, called a \textit{sequent}. So a sequent is an object containing a set of formulas representing a set of assumptions and a formula representing a goal, notated as just shown.
 
-A \textit{sequent} is an object containing a set of formulas $P_1, \dots, P_k$ representing a set of assumptions and a formula $G$ representing a goal. It is notated $P_1, \dots, P_k \vdash G$ and means if you assume all of $P_1, \dots, P_k$, then you can derive $G$.
+In our application, the root of a proof tree is the conclusion to be derived and the leaves are assumptions. We understand a proof tree with leaves $A_1, \dots, A_k$ and root $C$ built with correct application of rules and consistent substitutions for rule variables to be a proof of the sequent $A_1, \dots, A_k \vdash C$. For example, in Figure~\ref{fig:andcomm}, we see a tree with the unique leaf formula $p \wedge q$ and the conclusion $q \wedge p$. If the inferences are all valid, then this is a proof of $p \wedge q \vdash q \wedge p$.
 
-The root of a proof tree is the goal to be derived and the leaves are premises. We understand a proof tree with leaves $L_1, \dots, L_k$ and root $R$ to be a proof of the sequent $L_1, \dots, L_k \vdash R$.
+We wish to check that the proof of $p \wedge q \vdash q \wedge p$ in Figure~\ref{fig:andcomm} is valid. To check this proof, we will begin at the root. The formula at the root of the proof tree, our conclusion, is $q \wedge p$. The only rule that could have been used to derive this formula is $\wedge_i$ applied to premises $q$ and $p$ (in that order). The first premise can be derived by the rule $wedge_{E_2}$ applied to the premise $p \wedge q$. We stop this line of reasoning here and allow $p \wedge q$ to remain an assumption. Back to the first inference considered, we had a second premise $p$. The formula $p$ can be derived by the rule $\wedge_{E_1}$ applied to $p \wedge q$. We are already seeing $p \wedge q$ as an assumption, so we can halt our proof search/check here. We now see that the proof tree in Figure~\ref{fig:andcomm} is a valid proof tree providing evidence of $p \wedge q \vdash q \wedge p$.
 
-TODO: extensions of what can be allowed in the nodes (leave this for discussion?) \\
-
-TODO: examples, not super formal (rules, proof) \\
-
-TODO: more emphasis on goal-directed reading of proof, discussion of forward vs backward reasoning \\
-
+Notice that in working through the example proof above, we began with the conclusion of the proof, rather than working from assumptions to conclusion. We favour the former backward reasoning style, but one could also read the proof in the forward direction, beginning with assumptions. This will be discussed further in Section~\ref{sec:discussion}.
 
 \section{Tool Description and User Tasks}
 \label{sec:tooldesc}
@@ -358,12 +353,16 @@ TODO: visual thinking content \\
 \section{Discussion}
 \label{sec:discussion}
 
+A difference to note between the lecture notes and the presentation here is we do not make an explicit distinction between a formula and the judgment that the formula is true. For example, whenever we see a formula $P$ in a proof, we assume that this means $P$ is true, rather than writing $P \; true$ directly in the proof tree. Here we prefer the more condensed presentation and don't see the more careful explicit presentation as necessary to achieve our goals of making this tool accessible to beginners. Advanced users can be more careful when writing their own proof trees using the tool. (TODO: more this difference discussion to Discussion section?)
+
+TODO: extensions of what can be allowed in the nodes (leave this for discussion?) \\
+
 Discussion items:
 
 \begin{itemize}
     \item consequences of logic choice (but this doesn't have to be made ahead of time... the tool can handle anything that can be written, although it doesn't check correctness) / how to use for other logics
     \item Limitation: natural deduction proofs are made more naturally using other visualization methods, e.g. Fitch style, where you don't know the shape of the proof yet
-    \item reasoning direction (forward more natural, but backward more conducive to automated reasoning and more standard reading for logic programs)
+    \item reasoning direction (forward more natural, but backward more conducive to automated reasoning and more standard reading for logic programs; unambiguous application of rules)
     \item impact of different traversals on cognition
 \end{itemize}
 
@@ -403,6 +402,11 @@ TODO: proof as argument \textit{obeying} logic rules \\
 It is our hope that the tool will be useful as an educational resource and for documentation.
 
 (Interaction is an essential component of this project because it elevates a proof tree from a static graphic to a visualization that can lead to further understanding and insight along a variety of paths. Duval claims that proof trees are disappointing and visualizations in general do not lead to immediate comprehension in mathematics~\cite{repvisvis-duval}. It appears that what is meant by visualization in this article only includes static graphics representing mathematical objects. He also does not fully explore other advantages to explicit articulation of proof trees, such as cognitive offloading and observation of patterns in large proofs, which are particularly useful in proofs where the goal to be proven has a complicated logical structure. Here we propose that adding interaction to a proof tree will aid in understanding of both the logic used to build it and the proposition being proven, although this is stated without evidence and without a study to verify this hypothesis. There is more to discuss relating Duval’s work to what is being attempted here, and this will be expanded on in the final report.) (TODO: repetitive; bring some of these points to the conclusion? discussion?)
+
+% Dump:
+%
+% (A formula in an inference rule represented by a symbol that is not one of the logical constants of the expression language is called a \textit{meta-variable}. For example, in the rule $\wedge_I$, the formulas $P_1$ and $P_2$ are meta-variables for the rule. To use rules in building a proof, we fill in meta-variables consistently and match the top-level symbols used when applying a sequence of rules. For example, the proof in Figure~\ref{fig:andcomm} shows that the connective $\wedge$ is commutative. (TODO: finish explanation of how rules used). If we can build a tree structure using the rules this way (TODO: expand) such that the leaves of the tree are the desired assumptions and the root is the desired goal, then we have built a \textit{proof tree}.) (TODO: move or remove?)
+
 
 
 \section{Temporary TODO}
