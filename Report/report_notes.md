@@ -43,42 +43,50 @@ Dec 18 goals:
 
 Dec 19 goals:
 
-- merge design outline from proposal (if anything is applicable)
-
-- discussion: first draft (moved from Dec 17)
-
-- conclusion: first draft
-
-- add in visual thinking results
-
-- check proposal feedback
-
-- introduction: second draft
-
 - ~~logic background: second draft~~
 
-- tool description: second draft
 
-- technology: second draft
 
-- infovis elements: second draft
-
-- discussion: second draft
-
-- future work: second draft
-
-- conclusion: second draft
 
 
 Dec 20 goals:
 
-- exaluation: draft
+- check proposal feedback (moved from Dec 19)
+
+- merge design outline from proposal (if anything is applicable) (moved from Dec 19)
+
+- ~~discussion: first draft (moved from Dec 17)~~
+
+- ~~conclusion: first draft (moved from Dec 19)~~
+
+- add in visual thinking results (moved from Dec 19)
+
+- introduction: second draft (moved from Dec 19)
+
+- tool description: second draft (moved from Dec 19)
+
+- technology: second draft (moved from Dec 19)
+
+- infovis elements: second draft (moved from Dec 19)
+
+- discussion: second draft (moved from Dec 19)
+
+- future work: second draft (moved from Dec 19)
+
+- conclusion: second draft (moved from Dec 19)
+
+- evaluation: draft
+
+
+Dec 21 goals:
 
 - figures / graphics
 
-- tool updates
+- complete TODOs on Trello (mostly final checks and small changes)
 
 - final draft
+
+- tool updates
 
 
 
