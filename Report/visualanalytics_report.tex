@@ -204,7 +204,12 @@ $$
 \label{fig:natdedrules}
 \end{figure}
 
-\begin{figure}
+
+Suppose we wish to prove that from the $n$ assumptions $A_1, \dots , A_n$, we can derive the conclusion $C$. This goal can be written as $A_1, \dots, A_n \vdash C$, called a \textit{sequent}. So a sequent is an object containing a set of formulas representing a set of assumptions and a formula representing a conclusion, notated as just shown.
+
+In our application, the root of a proof tree is the conclusion to be derived and the leaves are assumptions. We understand a proof tree with leaves $A_1, \dots, A_k$ and root $C$ built with correct application of rules and consistent substitutions for rule variables to be a proof of the sequent $A_1, \dots, A_k \vdash C$. For example, in Figure~\ref{fig:andcomm}, we see a tree with the unique leaf formula $p \wedge q$ and the conclusion $q \wedge p$. If the inferences are all valid, then this is a proof of $p \wedge q \vdash q \wedge p$.
+
+\begin{figure}[h]
 
 \begin{prooftree}
 \AxiomC{$p \wedge q$}
@@ -223,11 +228,7 @@ $$
 \label{fig:andcomm}
 \end{figure}
 
-Suppose we wish to prove that from the $n$ assumptions $A_1, \dots , A_n$, we can derive the conclusion $C$. This goal can be written as $A_1, \dots, A_n \vdash C$, called a \textit{sequent}. So a sequent is an object containing a set of formulas representing a set of assumptions and a formula representing a conclusion, notated as just shown.
-
-In our application, the root of a proof tree is the conclusion to be derived and the leaves are assumptions. We understand a proof tree with leaves $A_1, \dots, A_k$ and root $C$ built with correct application of rules and consistent substitutions for rule variables to be a proof of the sequent $A_1, \dots, A_k \vdash C$. For example, in Figure~\ref{fig:andcomm}, we see a tree with the unique leaf formula $p \wedge q$ and the conclusion $q \wedge p$. If the inferences are all valid, then this is a proof of $p \wedge q \vdash q \wedge p$.
-
-We wish to check that the proof of $p \wedge q \vdash q \wedge p$ in Figure~\ref{fig:andcomm} is valid. To check this proof, we will begin at the root. The formula at the root of the proof tree, our conclusion, is $q \wedge p$. The only rule that could have been used to derive this formula is $\wedge_i$ applied to premises $q$ and $p$ (in that order). The first premise can be derived by the rule $\wedge_{E_2}$ applied to the premise $p \wedge q$. We stop this line of reasoning here and allow $p \wedge q$ to remain an assumption. Back to the first inference considered, we had a second premise $p$. The formula $p$ can be derived by the rule $\wedge_{E_1}$ applied to $p \wedge q$. We are already seeing $p \wedge q$ as an assumption, so we can halt our proof search/check here. We now see that the proof tree in Figure~\ref{fig:andcomm} is a valid proof tree providing evidence of $p \wedge q \vdash q \wedge p$.
+We wish to check that the proof of $p \wedge q \vdash q \wedge p$ in Figure~\ref{fig:andcomm} is valid. To check this proof, we will begin at the root. The formula at the root of the proof tree, our conclusion, is $q \wedge p$. The only rule that could have been used to derive this formula is $\wedge_I$ applied to premises $q$ and $p$ (in that order). The first premise can be derived by the rule $\wedge_{E_2}$ applied to the premise $p \wedge q$. We stop this line of reasoning here and allow $p \wedge q$ to remain an assumption. Back to the first inference considered, we had a second premise $p$. The formula $p$ can be derived by the rule $\wedge_{E_1}$ applied to $p \wedge q$. We are already seeing $p \wedge q$ as an assumption, so we can halt our proof search/check here. We now see that the proof tree in Figure~\ref{fig:andcomm} is a valid proof tree providing evidence of $p \wedge q \vdash q \wedge p$.
 
 Notice that in working through the example proof above, we began with the conclusion of the proof, rather than working from assumptions to conclusion. We favour the former backward reasoning style, but one could also read the proof in the forward direction, beginning with assumptions. This choice will be discussed further in Section~\ref{sec:discussion}.
 

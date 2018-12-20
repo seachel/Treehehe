@@ -61,7 +61,7 @@ Dec 20 goals:
 
 - add in visual thinking results (moved from Dec 19)
 
-- introduction: second draft (moved from Dec 19)
+- ~~introduction: second draft (moved from Dec 19)~~
 
 - tool description: second draft (moved from Dec 19)
 
