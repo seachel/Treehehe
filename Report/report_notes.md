@@ -65,11 +65,11 @@ Dec 20 goals:
 
 - ~~tool description: second draft (moved from Dec 19)~~
 
-- technology: second draft (moved from Dec 19)
+- ~~technology: second draft (moved from Dec 19)~~
 
 - infovis elements: second draft (moved from Dec 19)
 
-- discussion: second draft (moved from Dec 19)
+- ~~discussion: second draft (moved from Dec 19)~~
 
 - future work: second draft (moved from Dec 19)
 
