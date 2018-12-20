@@ -63,7 +63,7 @@ Dec 20 goals:
 
 - ~~introduction: second draft (moved from Dec 19)~~
 
-- tool description: second draft (moved from Dec 19)
+- ~~tool description: second draft (moved from Dec 19)~~
 
 - technology: second draft (moved from Dec 19)
 
