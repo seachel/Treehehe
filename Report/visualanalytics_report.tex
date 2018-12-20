@@ -92,43 +92,24 @@ cbattell@uottawa.ca}
 \section{Introduction}
 \label{sec:intro}
 
-% discuss application domain and problem area
-% discussion of learning math and using visualizations... math education literature
-% discussion of math education papers
-% motivation
-
-Proofs are naturally visual artifacts and an essential part of comprehension and advancement in logic. A proof is a logical argument providing evidence of the truth of some statement. It connects assumptions and a goal through the application of rules that preserve truth. These arguments have a tree structure with the goal as the root and the assumptions as leaves. We call a drawing of a proof as a tree a \textit{proof tree}. This work presents a tool to allow a user to explore proof trees and to gain insight in to the specific proof and the logic it is built from.
+Proofs are naturally visual artifacts and an essential part of comprehension and advancement in logic. They are a requirement for confidence in the logician's intellectual explorations and constructions. A proof is a logical argument providing evidence of the truth of some statement. It connects assumptions and a goal through the application of rules that preserve truth. These arguments have a tree structure with the goal as the root and the assumptions as leaves. We call a drawing of a proof as a tree a \textit{proof tree}. This work presents a tool to allow a user to explore proof trees and to gain insight in to specific proofs and the logics they are built from.
 
 Proof trees are a common visual representation used to illustrate both the structure and details of a logical argument. There are many advantages to be found using proof trees: they are useful for learning about a logic through experimentation with writing proofs, they reveal structure in the proof that a linear proof presentation may obscure, they allow cognitive offloading when working through a challenging argument, and they can serve as a form of documentation.
 
-TODO: discussion of e-proofs for visualizing / walking through real analysis proofs (also in discussion or conclusion?)~\cite{eproofs-alcock+wilkinson}
-
-In~\cite{eproofs-alcock+wilkinson}, Alcock and Wilkinson present a tool for walking through real analysis proofs. Users are able to step through a proof and (TODO: icons? ..) are used to bring the reader's attention to the current point in the proof, as well as link to dependencies elsewhere in the proof. (TODO: more? how is this related to this work?)
-
 There are critical limitations in the use of proof trees in certain mediums. Even a straightforward, ``small'' proof tree can easily escape the bounds of a sheet of paper. Creating a digital version eliminates bounds on the size of the tree.
 
-A proof tree is a static and declarative object, which requires some level of expertise to be parsed by the reader. In~\cite{repvisvis-duval}, Duval criticizes proof trees and mathematics visualizations, arguing that they don’t aid in operational or discursive comprehension. In this case he is speaking of static graphics and figures used when learning mathematics. To overcome this limitation of static proof trees, the user is able to interact with the proof in two distinct ways.
+In~\cite{eproofs-alcock+wilkinson}, Alcock and Wilkinson present a tool for walking through analysis proofs. The proofs are written as they typically would be in analysis lecture notes, with a combination of text explanations and mathematical notation. Users are able to step through a proof and graphical elements are used to bring the reader's attention to the current point in the proof, as well as link to dependencies elsewhere in the proof. We hope to provide the logic and proof theory community with a resource with benefits similar to what e-proofs provide in analysis lectures. We also see \projectname{} as having utility in addition to increased comprehension, such as sparking further insight on logical systems and being a resource for experimentation and documentation. We also hope to add more features to further this goal. This is discussed in Section~\ref{sec:future}.
 
-The first is in the form of a proof walk-through that will support operational comprehension by using colour to focus attention on the current inference in a proof and distinguish between previously seen inferences and future inferences. Past inferences are coloured to be less visible. Another panel on the page will have information on how the focused node is derived to provide discourse. (TODO: adjust this argument and bring out content on colour and panel because it applies to both modes)
+A proof tree is a static object which requires some level of expertise to be parsed by the reader. \projectname{} adds interaction to proof trees to help the user understand and explore them. In~\cite{repvisvis-duval}, Duval criticizes proof trees and mathematics visualizations by arguing that they don’t aid in operational or discursive comprehension. In this case he is speaking of static graphics and figures used when learning mathematics. To overcome this limitation of static proof trees, the user is able to interact with the proof in two distinct ways.
 
-The second form of interaction will allow more free-form exploration of the proof tree. The user can click on any node to focus on it.
+The first is in the form of a proof walk-through that supports operational comprehension by guiding the user through the steps of the proof. At every stage in the walk-through, there is a node that is focused. The second form of interaction allows more free-form exploration of the proof tree. The user can click on any node to focus on it. Colour is used to bring attention to the currently focused node and to distinguish between previously seen inferences and future inferences. Past nodes are coloured to be less visible. Another panel on the page has information on how the focused node is derived to provide discourse.
 
 Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it. Next, the tool and expected user tasks will be described. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it. InfoVis results motivating the design of the tool will be explored in the next section. Finally, we discuss benefits and limitations of the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of \projectname{} and know how InfoVis techniques implemented here help users to learn about specific proofs and proof systems.
-
-TODO: reference first work on proof trees? \\
-
-TODO: more math education literature? \\
 
 \section{Logic Background}
 \label{sec:background}
 
-TODO: references:
-
-- natded first proposed by Gentzen (Gen35)
-
-- proof trees in this notation proposed by ?? \\
-
-Recall that the deliverable of \projectname{}, the tool described in this report, is an interactive visualization of proof trees. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees from these systems. We will aim to discuss these preliminary concepts generally, while carrying through the specific example of natural deduction as our logic. Our presentation of the natural deduction system is motivated by~\cite[1.2 Natural Deduction]{logicincs-huth+ryan} and the lecture notes of Frank Pfenning~\cite{natded-pfenning}.
+Recall that the deliverable of \projectname{}, the tool described in this report, is an interactive visualization of proof trees. Before we can discuss the tool in detail, it is necessary to first review the application area. We will present the basics of logic, inference systems and proof trees from these systems. We will aim to discuss these preliminary concepts generally, while carrying through the specific example of natural deduction, first proposed by Gentzen~\cite{natded-gentzen}, as our logic. Our presentation of the natural deduction system is motivated by~\cite[1.2 Natural Deduction]{logicincs-huth+ryan} and the lecture notes of Frank Pfenning~\cite{natded-pfenning}.
 
 A \textit{formula} is an expression that represents a true or false statement. We can write a grammar for the formulas of a given logic. For example, in natural deduction formulas are described by the following grammar:
 $$
@@ -369,6 +350,8 @@ In \projectname{}, we have used a depth-first preorder traversal. A traversal ha
 
 Related to the traversal discussion, when we walked through an example in Section~\ref{sec:background}, we began with the root node. This backward reasoning is useful in automated reasoning, because we know we are starting with the root node and there is typically a finite set of rules that could have been used to infer that node (often only one rule). Starting with assumptions or leaves of the tree might feel more natural, because we start with what we know and work towards a goal. The issue with forward reasoning when constructing a tree is we don't know ahead of time what shape the tree will take and there is nothing in the shape of axioms or assumptions to guide our construction. So in building a proof without already knowing it, there is often a more algorithmic approach to the tree construction with backward reasoning than with forward. With all this said, in some logics (including natural deduction) backward reasoning alone is not sufficiently intuitive, and in this case allowing the user to select different traversals would be useful.
 
+TODO: walk-through not sufficient... see argument by A and W and others?
+
 
 \section{Future Work}
 \label{sec:future}
@@ -406,6 +389,9 @@ We presented the logical foundations necessary to understand how to use the \pro
 Once the project is updated to the point where a user can enter their own proof, it should also be a more pleasant experience than trying to write proof trees on paper. When writing a tree by hand on paper, you are more committed to the spatial position of the nodes you write; in \projectname{}, you will be able to easily modify the elements of the tree. (TODO: add to future work?)
 
 It is our hope that this tool will be a useful resource for learning about formal reasoning. For more experienced users, that it will aid in the understanding of larger proofs in the proof-writing process and for documenting reasoning.
+
+
+TODO: motivation: logic is scary and intimidating for beginners? put this in conclusion?
 
 % TODO: proof as argument \textit{obeying} logic rules \\
 
