@@ -355,18 +355,20 @@ TODO: visual thinking content \\
 \section{Discussion}
 \label{sec:discussion}
 
-A difference to note between the lecture notes and the presentation here is we do not make an explicit distinction between a formula and the judgment that the formula is true. For example, whenever we see a formula $P$ in a proof, we assume that this means $P$ is true, rather than writing $P \; true$ directly in the proof tree. Here we prefer the more condensed presentation and don't see the more careful explicit presentation as necessary to achieve our goals of making this tool accessible to beginners. Advanced users can be more careful when writing their own proof trees using the tool. (TODO: more this difference discussion to Discussion section?)
+There are many decisions made in implementing and describing this project that the reader may wish to see motivated or explained further. We attempt to address these here. If any of these topics feel out of (scope? understanding?) for the reader, they can be skipped.
 
-TODO: extensions of what can be allowed in the nodes (leave this for discussion?) \\
+In this paper we have used natural deduction as the example system when presenting the logic background and describing how to use the tool. In the current version of \projectname{}, most examples are natural deduction proofs. This logic was chosen because it is usually the first inference system presented in an introductory logic course, so it made sense as the system to use to make this paper readable to as wide an audience as reasonable. It also helped keep the presentation of background information manageable. A critical observation to make here is that there is nothing in the system that requires a user to commit to a single logic.
 
-Discussion items:
+Since the tree data is a JSON object, the tree content can contain any string and thus be from any logic. An implication of this is that there is no check for correctness of the proof being displayed. In its current version, \projectname{} is only for visualization and not verification.
 
-\begin{itemize}
-    \item consequences of logic choice (but this doesn't have to be made ahead of time... the tool can handle anything that can be written, although it doesn't check correctness) / how to use for other logics
-    \item Limitation: natural deduction proofs are made more naturally using other visualization methods, e.g. Fitch style, where you don't know the shape of the proof yet
-    \item reasoning direction (forward more natural, but backward more conducive to automated reasoning and more standard reading for logic programs; unambiguous application of rules)
-    \item impact of different traversals on cognition
-\end{itemize}
+In the version of \projectname{} released with this paper, there is one example that is not a natural deduction proof. This is to illustrate the points just made. This example is a proof of $\Sigma ; P \vdash \exists M, \mathit{length} \; (1 :: 2 :: 3 :: [ \, ]) \; M$, a formalization of a Prolog query. Without being too pedantic, this query asks if there is an $M$ such that $M$ is the length of the list $(1 :: 2 :: 3 :: [\, ])$. The expression query above is the root node of the proof tree. In this example in the webpage we can see how this query is proven in Prolog and how the value of $M$ is computed to be 3.
+
+A reader more familiar with, and favouring, the Martin L{\"o}f approach to natural deduction may be wondering why we have not made an explicit distinction between formulas and judgments as in~\cite{natded-pfenning}. What we mean here is if we want to derive that formula $p$ is true, the node in the proof tree should say this explicitly; for example, the node would contain the judgment $p \; \mathit{true}$. The current presentation has preferred the more condensed presentation where whenever we see a formula $p$ in a proof, we assume that this means $p$ is true. Aside from a smaller use of space, another benefit is we avoid the discussion of judgments vs formulas, making the presentation easier to digest for less experienced users and readers. As mentioned above, the experienced user could build a proof tree in this system where the judgment is clearly distinguished from the formula.
+
+In \projectname{}, we have used a depth-first preorder traversal. A traversal had to be chosen to implement the proof walk-through and this choice of traversal felt intuitive to the author. If a user wishes to use a different traversal or it is found that another traversal would improve congnition in learning about proofs and logic, the change could be made fairly simply in the system. A two-way iterator was implemented to step forward or backward through the proof. This iterator accepts a callback representing a function to traverse a tree. This could either be updated only in the code, or the user of the page could select from a few options.
+
+Related to the traversal discussion, when we walked through an example in Section~\ref{sec:background}, we began with the root node. This backward reasoning is useful in automated reasoning, because we know we are starting with the root node and there is typically a finite set of rules that could have been used to infer that node (often only one rule). Starting with assumptions or leaves of the tree might feel more natural, because we start with what we know and work towards a goal. The issue with forward reasoning when constructing a tree is we don't know ahead of time what shape the tree will take and there is nothing in the shape of axioms or assumptions to guide our construction. So in building a proof without already knowing it, there is often a more algorithmic approach to the tree construction with backward reasoning than with forward. With all this said, in some logics (including natural deduction) backward reasoning alone is not sufficiently intuitive, and in this case allowing the user to select different traversals would be useful.
+
 
 \section{Future Work}
 \label{sec:future}
@@ -389,19 +391,24 @@ The final InfoVis updates we propose involve the rules panel on the page. When s
 
 In the current version of \projectname{}, there are a number of example the user can choose to explore, but the tool would be far more useful if there was a way to add custom proofs. The best way for this to be done is to extend the interface so that new nodes can be added. Initial plans for this idea would add an icon to each node to add siblings, and another icon to each leaf node to make that node a result of an inference (i.e. add an inference line), then children could be added above that node. The content of a new node would be entered in a text box and written in \LaTeX{}. In this circumstance (better word?), the user is writing the proof, adding to ... (TODO: ref Duval work? Alcock?)
 
-Other updates would add more uses for the tool that are extraneous to information visualization. Once a proof is built, the user may want to present it in a \LaTeX{} document. It would be a small change to export the \LaTeX{} code for the tree from the JSON object representing the tree.
-
+Other updates would add more uses for the tool that are extraneous to information visualization. Once a proof is built, the user may want to present it in a \LaTeX{} document. It would be a small change to export the \LaTeX{} code for the tree from the JSON object representing the tree. Another helpful update is to add ``help'' information in the form of easily readable instructions for use and a tutorial on natural deduction.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-% summarize the tool, its purpose, and topics presented in this paper... review of everything? expanded abstract like intro, but with less motivation, more tech detail?
-
 % \makeglossaries
 
-TODO: proof as argument \textit{obeying} logic rules \\
+In this paper we have seen how information visualization techniques can be used to make a tool for visualizing proof trees. Students studying logic in university will see proof trees during their studies. \projectname{} should help them gain confidence in using proof trees to construct logical arguments. Advanced users who write proofs in other formats (e.g. Calculus of Constructions, ), or write logic program queries, may want to be able to be able to build a visual version of their proofs to gain new understanding of the proof they are writing and to record this proof. (TODO: improve)
 
-It is our hope that the tool will be useful as an educational resource and for documentation.
+We presented the logical foundations necessary to understand how to use the \projectname{}. Following this, we saw how to use the tool, looking at each major area of the webpage, and reviewed the technologies used implementing the tool. Since this is an information visualization project, the InfoVis elements that helped guide the design are described. Finally, we attempted to address other concerns and questions that the reader might have and future modifications to the project.
+
+
+Once the project is updated to the point where a user can enter their own proof, it should also be a more pleasant experience than trying to write proof trees on paper. When writing a tree by hand on paper, you are more committed to the spatial position of the nodes you write; in \projectname{}, you will be able to easily modify the elements of the tree. (TODO: add to future work?)
+
+It is our hope that this tool will be a useful resource for learning about formal reasoning. For more experienced users, that it will aid in the understanding of larger proofs in the proof-writing process and for documenting reasoning.
+
+% TODO: proof as argument \textit{obeying} logic rules \\
+
 
 (Interaction is an essential component of this project because it elevates a proof tree from a static graphic to a visualization that can lead to further understanding and insight along a variety of paths. Duval claims that proof trees are disappointing and visualizations in general do not lead to immediate comprehension in mathematics~\cite{repvisvis-duval}. It appears that what is meant by visualization in this article only includes static graphics representing mathematical objects. He also does not fully explore other advantages to explicit articulation of proof trees, such as cognitive offloading and observation of patterns in large proofs, which are particularly useful in proofs where the goal to be proven has a complicated logical structure. Here we propose that adding interaction to a proof tree will aid in understanding of both the logic used to build it and the proposition being proven, although this is stated without evidence and without a study to verify this hypothesis. There is more to discuss relating Duval’s work to what is being attempted here, and this will be expanded on in the final report.) (TODO: repetitive; bring some of these points to the conclusion? discussion?)
 
