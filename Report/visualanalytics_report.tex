@@ -156,18 +156,18 @@
 %% See <http://www.acm.org/class/1998/> for details.
 %% The ``\CCScat'' command takes four arguments.
 % TODO
-\CCScatlist{ % not used in journal version
- \CCScat{K.6.1}{Management of Computing and Information Systems}%
-{Project and People Management}{Life Cycle};
- \CCScat{K.7.m}{The Computing Profession}{Miscellaneous}{Ethics}
-}
+% \CCScatlist{ % not used in journal version
+%  \CCScat{K.6.1}{Management of Computing and Information Systems}%
+% {Project and People Management}{Life Cycle};
+%  \CCScat{K.7.m}{The Computing Profession}{Miscellaneous}{Ethics}
+% }
 
 %% Uncomment below to include a teaser figure.
 \teaser{
   \centering
   \includegraphics[width=0.36\linewidth]{resources/logo_v1.png}
   % \captionsetup{justification=centering}
-  \caption{Experience the magic of interactive proof trees${^{TMLOL}}$}
+  \caption{Experience the magic of interactive proof trees}
 	\label{fig:teaser}
 }
 
@@ -215,9 +215,7 @@ The first is in the form of a proof walk-through that supports operational compr
 
 In~\cite{eproofs-alcock+wilkinson}, Alcock and Wilkinson present a tool for walking through analysis proofs. The proofs are written as they typically would be in analysis lecture notes, with a combination of text explanations and mathematical notation. Users are able to step through a proof and graphical elements are used to bring the reader's attention to the current point in the proof, as well as link to dependencies elsewhere in the proof. Tools like this do not appear to exist for visualizing proof trees. We hope to provide the logic and proof theory community with a resource with benefits similar to what e-proofs provide in analysis lectures. We also see \projectname{} as having utility in addition to increased comprehension, such as sparking further insight on logical systems and being a resource for experimentation and documentation. We also hope to add more features to further this goal. This is discussed in Section~\ref{sec:future}.
 
-Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it in Section~\ref{sec:background}. Next in Section~\ref{sec:tooldesc}, the tool and expected user tasks will be described. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it in Section~\ref{sec:technology}. InfoVis results motivating the design of the tool will be explored in the Section~\ref{sec:infoviselem}. Finally, in the remaining sections we discuss limitations and deeper topics related to the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of \projectname{} and know how InfoVis techniques implemented here help users to learn about specific proofs and proof systems.
-
-TODO: update at end! in case sections have changed
+Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it in Section~\ref{sec:background}. Next in Section~\ref{sec:design} we look at the original design, followed by the currend design in Section~\ref{sec:tooldesc}, focusing on the tool description and expected user tasks. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it in Section~\ref{sec:technology}. InfoVis results motivating the design of the tool will be explored in Section~\ref{sec:infoviselem}. Finally, in the remaining sections we discuss limitations and deeper topics related to the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of \projectname{} and know how InfoVis techniques implemented here help users to learn about specific proofs and proof systems.
 
 \section{Logic Background}
 \label{sec:background}
@@ -349,18 +347,32 @@ Notice that in working through the example proof above, we began with the conclu
 \section{Design}
 \label{sec:design}
 
-TODO: more description of structure of proof trees used by math and logic community? in design section \\
+The main content to display in this tool is a proof tree, so we will first discuss the display of proof trees. For this task we follow the conventions for drawing proof trees in the math and logic community. Namely, uses of inference rules similar to those in Figure~\ref{fig:natdedrules} are chained together to build a tree with the proof conclusion at the root and assumptions at the leaves. More detail on the construction of proof trees can be found in Section~\ref{sec:background}.
 
+We wish to be able to direct attention of the user to particular nodes in the tree. This is done using colour to highlight a node for focus and lightly bring attention to the children of the node, since they will follow in a proof traversal. Compare the \projectname{} version of the proof that $\wedge$ is commutative in Figure~\ref{fig:andcommtreehehe} with the standard proof tree showing the same fact in Figure~\ref{fig:andcomm}.
 
-TODO:
+\begin{figure}[h]
 
-\begin{itemize}
-\item present how design came about
-\item discuss knowledge and observations about likely users
-\item discuss use cases that are important and explain why
-\item rationale for design choices
-\item early prototypes and sketches
-\end{itemize}
+\includegraphics[width=3.3in]{resources/andassoc_focus.png}
+
+\caption{\projectname{} version of proof of associativity of $\wedge$ with node $p \wedge q$ focused}
+\label{fig:andcommtreehehe}
+\end{figure}
+
+Important goals for the design of the project were to make it comfortable for users to explore a proof without necessarily being told what to do. To provide some form of discourse, supplementary information explaining how a selected node was derived and connecting it to the inference system was important.
+
+\begin{figure}
+
+\includegraphics[width=3.3in]{resources/page_layout_og.png}
+
+\caption{Original \projectname{} design}
+\label{fig:layoutog}
+
+\end{figure}
+
+It was clear that the following regions needed to be available on the page: title, example selection, tree display, selection information, and rules. See Figure~\ref{fig:layoutog} for a sketch of the initial page design. We also wanted to have controls to toggle between explore and walk-through modes and possibly alternative views for the tree, but we did not end up implementing alternative tree views. The distinction between walk-through and explore modes is now more in alternative ways of using the system, and we do not force this to be done by changing the mode of the entire application. Thus neither toggle control is included in the final version.
+
+Controls that had not been considered in the initial version include navigation arrows for the walk-through and a drop-down list for the example selection. By containing the list of examples in a drop-down menu, the examples display no longer required a large amount of vertical space. It also became clear that the information on the selected node is usually a few long lines with some large spans of math content. From these insights the page display was redesigned. The content that was displayed did not change, but the location of much of it did. The current version of the design is described in detail in the next section.
 
 
 \section{Tool Description and User Tasks}
@@ -419,7 +431,7 @@ The space-saving layouts could be useful if it is clear which node is the root a
 
 We will invert the standard tree constructed with this algorithm so that the root is at centre bottom as is conventional for drawing proof trees. The bottom center location of the root is a consistent position where we can find the goal of the proof, which is also the formula on the right side of a sequent, as described in section~\ref{sec:background}. Another benefit of the Reingold and Tilford algorithm for this application is the vertical alignment of nodes at the same level (distance from the root) in a proof. This permits a final difference between proof trees and general trees without making the relations between nodes unclear: we don't draw and links or edges between nodes. Instead, a horizontal line is drawn between a node and its children.
 
-TODO: focus+context here: children <- focus -> parent \\
+Focus+context techniques as discussed in~\cite{graphvis-herman+melancon+marshall} are naturally applied in \projectname{}. When we focus on a node, we maintain the context of the node in the tree as we can see its relation to nearby nodes. We emphasize the context by adjusting the colour of the children and parent of the focused node.
 
 In~\cite[Chapter 3]{infovis-ware} we learn many best practices from Ware for using colour in a visualization. In \projectname{}, colour is used to highlight a selected node in a proof tree to bring the focus of the user to the current inference of interest. We also use colour to categorize nodes. Colour is preattentively processed, so as described in~\cite[Chapter 11]{infovis-ware} the user is able to have attention on spatially disconnected elements without each element being the current fixation. We use this property of attention to allow the user to attend to and distinguish between groups of nodes, such as previously visited nodes, future nodes, and the current focus.
 
@@ -429,27 +441,24 @@ A user may want to select data to learn more about it or track how it changes in
 
 Techniques in the overview/explore category first display an overview of the data, then allow exploration through zooming, filtering, and the display of details on demand. Large proof trees may sometimes escape the bounds of a monitor, so it may not be possible to have a full proof tree visible. Thus a proper ``overview'' is not guaranteed in all cases, but the full tree is available in the application, possibly requiring panning. The user can then explore the proof through the guided walk-through, seeing more details as the proof progresses and nodes are focused.
 
-Lin and Yang~\cite{readingcompgeometric-lin+yang} (TODO: check that used correct reference here) present five facets of proof comprehension: basic knowledge, logical status, summary, generality, and application. These facets are used to guide the design of this project. (TODO: read this... add more... lower priority than visual thinking content)
+% Lin and Yang~\cite{readingcompgeometric-lin+yang} (TODO: check that used correct reference here) present five facets of proof comprehension: basic knowledge, logical status, summary, generality, and application. These facets are used to guide the design of this project. (TODO: read this... add more... lower priority than visual thinking content)
 
 Yi et al. observe that sensemaking is one path to insight~\cite{insights-yi+etal}. Sensemaking, in the context of interactive visualizations, is an intentional process in which a person continually reframes their understanding of a concept. The authors also propose four processes for gaining insight: provide overview, adjust, detect pattern, and match mental model.
 
 Provide overview means a user can gain a higher-level understanding of a data set. In \projectname{}, this is realized in the viewing of a complete proof tree.
 
-(Through adjust, a user is able to explore a data set. This can come from a variety of interaction techniques, such as adjustments to the level of abstraction, or selecting a range of values. In \projectname{}, the alternation between detail and structure view and the hiding of subtrees can help the user develop insight about the logic and formula proven.) (TODO: remove adjust?)
+Through adjust, a user is able to explore a data set. This can come from a variety of interaction techniques, such as adjustments to the level of abstraction, or selecting a range of values. In \projectname{}, the user can step through a proof using navigation arrows, causing updates to the selected node and supplementary proof guidance related to that node.
 
 When new structure is observed in data and possibly new discoveries made, the user has been able to detect a pattern. In \projectname{}, examples of how this is realized include observing repeated arguments in a proof and being able to detect loops.
 
 Match mental model means one has a bridge between the data and their mental model of it. Having an external visual version of the mental model allows for cognitive offloading. In this project, we will see the value of having a visualization of a proof to interact with rather than trying to hold the entire picture in one’s head. It is then possible to allocate more mental resources to reasoning and gaining insight through the other processes.
 
-TODO: visual thinking content \\
 
 \section{Evaluation}
 \label{sec:evaluation}
 
 % from cognitive dimensions paper; low priority for this report, work on this once everything else is done
 % review handouts from the class where this was discussed
-
-TODO: add discussion of how things could be fixed
 
 Here we do a preliminary informal evaluation based on the author's experience in using \projectname{}.
 
@@ -459,7 +468,7 @@ It would be useful for the user to have more guidance on how to start using the 
 
 It is possible that a user without any logic background could experiment by clicking on the nodes, reading the selection information, and see patterns between the concrete proof tree with the rules in the rules panel. This is an ideal use of the tool. We want users to learn about proofs through exploration.
 
-If a user clicks on a non-root node during exploration, then all nodes that would have been visited earlier in the programmed traversal are coloured to be less visible. This might be confusing, since different traversals are possible and the user will not have experienced the full traversal up to this point. This may be jarring and (TODO: ref map thing from course paper, where need smooth zooming... or was that in Ware?)
+If a user clicks on a non-root node during exploration, then all nodes that would have been visited earlier in the programmed traversal are coloured to be less visible. This might be confusing, since different traversals are possible and the user will not have experienced the full traversal up to this point. The multiple sudden changes may be distracting.
 
 The proof walk-through is initiated by pressing the ``forward'' arrow in the top right. This highlights the root node. As discussed earlier, the currently programmed traversal is depth-first preorder. We are starting at the root of the tree which is the conclusion of the proof, and we reason in a backwards direction. In this situation, it is useful to have previously visited nodes made harder to read, so that the user is focused primarily on the current node, but can also see ahead in the walk-through. At the end of the walk-through, the forward button can be pressed, but the walkthrough does not go beyond having the last node in the traversal highlighted. This could be improved by having a more clear indication that traversal is done. The forward button could be unavailable, or the final node is coloured as the previously visited nodes.
 
@@ -467,7 +476,7 @@ It would be pleasant if there was a way to ``escape'' from having a node focused
 
 Overall, it is easy to explore proof trees and see supplementary information. The display is generally pleasant. There are many small changes that could substantially increase how useful this tool is in practice.
 
-In the future we hope to perform a more detailed evaluation following the cognitive dimensions of Blackwell and Green (TODO: ref).
+In the future we hope to perform a more detailed evaluation following the cognitive dimensions of Blackwell and Green~\cite{cogdim-blackwell+green}.
 
 \section{Discussion}
 \label{sec:discussion}
@@ -491,9 +500,9 @@ Related to the traversal discussion, when we walked through an example in Sectio
 
 There are many additions that could be made to this work to implement more lessons from the information visualization community and also to make the tool more useful for a range of proof-related tasks. We will first look at the updates in the InfoVis area.
 
-Since large proof trees can escape the bounds of a digital display, navigation is another topic explored by Herman et al.~\cite{graphvis-herman+melancon+marshall} that is relevant to this project. The user will want to be able to scroll around the graph while exploring. The technique of incremental exploration and navigation can be used to display only a desired subtree of the proof; nodes will have an icon to either exclusively display or to hide the subtree that it is the root of. (TODO: check if covered in InfoVis elements)
+Since large proof trees can escape the bounds of a digital display, navigation is another topic explored by Herman et al.~\cite{graphvis-herman+melancon+marshall} that is relevant to this project. The user will want to be able to scroll around the graph while exploring. The technique of incremental exploration and navigation can be used to display only a desired subtree of the proof; nodes will have an icon to either exclusively display or to hide the subtree that it is the root of.
 
-Weber and Mejia-Ramos~\cite{majorsbeliefs-weber+mejiaramos} and Alcock and Wilkinson~\cite{eproofs-alcock+wilkinson} have argued that too much detail visible in a proof obscures high-level structural information which is important for proof comprehension. To address this concern, a future version will have two views for the proof display: detail view and structure view. Detail view will show a proof tree, possibly with subtrees hidden as discussed above, and with full formulas, rule names, and rule side conditions as presented in the rest of this paper. Structure view will show only the shape of the tree and which rules are used. (TODO: graphic showing this)
+Weber and Mejia-Ramos~\cite{majorsbeliefs-weber+mejiaramos} and Alcock and Wilkinson~\cite{eproofs-alcock+wilkinson} have argued that too much detail visible in a proof obscures high-level structural information which is important for proof comprehension. To address this concern, a future version will have two views for the proof display: detail view and structure view. Detail view will show a proof tree, possibly with subtrees hidden as discussed above, and with full formulas, rule names, and rule side conditions as presented in the rest of this paper. Structure view will show only the shape of the tree and which rules are used. % (TODO: graphic showing this)
 
 The interaction technique abstract/elaborate presented by Yi et al.~\cite{interaction-yietal} and Figueiras~\cite{interaction-figueiras} is used to adjust the level of abstraction of the data. By including a separate structure view option as previously described, this tool will have an abstract view displaying the structure and an elaborate view displaying full proof detail.
 
@@ -530,24 +539,24 @@ It is our hope that this tool will be a useful resource for learning about forma
 
 
 
-\section{Temporary TODO}
+% \section{Temporary TODO}
 
-Terms for glossary or other special note:
+% Terms for glossary or other special note:
 
-\begin{itemize}
-    \item proof
-    \item logic
-    \item formula
-    \item judgment
-    \item sequent
-    \item inference rule
-    \item proof tree
-    \item assumption (leaf in tree, left side of sequent)
-    \item premise (can be intermediate in rules; top of an inference)
-    \item hypothesis (hypothetical judgment)
-    \item goal vs conclusion
-    \item logical constant
-\end{itemize}
+% \begin{itemize}
+%     \item proof
+%     \item logic
+%     \item formula
+%     \item judgment
+%     \item sequent
+%     \item inference rule
+%     \item proof tree
+%     \item assumption (leaf in tree, left side of sequent)
+%     \item premise (can be intermediate in rules; top of an inference)
+%     \item hypothesis (hypothetical judgment)
+%     \item goal vs conclusion
+%     \item logical constant
+% \end{itemize}
 
 
 %\bibliographystyle{abbrv}
