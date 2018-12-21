@@ -71,7 +71,7 @@ Dec 20 goals:
 
 - ~~discussion: second draft (moved from Dec 19)~~
 
-- future work: second draft (moved from Dec 19)
+- ~~future work: second draft (moved from Dec 19)~~
 
 - conclusion: second draft (moved from Dec 19)
 
