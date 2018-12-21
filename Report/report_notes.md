@@ -51,15 +51,9 @@ Dec 19 goals:
 
 Dec 20 goals:
 
-- check proposal feedback (moved from Dec 19)
-
-- merge design outline from proposal (if anything is applicable) (moved from Dec 19)
-
 - ~~discussion: first draft (moved from Dec 17)~~
 
 - ~~conclusion: first draft (moved from Dec 19)~~
-
-- add in visual thinking results (moved from Dec 19)
 
 - ~~introduction: second draft (moved from Dec 19)~~
 
@@ -67,18 +61,24 @@ Dec 20 goals:
 
 - ~~technology: second draft (moved from Dec 19)~~
 
-- infovis elements: second draft (moved from Dec 19)
-
 - ~~discussion: second draft (moved from Dec 19)~~
 
 - ~~future work: second draft (moved from Dec 19)~~
 
-- conclusion: second draft (moved from Dec 19)
+- ~~conclusion: second draft (moved from Dec 19)~~
 
-- evaluation: draft
+- ~~evaluation: draft~~
 
 
 Dec 21 goals:
+
+- check proposal feedback (moved from Dec 19)
+
+- merge design outline from proposal (if anything is applicable) (moved from Dec 19)
+
+- infovis elements: second draft (moved from Dec 19)
+
+- add in visual thinking results (moved from Dec 19)
 
 - figures / graphics
 

@@ -71,7 +71,7 @@
 
 \usepackage{enumitem}
 \usepackage{graphicx}
-\usepackage{caption}
+\usepackage{float,caption}
 
 \newcommand{\projectname}{Treehehe}
 
@@ -165,9 +165,9 @@
 %% Uncomment below to include a teaser figure.
 \teaser{
   \centering
-  \includegraphics[width=0.5\linewidth]{resources/logo_v1.png}
+  \includegraphics[width=0.36\linewidth]{resources/logo_v1.png}
   % \captionsetup{justification=centering}
-  \caption{Experience the magic of proof trees${^{TMLOL}}$}
+  \caption{Experience the magic of interactive proof trees${^{TMLOL}}$}
 	\label{fig:teaser}
 }
 
@@ -203,14 +203,21 @@ Proof trees are a common visual representation used to illustrate both the struc
 
 There are critical limitations in the use of proof trees in certain mediums. Even a straightforward, ``small'' proof tree can easily escape the bounds of a sheet of paper. Creating a digital version eliminates bounds on the size of the tree.
 
-In~\cite{eproofs-alcock+wilkinson}, Alcock and Wilkinson present a tool for walking through analysis proofs. The proofs are written as they typically would be in analysis lecture notes, with a combination of text explanations and mathematical notation. Users are able to step through a proof and graphical elements are used to bring the reader's attention to the current point in the proof, as well as link to dependencies elsewhere in the proof. We hope to provide the logic and proof theory community with a resource with benefits similar to what e-proofs provide in analysis lectures. We also see \projectname{} as having utility in addition to increased comprehension, such as sparking further insight on logical systems and being a resource for experimentation and documentation. We also hope to add more features to further this goal. This is discussed in Section~\ref{sec:future}.
+\begin{figure}[h]
+\centering
+\includegraphics[width=3.4in]{resources/andassoc.png}
+\caption{A proof tree showing that the symbol $\wedge$ is associative in the logic used}
+\end{figure}
 
 A proof tree is a static object which requires some level of expertise to be parsed by the reader. \projectname{} adds interaction to proof trees to help the user understand and explore them. In~\cite{repvisvis-duval}, Duval criticizes proof trees and mathematics visualizations by arguing that they don’t aid in operational or discursive comprehension. In this case he is speaking of static graphics and figures used when learning mathematics. To overcome this limitation of static proof trees, the user is able to interact with the proof in two distinct ways.
 
 The first is in the form of a proof walk-through that supports operational comprehension by guiding the user through the steps of the proof. At every stage in the walk-through, there is a node that is focused. The second form of interaction allows more free-form exploration of the proof tree. The user can click on any node to focus on it. Colour is used to bring attention to the currently focused node and to distinguish between previously seen inferences and future inferences. Past nodes are coloured to be less visible. Another panel on the page has information on how the focused node is derived to provide discourse.
 
-Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it. Next, the tool and expected user tasks will be described. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it. InfoVis results motivating the design of the tool will be explored in the next section. Finally, we discuss benefits and limitations of the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of \projectname{} and know how InfoVis techniques implemented here help users to learn about specific proofs and proof systems.
+In~\cite{eproofs-alcock+wilkinson}, Alcock and Wilkinson present a tool for walking through analysis proofs. The proofs are written as they typically would be in analysis lecture notes, with a combination of text explanations and mathematical notation. Users are able to step through a proof and graphical elements are used to bring the reader's attention to the current point in the proof, as well as link to dependencies elsewhere in the proof. Tools like this do not appear to exist for visualizing proof trees. We hope to provide the logic and proof theory community with a resource with benefits similar to what e-proofs provide in analysis lectures. We also see \projectname{} as having utility in addition to increased comprehension, such as sparking further insight on logical systems and being a resource for experimentation and documentation. We also hope to add more features to further this goal. This is discussed in Section~\ref{sec:future}.
 
+Before further discussion of the visualization tool, we will take a step back to review the logic concepts needed to understand how to use it in Section~\ref{sec:background}. Next in Section~\ref{sec:tooldesc}, the tool and expected user tasks will be described. Following an initial discussion of the tool and how to use it, we discuss the technologies used to implement it in Section~\ref{sec:technology}. InfoVis results motivating the design of the tool will be explored in the Section~\ref{sec:infoviselem}. Finally, in the remaining sections we discuss limitations and deeper topics related to the tool, future work, and finish with a conclusion reviewing what is presented here. We hope the reader will be left with an understanding of the motivation for and use of \projectname{} and know how InfoVis techniques implemented here help users to learn about specific proofs and proof systems.
+
+TODO: update at end! in case sections have changed
 
 \section{Logic Background}
 \label{sec:background}
@@ -227,9 +234,7 @@ The symbols $\wedge$, $\vee$, and $\supset$ are called \textit{connectives}. Thi
 
 The grammar tells us how to build formulas, but not what they mean. For example, given formulas $p$, $q$, and $r$, we can build the expression $((p \wedge q) \vee r) \supset ((p \vee r) \wedge (q \vee r))$ from the grammar above, but without any understanding of the semantics of the logical constants this is simply a string of symbols without meaning. We don't know if the expression is true or false. The semantics of formulas can be encoded in a set of inference rules for the logic.
 
-An \textit{inference rule} is a structure that tells us how to derive a formula. The notation for an inference rule is as shown in Figure~\ref{fig:infrule}. It has the premises of the rule written beside each other, with consistent space in between, above a horizontal line which is above the conclusion of the rule. The name of the rule is written to the right of the horizontal line and any side conditions that must hold are written to the left of the line. There may be some slight variation in laying out inference rules in other writings, but here we will follow the conventions described above. The meaning of this inference rule is ``if we either assume or derive $\mathit{Premise}_1$ to $\mathit{Premise}_n$, then we can derive $\mathit{Conclusion}$''.
-
-\begin{figure}[h]
+\begin{figure}[H]
 
 \begin{prooftree}
 \AxiomC{$\mathit{Premise_1}$}
@@ -243,6 +248,8 @@ An \textit{inference rule} is a structure that tells us how to derive a formula.
 \caption{Structure of inference rules}
 \label{fig:infrule}
 \end{figure}
+
+An \textit{inference rule} is a structure that tells us how to derive a formula. The notation for an inference rule is as shown in Figure~\ref{fig:infrule}. It has the premises of the rule written beside each other, with consistent space in between, above a horizontal line which is above the conclusion of the rule. The name of the rule is written to the right of the horizontal line and any side conditions that must hold are written to the left of the line. There may be some slight variation in laying out inference rules in other writings, but here we will follow the conventions described above. The meaning of this inference rule is ``if we either assume or derive $\mathit{Premise}_1$ to $\mathit{Premise}_n$, then we can derive $\mathit{Conclusion}$''.
 
 Inference rules tell us how to build a formula or take it apart. These rules give meaning to the logical constants used in them. For example, see Figure~\ref{fig:natdedrules} for the rules of natural deduction. Rules with names containing ``I'' are called introduction rules because a logical constant is introduced in the conclusion of the rule. Rules with names containing ``E'' are called elimination rules because a logical constant that occurrs in one of the premises is eliminated and is not present in the conclusion.
 
@@ -339,6 +346,23 @@ We wish to check that the proof of $p \wedge q \vdash q \wedge p$ in Figure~\ref
 Notice that in working through the example proof above, we began with the conclusion of the proof, rather than working from assumptions to conclusion. We favour the former backward reasoning style, but one could also read the proof in the forward direction, beginning with assumptions. This choice will be discussed further in Section~\ref{sec:discussion}.
 
 
+\section{Design}
+\label{sec:design}
+
+TODO: more description of structure of proof trees used by math and logic community? in design section \\
+
+
+TODO:
+
+\begin{itemize}
+\item present how design came about
+\item discuss knowledge and observations about likely users
+\item discuss use cases that are important and explain why
+\item rationale for design choices
+\item early prototypes and sketches
+\end{itemize}
+
+
 \section{Tool Description and User Tasks}
 \label{sec:tooldesc}
 
@@ -366,7 +390,7 @@ Recall that our reading of the example proof in the previous section applied rea
 In walk-through mode, the information displayed for the focused node and colouring of nodes in the tree is the same as in explore mode, but the method for focusing nodes is different. In a walk-through, the arrows in the controls panel of the page are used to navigate forward and backward through the steps of the proof, again with a backward reasoning reading. The nodes are visited following a preorder depth-first traversal. This is a reading of the proof that seems intuitive to the author, but could easily be changed to other traversals if they seem a better fit. We consider this further in Section~\ref{sec:discussion}.
 
 
-\section{Technology}
+\section{Implementation}
 \label{sec:technology}
 
 This project is implemented as a webpage, so the main languages used are the standard web development languages: HTML, CSS, and JavaScript. Trees are implemented as JSON objects. Although the design does not prioritize small-screen devices, Flexbox has been used to help make the page responsive. By implementing the tool as a webpage, it is more easily accessible for a wide audience. The lack of type safety in JavaScript may make it a poor choice for a project where correctness is of vital importance, but it is a good choice for relatively quick development of a visualization project. The page is hosted using GitHub pages. As of this writing, it can be found at \href{chelsea.lol/treehehe}{http://chelsea.lol/treehehe}. This tool has been tested on Google Chrome v70.0.3538.110.
@@ -391,15 +415,9 @@ To draw the inference line between a node and its children and draw the rule nam
 
 Data in this visualization project are trees, so an important first consideration is determining a visual formalism for drawing trees that is consistent with conventions for this task. Herman et al.~\cite{graphvis-herman+melancon+marshall} discuss a number of techniques for visualizing trees. Several spacesaving representations are presented, such as H-tree layout, radial view, and balloon view. In \projectname{}, much of the utility of a proof tree comes from being able to read a flow of inferences, seeing the leaves as axioms or assumptions and the root as the conclusion of the proof. Each node contains a propositional formula, so to be readable all nodes need to have the same orientation.
 
-The space-saving layouts could be useful if it is clear which node is the root and some other form of iconography could be used for constructing formulas. For the current project, we will use the Reingold and Tilford layout for trees, which could be described as visually rooted, since we have a convention that tells us which node we see as the root. We want to allow for inferences with more than two premises, so we need the version of the Reingold and Tilford algorithm extended by Walker to general trees~\cite{generaltreeslayout-walker}.
+The space-saving layouts could be useful if it is clear which node is the root and some other form of iconography could be used for constructing formulas. For the current project, we will use the Reingold and Tilford layout for trees, which could be described as visually rooted, since we have a convention that tells us which node we see as the root. We want to allow for inferences with more than two premises, so we need the version of the Reingold and Tilford algorithm extended by Walker to general trees~\cite{generaltreeslayout-walker}, then made more efficient to run in linear time by~\cite{improvingwalker-buchheim+etal}.
 
-TODO: linear time improvement by Buchheim et al \\
-
-We will invert the standard tree constructed with this algorithm so that the root is at centre bottom. The bottom center location of the root is a consistent position where we can find the goal of the proof, which is also the formula on the right side of a sequent, as described in section~\ref{sec:background}. Another benefit of the Reingold and Tilford algorithm for this application is the vertical alignment of nodes at the same level (distance from the root) in a proof. This allows a final difference between proof trees and general trees without making the relations between nodes unclear: we don't draw and links or edges between nodes. Instead, a horizontal line is drawn between a node and its children.
-
-TODO: can expand on TRW algorithm if there is more space by talking about aesthetic requirements \\
-
-TODO: more description of structure of proof trees used by math and logic community? \\
+We will invert the standard tree constructed with this algorithm so that the root is at centre bottom as is conventional for drawing proof trees. The bottom center location of the root is a consistent position where we can find the goal of the proof, which is also the formula on the right side of a sequent, as described in section~\ref{sec:background}. Another benefit of the Reingold and Tilford algorithm for this application is the vertical alignment of nodes at the same level (distance from the root) in a proof. This permits a final difference between proof trees and general trees without making the relations between nodes unclear: we don't draw and links or edges between nodes. Instead, a horizontal line is drawn between a node and its children.
 
 TODO: focus+context here: children <- focus -> parent \\
 
@@ -409,7 +427,7 @@ Figueiras presents a taxonomy of interaction consisting of eleven categories of 
 
 A user may want to select data to learn more about it or track how it changes in response to other interaction. In \projectname{}, a node can be selected to see more detail on its role in the proof tree. Its related parent and child inferences can be highlighted, the rules used displayed, and the substitutions used in applying the rules explicitly stated.
 
-Techniques in the overview/explore category first display an overview of the data, then allow exploration through zooming, filtering, and the display of details on demand. Large proof trees may sometimes escape the bounds of a monitor, so it may not be possible to have a full proof tree visible. Thus a proper ``overview'' is not guaranteed in all cases, but the full tree is available in the application, possibly requiring panning. (TODO: remove? does this not work anymore? review other interaction stuff? is using the walkthrough considered exploring?)
+Techniques in the overview/explore category first display an overview of the data, then allow exploration through zooming, filtering, and the display of details on demand. Large proof trees may sometimes escape the bounds of a monitor, so it may not be possible to have a full proof tree visible. Thus a proper ``overview'' is not guaranteed in all cases, but the full tree is available in the application, possibly requiring panning. The user can then explore the proof through the guided walk-through, seeing more details as the proof progresses and nodes are focused.
 
 Lin and Yang~\cite{readingcompgeometric-lin+yang} (TODO: check that used correct reference here) present five facets of proof comprehension: basic knowledge, logical status, summary, generality, and application. These facets are used to guide the design of this project. (TODO: read this... add more... lower priority than visual thinking content)
 
@@ -423,8 +441,6 @@ When new structure is observed in data and possibly new discoveries made, the us
 
 Match mental model means one has a bridge between the data and their mental model of it. Having an external visual version of the mental model allows for cognitive offloading. In this project, we will see the value of having a visualization of a proof to interact with rather than trying to hold the entire picture in one’s head. It is then possible to allocate more mental resources to reasoning and gaining insight through the other processes.
 
-TODO: review second half of course content for other relevant readings \\
-
 TODO: visual thinking content \\
 
 \section{Evaluation}
@@ -433,6 +449,25 @@ TODO: visual thinking content \\
 % from cognitive dimensions paper; low priority for this report, work on this once everything else is done
 % review handouts from the class where this was discussed
 
+TODO: add discussion of how things could be fixed
+
+Here we do a preliminary informal evaluation based on the author's experience in using \projectname{}.
+
+On initial page load, the first example from the example selection menu is displayed. It may be better if initially there was no example to be displayed so that there is less information on the screen on load.
+
+It would be useful for the user to have more guidance on how to start using the tool. Being initially presented with some instructions on how to get started is necessary. If the user is unfamiliar with proof trees, a pointer to a basic logic tutorial will be helpful.
+
+It is possible that a user without any logic background could experiment by clicking on the nodes, reading the selection information, and see patterns between the concrete proof tree with the rules in the rules panel. This is an ideal use of the tool. We want users to learn about proofs through exploration.
+
+If a user clicks on a non-root node during exploration, then all nodes that would have been visited earlier in the programmed traversal are coloured to be less visible. This might be confusing, since different traversals are possible and the user will not have experienced the full traversal up to this point. This may be jarring and (TODO: ref map thing from course paper, where need smooth zooming... or was that in Ware?)
+
+The proof walk-through is initiated by pressing the ``forward'' arrow in the top right. This highlights the root node. As discussed earlier, the currently programmed traversal is depth-first preorder. We are starting at the root of the tree which is the conclusion of the proof, and we reason in a backwards direction. In this situation, it is useful to have previously visited nodes made harder to read, so that the user is focused primarily on the current node, but can also see ahead in the walk-through. At the end of the walk-through, the forward button can be pressed, but the walkthrough does not go beyond having the last node in the traversal highlighted. This could be improved by having a more clear indication that traversal is done. The forward button could be unavailable, or the final node is coloured as the previously visited nodes.
+
+It would be pleasant if there was a way to ``escape'' from having a node focused, so that there are no longer any nodes with special focus.
+
+Overall, it is easy to explore proof trees and see supplementary information. The display is generally pleasant. There are many small changes that could substantially increase how useful this tool is in practice.
+
+In the future we hope to perform a more detailed evaluation following the cognitive dimensions of Blackwell and Green (TODO: ref).
 
 \section{Discussion}
 \label{sec:discussion}
