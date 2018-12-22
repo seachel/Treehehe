@@ -2,7 +2,7 @@ let vars = {
 	rulesContainerClass: 'rules-container'
 };
 
-function Rule(conclusion, premises = [], ruleName = [], sideCondition = [])
+function Rule(conclusion, premises = [], ruleName = "", sideCondition = "")
 {
 	return {
 		conclusion: conclusion,
@@ -12,13 +12,23 @@ function Rule(conclusion, premises = [], ruleName = [], sideCondition = [])
 	};
 }
 
+function Rule_Tex(conclusion, premises = [], ruleName = "", textRuleName = "")
+{
+	return {
+		conclusion: conclusion,
+		premises: premises,
+		ruleName: ruleName,
+		textRuleName: textRuleName
+	};
+}
+
 const RuleSets = (function()
 {
 	let naturalDeduction =
 	[
 		Rule("$P_1 \\wedge P_2$", ["$P_1$", "$P_2$"], "$\\wedge_I$"),
 		Rule("$P_1$", ["$P_1 \\wedge P_2$"], "$\\wedge_{E_1}$"),
-		Rule("$P_2$", ["$P_1 \\wedge P_2$"], "$\\wedge_{E_2}$"),
+		Rule("$P_2$", ["$P_1 \\wedge P_2$"], "$\\wedge_{E_2}$")
 		// Rule("$P_1 \\rightarrow P_2$", [{ contents: ["$P_1$", "$\\vdots$", "$P_2$"], justification: "$u$" }], "$\\rightarrow_{I^u}$"),
 		// Rule("$P_2$", ["$P_1$", "$P_1 \\rightarrow P_2$"], "$\\rightarrow_E$")
 	];
@@ -36,6 +46,23 @@ const RuleSets = (function()
 		writeRuleHTML(rule);
 	});
 })()
+
+function writeRuleHTML_Tex(rule)
+{
+	// div for the rule name
+	// div content is latex with "infer" command
+	// div class is rule-(rule name)
+
+	var classStr = `rule-${rule.textRuleName}`;
+
+	var ruleText = `\$\\infer[${rule.ruleName}]\{${rule.conclusion}\}\{${rule.premises ? rule.premises.join(" & ") : ""}\}\$`;
+
+	var ruleContainer = d3.select(`.${vars.rulesContainerClass}`)
+							.append('div')
+							.classed(classStr, true)
+							.classed('rule', true)
+							.text(ruleText);
+}
 
 function writeRuleHTML(rule)
 {
