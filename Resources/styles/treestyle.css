@@ -14,9 +14,9 @@ rect.node
 	fill: white;
 }
 
-rect.node:hover
+rect.node:hover, rect.focus-rect:hover
 {
-	fill: lightgrey;
+	stroke-width: 3px;
 }
 
 rect.related-rect
@@ -39,12 +39,8 @@ rect.visited-rect
 
 rect.focus-rect
 {
+	fill: hsl(120, 80%, 90%);
 	stroke: hsl(120, 93%, 22%);
-}
-
-rect.focus-rect:hover
-{
-	fill: hsl(120, 80%, 90%);;
 }
 
 .scroll-container
