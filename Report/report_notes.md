@@ -74,11 +74,11 @@ Dec 21 goals:
 
 - check proposal feedback (moved from Dec 19)
 
-- merge design outline from proposal (if anything is applicable) (moved from Dec 19)
+- ~~merge design outline from proposal (if anything is applicable) (moved from Dec 19)~~
 
-- infovis elements: second draft (moved from Dec 19)
+- ~~infovis elements: second draft (moved from Dec 19)~~
 
-- add in visual thinking results (moved from Dec 19)
+- ~~add in visual thinking results (moved from Dec 19)~~
 
 - figures / graphics
 
@@ -150,12 +150,7 @@ DONE
 
 Design outline (approach):
 
-- description of inference rules (for intro or logic background or conclusion)
-- pattern matching to use rule
-- sequent
-- in TR algorithm, can depend on root of tree being in the same location (in InfoVis Elements section)
-
-(possibly copy some paragraphs?)
+DONE
 
 
 Design outline (technology):
