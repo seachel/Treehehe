@@ -127,6 +127,11 @@ function writeRuleHTML_flex(rule)
 
 			if (rule.premises[i].contents)
 			{
+				if (rule.premises[i].justification)
+				{
+					premiseContainer.append('div').classed(`${vars.dividerClass}`, true);
+				}
+
 				rule.premises[i].contents.forEach(c => premiseContainer.append('div').text(c));
 			}
 			else
