@@ -38,10 +38,15 @@ const RuleSets = (function()
 	let naturalDeduction =
 	[
 		Rule("$P_1 \\wedge P_2$", ["$P_1$", "$P_2$"], "$\\wedge_I$"),
-		Rule("$P_1$", ["$P_1 \\wedge P_2$"], "$\\wedge_{E_1}$"),
-		Rule("$P_2$", ["$P_1 \\wedge P_2$"], "$\\wedge_{E_2}$"),
-		Rule("$P_1 \\rightarrow P_2$", [{ contents: ["$P_1$", "$\\vdots$", "$P_2$"], justification: "$u$" }], "$\\rightarrow_{I^u}$"),
-		Rule("$P_2$", ["$P_1$", "$P_1 \\rightarrow P_2$"], "$\\rightarrow_E$")
+		Rule("$P_n$", ["$P_1 \\wedge P_2$"], "$\\wedge_{E_n}$", "$n \\in \{ 1, 2 \}$"),
+		Rule("$P_1 \\rightarrow P_2$", [{ contents: ["$P_1$", "$\\vdots$", "$P_2$"], justification: "$u$" }], "$\\rightarrow_{I^u}$"), // TODO: include justification... if justification, have inference line above
+		Rule("$P_2$", ["$P_1$", "$P_1 \\rightarrow P_2$"], "$\\rightarrow_E$"),
+		Rule("$P_1 \\vee P_2$", ["$P_n$"], "$\\vee_{I_n}$", "$n \\in \{ 1, 2 \}$"),
+		Rule("$Q$", ["$P_1 \\vee P_2$",
+					 { contents: ["$P_1$", "$\\vdots$", "$Q$"], justification: "$u$" },
+					 { contents: ["$P_2$", "$\\vdots$", "$Q$"], justification: "$w$"}], "$\\vee_{E^{u,w}}$"),
+		Rule("$\\top$", [], "$\\top_I$"),
+		Rule("$P$", ["$\\bot$"], "$\\bot_E$")
 	];
 
 	return {
