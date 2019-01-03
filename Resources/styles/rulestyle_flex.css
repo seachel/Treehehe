@@ -1,0 +1,65 @@
+/* Colours for layout; comment out if annoying */
+
+/* .rule-container { background: silver; }
+.rule-top { background: wheat; }
+.rule-text { background: lightgreen; }
+.rule-top-center { background: lightskyblue; }
+.premise-container { background: blueviolet; }
+.premise { background: thistle; }
+.divider { background: seagreen; }
+.rule-right { background: sandybrown; }
+.rule-bottom { background: coral; }
+.rule-container { background: silver; } */
+
+
+.rule-container
+{
+	display: flex;
+}
+
+.rule-left, .rule-right
+{
+	align-self: flex-end;
+	padding: 0 10px 20px 10px;
+}
+
+.rule-top
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.premises-container
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.premise
+{
+	padding: 0 20px; /* set minumum spacing between premises when no subtree */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.divider
+{
+	outline: 1px solid black;
+	margin-top: 10px;
+}
+
+.rule-text
+{
+	display: inline;
+}
+
+.rule-bottom
+{
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
