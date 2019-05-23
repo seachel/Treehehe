@@ -1,4 +1,4 @@
-// ------------------------------ Program and layout variables ------------------------------
+//#region ---------- Program and layout variables ----------
 
 var walkthroughMode = true;
 
@@ -21,8 +21,8 @@ const webvars = {
 	ruleTextClass: "rule-text",
 	ruleTextLeftClass: "rule-text-left",
 	ruleTextRightClass: "rule-text-right",
-	texContainerTag: "g",
 	texContainerClass: "tex-container",
+	texContainerTag: "g",
 	focusRectClass: "focus-rect",
 	relatedRectClass: "related-rect",
 	visitedRectClass: "visited-rect",
@@ -50,8 +50,9 @@ let stylingvars = {
 	texShift: -30 // need to be set for every example?
 };
 
-// ------------------------------ Tree Data ------------------------------
+//#endregion
 
+//#region ---------- Tree Data ----------
 
 TreeDataMaker = (function()
 {
@@ -112,6 +113,37 @@ TreeDataMaker = (function()
 
 const TreeExamples = (function()
 {
+	let linlog_ex1_blocks_root = TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash \\exists X, Y : nat \\; . \\; program(\\mathtt{INC} :: \\mathtt{REP}(\\mathtt{SAME}, 2) :: \\mathtt{DEC} :: [ \\; ], X, Y)$",
+	[
+		TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash program(\\mathtt{INC} :: \\mathtt{REP}(\\mathtt{SAME}, 2) :: \\mathtt{DEC} :: [ \\; ], 1, 1)$",
+		[
+			TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash move(\\mathtt{INC}, 1, 2)$",
+			[
+				TreeDataMaker.makeNode("")
+			], "$move\\_inc$"),
+			TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash program(\\mathtt{REP}(\\mathtt{SAME}, 2) :: \\mathtt{DEC} :: [ \\; ], 2, 1)$",
+			[
+				TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash move(\\mathtt{REP}(\\mathtt{SAME}, 2), 2, 2)$",
+				[
+					TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash move(\\mathtt{SAME}, 1, 1)$", [], "$move\\_same$")
+				],
+				"$move\\_rep$"),
+				TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash program(\\mathtt{DEC} :: [ \\; ], 2, 1)$",
+				[
+					TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash move(\\mathtt{DEC}, 2, 1)$", [],"$move\\_dec$"),
+					TreeDataMaker.makeNode("$\\Gamma; \\cdot \\vdash program([ \\;], 1, 1)$", [], "$prog\\_check$")
+				],
+				"$prog\\_check$")
+			],
+			"$prog\\_check$")
+		],
+		"$prog\\_check$")
+	],
+	"$\\exists_R \\mathrm{(twice)}$"
+	);
+
+	let linlog_ex1_blocks = TreeDataMaker.makeTree(linlog_ex1_blocks_root, 2000, "logic-programming");
+
 	let natded_ex1Root = TreeDataMaker.makeNode("$(p \\wedge q) \\rightarrow r$",
 		[
 			TreeDataMaker.makeNode("$r$",
@@ -251,7 +283,7 @@ const TreeExamples = (function()
 		]);
 
 
-	let selectedExample = natded_ex1;
+	let selectedExample = linlog_ex1_blocks;
 
 	function setSelectedExample(selection)
 	{
@@ -266,6 +298,7 @@ const TreeExamples = (function()
 	return {
 		examples:
 			[
+				linlog_ex1_blocks,
 				natded_ex1,
 				natded_ex2,
 				natded_ex3,
@@ -277,6 +310,8 @@ const TreeExamples = (function()
 	};
 })();
 
+//#endregion
+
 // whole thing in a module, with function `setTree` that makes a new tree builder and reruns MathJax? anything else?
 
 let currentTreeBuilder = TreeBuilder(TreeExamples.getSelectedExample());
@@ -287,7 +322,7 @@ function UpdateTreeSelection(selectedTree)
 	currentInteractionManager = InteractionManager(); // better way to do this?
 
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-	setTimeout(MathJaxSVGManipulation, 500);
+	setTimeout(MathJaxSVGManipulation, 500); //default: 500
 }
 
 function TreeBuilder(selectedTree)
@@ -685,7 +720,7 @@ function TreeBuilder(selectedTree)
 }
 
 
-// ---------- Interaction
+//#region ---------- Interaction ----------
 
 let currentInteractionManager = InteractionManager();
 
@@ -865,9 +900,10 @@ function InteractionManager()
 	}
 };
 
+//#endregion
 
-// ---------- Tree Traversal
 
+//#region ---------- Tree Traversal ----------
 function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
 {
 	if (rootNode.children)
@@ -917,9 +953,9 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 	iterationHeight++;
 }
+//#endregion
 
-
-// ------------------------------ Event handlers ------------------------------
+//#region ---------- Event handlers ----------
 
 function node_onclick(selectedHNode)
 {
@@ -955,9 +991,9 @@ function modeToggle_onchange()
 	//	- dark visited nodes
 	//	- don't allow open node selection?
 }
+//#endregion
 
-
-// ------------------------------ MathJax ------------------------------
+//#region ---------- MathJax ----------
 function MathJaxSVGManipulation()
 {
 	currentTreeBuilder.svgtree.selectAll(`${selectors.nodeElementSelector}`).each(function(){
@@ -1002,6 +1038,7 @@ function MathJaxSVGManipulation()
 
 	currentTreeBuilder.postRenderRuleText();
 }
+//#endregion
 
 // scrolling
 let scrollNode = d3.select('.scroll-container').node();

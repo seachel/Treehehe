@@ -42,6 +42,7 @@ body
 .region
 {
 	padding: 10px;
+	overflow: auto;
 }
 
 .title
