@@ -52,6 +52,7 @@ let stylingvars = {
 
 //#endregion
 
+
 //#region ---------- Tree Data ----------
 
 TreeDataMaker = (function()
@@ -311,6 +312,9 @@ const TreeExamples = (function()
 })();
 
 //#endregion
+
+
+//#region ---------- Tree Builder ----------
 
 // whole thing in a module, with function `setTree` that makes a new tree builder and reruns MathJax? anything else?
 
@@ -719,6 +723,8 @@ function TreeBuilder(selectedTree)
 	};
 }
 
+//#endregion
+
 
 //#region ---------- Interaction ----------
 
@@ -955,6 +961,7 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 }
 //#endregion
 
+
 //#region ---------- Event handlers ----------
 
 function node_onclick(selectedHNode)
@@ -992,6 +999,7 @@ function modeToggle_onchange()
 	//	- don't allow open node selection?
 }
 //#endregion
+
 
 //#region ---------- MathJax ----------
 function MathJaxSVGManipulation()
@@ -1040,6 +1048,8 @@ function MathJaxSVGManipulation()
 }
 //#endregion
 
+
+//#region ---------- other init? ----------
 // scrolling
 let scrollNode = d3.select('.scroll-container').node();
 let scrollContainerWidth = scrollNode.clientWidth;
@@ -1053,3 +1063,4 @@ TreeExamples.examples.forEach(e =>
 			.attr('label', e.id)
 			.text(e.root.proposition);
 	});
+//#endregion
