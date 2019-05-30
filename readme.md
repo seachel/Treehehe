@@ -1,7 +1,17 @@
+Background:
+---
+
+This work began as the a project for a course on Visual Analytics that I took at the University of Ottawa in fall 2018.
+
+The main goal of the project is to provide a tool for visualizing proof trees and providing a walk-through of the reasoning process. It is my hope that this work can have multiple uses. the initial motivation is to help beginners on their journey of understanding logic. A second goal is that it can be used by those more familiar with logic as a tool to view a large proof tree in a convenient format, possibly providing new insights and at least allowing convenient documentation of proofs. A third goal is to allow user to build proofs which can then be exported to LaTeX or other markup for display elsewhere.
+
+
 Info/Tutorial/Background/etc:
 ---
 
 TODO
+
+---
 
 Important files:
 ---
