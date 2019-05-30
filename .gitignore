@@ -17,6 +17,8 @@ Presentation/Resources/*
 *.fdb_latexmk
 *.odp#
 
+*.DS_Store
+
 .vscode
 yarn.lock
 node_modules/
