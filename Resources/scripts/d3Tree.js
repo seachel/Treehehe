@@ -1,4 +1,4 @@
-//#region ---------- Program and layout variables ----------
+//#region -TODO--------- Program and layout variables ----------
 
 var walkthroughMode = true;
 
@@ -53,7 +53,7 @@ let stylingvars = {
 //#endregion
 
 
-//#region ---------- Tree Data ----------
+//#region -TODO--------- Tree Data ----------
 
 TreeDataMaker = (function()
 {
@@ -314,7 +314,7 @@ const TreeExamples = (function()
 //#endregion
 
 
-//#region ---------- Tree Builder ----------
+//#region -TODO--------- Tree Builder ----------
 
 // whole thing in a module, with function `setTree` that makes a new tree builder and reruns MathJax? anything else?
 
@@ -726,7 +726,7 @@ function TreeBuilder(selectedTree)
 //#endregion
 
 
-//#region ---------- Interaction ----------
+//#region -TODO--------- Interaction ----------
 
 let currentInteractionManager = InteractionManager();
 
@@ -909,7 +909,7 @@ function InteractionManager()
 //#endregion
 
 
-//#region ---------- Tree Traversal ----------
+//#region -TODO--------- Tree Traversal ----------
 function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
 {
 	if (rootNode.children)
@@ -964,6 +964,8 @@ function visitNodes_preOrder(rootNode, nodeCallback = null, nodeCallbackArgs = [
 
 //#region ---------- Event handlers ----------
 
+// Self-explanatory region containing event handlers for clicks, changes, mode changing, etc.
+
 function node_onclick(selectedHNode)
 {
 	currentInteractionManager.focusNode(selectedHNode);
@@ -1002,6 +1004,13 @@ function modeToggle_onchange()
 
 
 //#region ---------- MathJax ----------
+
+// There is some kind of bug where the kind of tag that the styled TeX svg is placed in makes it so that it's not displayed. It needs to be moved.
+
+// This has to be done first for the main node content (the judgments), then again for the text beside the rules, because we don't know where to place them until the node TeX has been rendered.
+
+// TODO: review and add more detail
+
 function MathJaxSVGManipulation()
 {
 	currentTreeBuilder.svgtree.selectAll(`${selectors.nodeElementSelector}`).each(function(){
@@ -1049,12 +1058,19 @@ function MathJaxSVGManipulation()
 //#endregion
 
 
-//#region ---------- other init? ----------
+//#region ---------- Initialization of controls and page ----------
 // scrolling
+
+// Some extra initialization for scrolling
+// TODO: test if necessary and correct
+
 let scrollNode = d3.select('.scroll-container').node();
 let scrollContainerWidth = scrollNode.clientWidth;
 let scrollContainerHeight = scrollNode.clientHeight;
 scrollNode.scrollTo((currentTreeBuilder.treeWidth - scrollContainerWidth) / 2, currentTreeBuilder.treeHeight - scrollContainerHeight);
+
+
+// Populating the example selection drop-down
 
 TreeExamples.examples.forEach(e =>
 	{
