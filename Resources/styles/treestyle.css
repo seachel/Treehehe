@@ -47,8 +47,6 @@ rect.focus-rect
 {
 	display: flex;
 	align-items: center;
-	width: inherit;
-	height: inherit;
 	overflow: auto;
 }
 
