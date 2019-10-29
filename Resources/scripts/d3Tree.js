@@ -284,7 +284,8 @@ const TreeExamples = (function()
 		]);
 
 
-	let selectedExample = linlog_ex1_blocks;
+	// let selectedExample = linlog_ex1_blocks;
+	let selectedExample = natded_ex1;
 
 	function setSelectedExample(selection)
 	{
@@ -299,7 +300,7 @@ const TreeExamples = (function()
 	return {
 		examples:
 			[
-				linlog_ex1_blocks,
+				// linlog_ex1_blocks,
 				natded_ex1,
 				natded_ex2,
 				natded_ex3,

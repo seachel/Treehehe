@@ -82,7 +82,13 @@ body
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	/* justify-content: space-between; */
+	justify-content: center;
+}
+
+.menu-container div
+{
+	padding: 0 10px;
 }
 
 .control-panel
