@@ -1,4 +1,4 @@
-[Treehehe](http://chelsea.lol/treehehe/)
+The tool can be found at [Treehehe](http://chelsea.lol/treehehe/). Use the drop-down in the top left to select an example, then either use the arrows in the top right to traverse the tree with a goal-directed reading of the proof, or select a node in the proof tree to see how it's derived. Supplementary information on the currently selected node is displayed on the bottom of the page.
 
 
 Overview:
