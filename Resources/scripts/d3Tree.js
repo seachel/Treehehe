@@ -1,4 +1,4 @@
-//#region -TODO--------- Program and layout variables ----------
+//#region ---------- Program and layout variables ----------
 
 var walkthroughMode = true;
 
@@ -53,7 +53,7 @@ let stylingvars = {
 //#endregion
 
 
-//#region -TODO--------- Tree Data ----------
+//#region ---------- Tree Data ----------
 
 TreeDataMaker = (function()
 {
@@ -315,7 +315,7 @@ const TreeExamples = (function()
 //#endregion
 
 
-//#region -TODO--------- Tree Builder ----------
+//#region ---------- Tree Builder ----------
 
 // whole thing in a module, with function `setTree` that makes a new tree builder and reruns MathJax? anything else?
 
@@ -727,7 +727,7 @@ function TreeBuilder(selectedTree)
 //#endregion
 
 
-//#region -TODO--------- Interaction ----------
+//#region ---------- Interaction ----------
 
 let currentInteractionManager = InteractionManager();
 
@@ -910,7 +910,7 @@ function InteractionManager()
 //#endregion
 
 
-//#region -TODO--------- Tree Traversal ----------
+//#region ---------- Tree Traversal ----------
 function visitNodes_postOrder(rootNode, nodeCallback, nodeCallbackArgs = [], iterationHeight = 0, childCallback = null, childCallbackArgs = [])
 {
 	if (rootNode.children)
